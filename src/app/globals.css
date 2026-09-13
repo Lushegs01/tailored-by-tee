@@ -1,26 +1,334 @@
 @import "tailwindcss";
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Tailored by Tee — design tokens
+
+   Three layers:
+   1. Raw palette      (--paper, --ink …)          never used directly in UI
+   2. Semantic roles   (--background, --foreground …) re-scoped by .theme-ink
+   3. Tailwind theme   (bg-background, text-muted-foreground …)
+
+   Photography carries the colour; the interface stays paper, ink and stone.
+   ────────────────────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 1 · Raw palette */
+  --paper: #f4f1ea;
+  --paper-raised: #f9f7f2;
+  --linen: #ece8df;
+  --linen-deep: #e2ddd2;
+  --ink: #161513;
+  --ink-soft: #2c2a26;
+  --stone: #6e6a63; /* 4.7:1 on paper — smallest permitted text colour */
+  --stone-light: #a39e94; /* decorative only (rules, disabled) — fails AA for text */
+  --hairline: #d9d3c7;
+  --hairline-strong: #b9b2a5;
+  --tobacco: #7a6850; /* the one accent: used sparingly for badges & detail */
+  --moss: #4a5a45;
+  --brick: #9a3b2b;
+
+  /* 2 · Semantic roles */
+  --background: var(--paper);
+  --background-raised: var(--paper-raised);
+  --foreground: var(--ink);
+  --surface: var(--linen);
+  --surface-strong: var(--linen-deep);
+  --muted-foreground: var(--stone);
+  --subtle-foreground: var(--stone-light);
+  --border: var(--hairline);
+  --border-strong: var(--hairline-strong);
+  --ring: var(--ink);
+  --accent-brand: var(--tobacco);
+  --success: var(--moss);
+  --danger: var(--brick);
+  --overlay: rgb(22 21 19 / 0.42);
+
+  /* Layout */
+  --gutter: 1.25rem;
+  --header-height: 3.75rem;
+  --announcement-height: 2.25rem;
+  --container-max: 115rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (width >= 48rem) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter: 2rem;
+    --header-height: 4.25rem;
   }
 }
 
-body {
-  background: var(--background);
+@media (width >= 80rem) {
+  :root {
+    --gutter: 2.75rem;
+  }
+}
+
+@media (width >= 120rem) {
+  :root {
+    --gutter: 4rem;
+  }
+}
+
+/* Flip any section to ink. Everything built on semantic tokens follows. */
+.theme-ink {
+  --background: var(--ink);
+  --background-raised: #1f1d1a;
+  --foreground: var(--paper);
+  --surface: #23211e;
+  --surface-strong: #2c2a26;
+  --muted-foreground: #aaa396; /* 7.3:1 on ink */
+  --subtle-foreground: #6e6a63;
+  --border: #3a3732;
+  --border-strong: #57534c;
+  --ring: var(--paper);
+  --accent-brand: #c2ad8d;
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 3 · Tailwind theme — semantic (follows .theme-ink) */
+@theme inline {
+  --color-background: var(--background);
+  --color-background-raised: var(--background-raised);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+  --color-accent-brand: var(--accent-brand);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-overlay: var(--overlay);
+
+  /* shadcn/ui aliases so generated components inherit the brand */
+  --color-primary: var(--foreground);
+  --color-primary-foreground: var(--background);
+  --color-secondary: var(--surface);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--surface);
+  --color-accent: var(--surface-strong);
+  --color-accent-foreground: var(--foreground);
+  --color-card: var(--background-raised);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--background-raised);
+  --color-popover-foreground: var(--foreground);
+  --color-destructive: var(--danger);
+  --color-input: var(--border-strong);
+
+  --font-sans:
+    var(--font-instrument-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-instrument-serif), "Iowan Old Style", "Times New Roman", serif;
+}
+
+/* 3 · Tailwind theme — fixed values */
+@theme {
+  /* Fixed palette: for content that must NOT flip (e.g. text over photography) */
+  --color-paper: #f4f1ea;
+  --color-paper-raised: #f9f7f2;
+  --color-linen: #ece8df;
+  --color-ink: #161513;
+  --color-ink-soft: #2c2a26;
+  --color-stone: #6e6a63;
+  --color-tobacco: #7a6850;
+
+  /* Type scale. Display sizes are fluid and reserved for editorial moments. */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.125rem;
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 1.35rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.6;
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.6;
+  --text-display-xs: clamp(1.5rem, 1.25rem + 0.9vw, 1.875rem);
+  --text-display-xs--line-height: 1.1;
+  --text-display-sm: clamp(1.875rem, 1.4rem + 1.6vw, 2.75rem);
+  --text-display-sm--line-height: 1.04;
+  --text-display-sm--letter-spacing: -0.01em;
+  --text-display-md: clamp(2.375rem, 1.5rem + 3vw, 4.25rem);
+  --text-display-md--line-height: 1;
+  --text-display-md--letter-spacing: -0.015em;
+  --text-display-lg: clamp(2.875rem, 1.6rem + 4.6vw, 6rem);
+  --text-display-lg--line-height: 0.95;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-xl: clamp(3.25rem, 1.5rem + 6.8vw, 8.75rem);
+  --text-display-xl--line-height: 0.9;
+  --text-display-xl--letter-spacing: -0.025em;
+
+  --tracking-label: 0.16em;
+  --tracking-wordmark: 0.3em;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --breakpoint-3xl: 120rem;
+
+  --animate-shimmer: shimmer 2.4s var(--ease-editorial) infinite;
+  --animate-hero-settle: hero-settle 2.4s var(--ease-editorial) both;
+
+  @keyframes shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+
+  @keyframes hero-settle {
+    from {
+      transform: scale(1.06);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    background-color: var(--background);
+    /* A whisper of paper grain — sits under content, never over photography. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .09 0 0 0 0 .08 0 0 0 0 .07 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background-color: var(--ink);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+/* ── Utilities ─────────────────────────────────────────────────────────── */
+
+/* Small uppercase label above headings */
+@utility text-eyebrow {
+  font-size: var(--text-micro);
+  line-height: var(--text-micro--line-height);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Navigation, buttons, controls */
+@utility text-label {
+  font-size: var(--text-caption);
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Underline that draws in on hover */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 500ms var(--ease-editorial);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* Underline that is present at rest and retracts on hover */
+@utility link-underline-static {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 500ms var(--ease-editorial);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 0% 1px;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility skip-link {
+  position: fixed;
+  left: var(--gutter);
+  top: 0.75rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  background-color: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  font-size: var(--text-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

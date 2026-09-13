@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tailored by Tee — storefront
 
-## Getting Started
+A premium single-brand fashion storefront for a Lagos clothing label. Editorial in presentation, rigorous in commerce: server-priced carts, variant-level inventory, Paystack payments.
 
-First, run the development server:
+> **Status: Phase 1 of 10** — design system, storefront shell, navigation, search, cart drawer and homepage, running on a typed seed catalogue.
+
+## Stack
+
+| Concern    | Choice                                                               |
+| ---------- | -------------------------------------------------------------------- |
+| Framework  | Next.js 16 (App Router, Turbopack), React 19, TypeScript strict      |
+| Styling    | Tailwind CSS v4 (CSS-first tokens in `src/app/globals.css`)          |
+| Primitives | Radix UI (`radix-ui`), shadcn/ui-compatible tokens (`components.json`) |
+| Motion     | Motion v13 via `LazyMotion` + `m.*` (≈15 kB)                         |
+| Data       | Seed-backed repository → PostgreSQL + Prisma (Phase 8)               |
+| Payments   | Paystack (Phase 5) · amounts in kobo end-to-end                      |
+| Media      | Placeholder Unsplash manifest → Cloudinary (Phase 8)                 |
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run check      # typegen + tsc + eslint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set `NEXT_PUBLIC_SITE_URL` in production so canonical URLs and structured data resolve correctly.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/                      routes, API route handlers, server actions
+  config/
+    site.ts                 brand name, wordmark, contact, navigation, footer, commerce rules
+    homepage.ts             ordered homepage content blocks (editable without touching components)
+  lib/
+    catalog/types.ts        domain model — mirrors the future Prisma schema
+    catalog/repository.ts   the ONLY data access surface for UI (server-only)
+    media/                  image manifest access + MediaAsset type
+    content/types.ts        homepage block types
+    format.ts, motion.ts    money formatting, motion vocabulary
+  components/
+    ui/                     primitives: Button, IconButton, Sheet, Dialog, Input, MediaImage, Price…
+    layout/ home/ product/ cart/ search/ wishlist/ motion/ brand/ seo/
+  data/
+    media.json              placeholder photography (see media-credits.md)
+```
 
-## Learn More
+### Principles baked into the code
 
-To learn more about Next.js, take a look at the following resources:
+- **The client is never trusted with money.** The cart stores only `{ variantId, quantity }`; every price, total and stock figure comes from `POST /api/cart/quote`, which re-validates input and recomputes on the server.
+- **Inventory is per variant** (colour × size), with `onHand`, `reserved` and a low-stock threshold. Size systems (`apparel`, `waist`, `belt`, `one-size`) keep trousers and accessories honest.
+- **Money is integer kobo** — the same minor unit Paystack uses — so no floating-point arithmetic touches a price.
+- **One data contract.** Components code against `repository.ts`; Phase 8 swaps its internals for Prisma without UI changes.
+- **Photography is rendered one way** — `<MediaImage>` — guaranteeing fixed frames, dominant-colour grounds and blur placeholders.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design system
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tokens live in `src/app/globals.css` in three layers: raw palette → semantic roles → Tailwind theme.
 
-## Deploy on Vercel
+- **Palette** — paper `#F4F1EA`, ink `#161513`, stone `#6E6A63`, hairline `#D9D3C7`, a single restrained accent (tobacco `#7A6850`). Add `theme-ink` to any section to flip it dark; everything built on semantic tokens follows.
+- **Type** — Instrument Sans for interface and body; Instrument Serif reserved for editorial headlines. Write `*emphasis*` in any content string to set it in italic serif.
+- **Utilities** — `text-eyebrow`, `text-label`, `text-display-{xs…xl}`, `link-underline`, `link-underline-static`, `px-(--gutter)`, `ease-editorial`.
+- **Shape** — square corners, hairlines, no shadows, no glass, no decorative gradients.
+- **Motion** — low amplitude, unhurried, `prefers-reduced-motion` respected globally.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Rebranding
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Edit `src/config/site.ts` (name, wordmark, tagline, contact, navigation, delivery threshold).
+2. Replace the typeset wordmark in `src/components/brand/wordmark.tsx` with an SVG logo if needed.
+3. Adjust the raw palette at the top of `globals.css`.
+4. Replace `src/data/media.json` with brand photography (Phase 8 moves this to Cloudinary + admin).
+
+## Roadmap
+
+1. **Design system & storefront shell** ← current
+2. Homepage & product browsing (shop, categories, collections, filters, search page)
+3. Product detail pages & variant selection, size guide
+4. Cart & checkout
+5. Paystack integration (initialise → verify → webhook → stock deduction)
+6. Authentication & customer accounts
+7. Admin dashboard
+8. PostgreSQL / Prisma, Cloudinary
+9. Inventory & order management
+10. SEO, accessibility, performance, testing, production hardening
+
+## Image credits
+
+Placeholder photography is from [Unsplash](https://unsplash.com) and credited per image in `src/data/media-credits.md`. Replace it with brand photography before launch.
