@@ -30,6 +30,8 @@ const colorSeeds = {
   navy: { name: "Navy", hex: "#232A38", code: "NVY" },
   "indigo-rinse": { name: "Indigo Rinse", hex: "#2E3A52", code: "IND" },
   charcoal: { name: "Charcoal", hex: "#3B3B3D", code: "CHR" },
+  slate: { name: "Slate", hex: "#6E6E6C", code: "SLT" },
+  "mid-wash": { name: "Mid Wash", hex: "#5B7190", code: "MDW" },
   "washed-black": { name: "Washed Black", hex: "#2C2B2A", code: "WBK" },
 } as const satisfies Record<string, ColorSeed>;
 

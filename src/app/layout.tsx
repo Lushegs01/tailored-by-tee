@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -8,25 +7,9 @@ import { AppProviders } from "@/components/providers/app-providers";
 import { SearchOverlay } from "@/components/search/search-overlay";
 import { JsonLd, organizationJsonLd } from "@/components/seo/json-ld";
 import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
+import { fontVariables } from "@/lib/fonts";
 
 import "./globals.css";
-
-/* Grotesk for everything functional; serif reserved for editorial moments. */
-const sans = Instrument_Sans({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-instrument-sans",
-  display: "swap",
-  axes: ["wdth"],
-});
-
-const serif = Instrument_Serif({
-  subsets: ["latin", "latin-ext"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -60,7 +43,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-NG" className={cn(sans.variable, serif.variable)}>
+    <html lang="en-NG" className={fontVariables}>
       <body>
         <a href="#main" className="skip-link">
           Skip to content

@@ -33,9 +33,15 @@ export function CategoryIndex({ block, entries, headingId }: CategoryIndexProps)
   const links = entries.map(({ slug, name, href, count }) => ({ slug, name, href, count }));
   const stack = entries.map((entry) =>
     entry.image ? (
-      <MediaImage image={entry.image} ratio={null} className="size-full" sizes="(min-width: 1024px) 32vw, 100vw" />
+      <MediaImage
+        key={entry.slug}
+        image={entry.image}
+        ratio={null}
+        className="size-full"
+        sizes="(min-width: 1024px) 32vw, 100vw"
+      />
     ) : (
-      <CategoryFallback name={entry.name} />
+      <CategoryFallback key={entry.slug} name={entry.name} />
     ),
   );
 

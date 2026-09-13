@@ -1,0 +1,1017 @@
+{
+  "editorial": {
+    "hero": {
+      "src": "https://images.unsplash.com/photo-1538408680416-34dde4272bfb?fit=crop&crop=focalpoint&fp-x=0.4&fp-y=0.55&fp-z=1.2&w=2400&h=1500&fm=jpg&q=85",
+      "width": 2400,
+      "height": 1500,
+      "alt": "Model in an ink-black high-neck jacket and felt fedora, in profile against a sun-warmed clay plaster wall",
+      "color": "#f3c08c",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQF/8QAHBAAAQQDAQAAAAAAAAAAAAAAAgABAwQREiFh/8QAFAEBAAAAAAAAAAAAAAAAAAAABP/EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwDcvSnG1VwLXayAl6z54qsoiEbH/9k=",
+      "credit": {
+        "name": "Mike Von",
+        "url": "https://unsplash.com/@thevoncomplex",
+        "photoUrl": "https://unsplash.com/photos/minimalist-photography-of-man-facing-to-the-side-9SLOcUXXqzQ"
+      }
+    },
+    "heroMobile": {
+      "src": "https://images.unsplash.com/photo-1538408680416-34dde4272bfb?fit=crop&crop=focalpoint&fp-x=0.42&fp-y=0.5&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Model in an ink-black jacket and fedora standing in profile beside a warm clay wall",
+      "color": "#f3c08c",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQQG/8QAIxAAAQMDAgcAAAAAAAAAAAAAAQADEQIEEjFBBQYTIVGS0f/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREh/9oADAMBAAIRAxEAPwDQXty1Y2xfdjEEU6gamN1RiNu48gIbmmjqcFMmMXW6h7D6mZKE0oMun//Z",
+      "credit": {
+        "name": "Mike Von",
+        "url": "https://unsplash.com/@thevoncomplex",
+        "photoUrl": "https://unsplash.com/photos/minimalist-photography-of-man-facing-to-the-side-9SLOcUXXqzQ"
+      }
+    },
+    "essentials": {
+      "src": "https://images.unsplash.com/photo-1709004915865-38bc70f4cb78?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+      "width": 1600,
+      "height": 2000,
+      "alt": "Model in a stone short-sleeve linen shirt and navy straight trousers, hands in pockets, against a deep teal studio backdrop",
+      "color": "#262626",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAb/xAAhEAAABQQCAwAAAAAAAAAAAAAAAQIDBAUREiETMWGh8f/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQEBAQEAAAAAAAAAAAAAAAABABEx/9oADAMBAAIRAxEAPwCfhUp+VDXJQ3dtN+j3rwCmyV+/QTTqquLDeik2Sid1llbED5VF9CGDpy//2Q==",
+      "credit": {
+        "name": "Gilda Gonzàlez",
+        "url": "https://unsplash.com/@storiesofg",
+        "photoUrl": "https://unsplash.com/photos/a-man-standing-with-his-hands-in-his-pockets-UJlPhr1uRNQ"
+      }
+    },
+    "collectionMain": {
+      "src": "https://images.unsplash.com/photo-1698097513792-93f752c0b662?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+      "width": 1600,
+      "height": 2000,
+      "alt": "Model in an ecru V-neck tunic shirt, tobacco straight trousers, leather sandals and a sand fedora, with a brown leather messenger bag, against a sand studio backdrop",
+      "color": "#c0c0a6",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwAF/8QAIBAAAgICAQUBAAAAAAAAAAAAAQIDBAARMQUTFCFBof/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFREBAQAAAAAAAAAAAAAAAAAAAQD/2gAMAwEAAhEDEQA/ANe3Zr1IlaWTTMwRUA5J+4fcQ+949rp0Vh4y5Ok2dZeDAOF/cgjMS//Z",
+      "credit": {
+        "name": "Sẹ́gun Toríọlá",
+        "url": "https://unsplash.com/@seguntoriola",
+        "photoUrl": "https://unsplash.com/photos/a-man-wearing-a-hat-and-holding-a-briefcase-USy6TzTaxRk"
+      }
+    },
+    "collectionSecondaryA": {
+      "src": "https://images.unsplash.com/photo-1698444056946-516cad12ed70?fit=crop&crop=focalpoint&fp-x=0.55&fp-y=0.5&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Portrait of a model in a sand felt fedora and an ecru open-collar tunic shirt with a beaded necklace, against a warm stone backdrop",
+      "color": "#a6a68c",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwUG/8QAHRAAAgICAwEAAAAAAAAAAAAAAQIDEQAEEiFRMf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAECEv/aAAwDAQACEQMRAD8ATek24JtaKFABOeqTkxr7WKZgCQR2Pc0zoh4ylQXiBCHy8mtqI7lyzWxs5PJRd//Z",
+      "credit": {
+        "name": "Sẹ́gun Toríọlá",
+        "url": "https://unsplash.com/@seguntoriola",
+        "photoUrl": "https://unsplash.com/photos/a-man-wearing-a-white-shirt-and-a-brown-hat-LXNrOxVsrjw"
+      }
+    },
+    "collectionSecondaryB": {
+      "src": "https://images.unsplash.com/photo-1698444056635-f14f15e71269?fit=crop&crop=focalpoint&fp-x=0.4&fp-y=0.5&w=1200&h=1200&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1200,
+      "alt": "Detail of a hand raising a sand felt fedora with a dark band, stacked silver and beaded bracelets at the wrist, over an ecru tunic shirt",
+      "color": "#d9d9d9",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAKAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIEBf/EAB4QAAIBBAMBAAAAAAAAAAAAAAECAwAEESEFBjET/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABcRAAMBAAAAAAAAAAAAAAAAAAABAiH/2gAMAwEAAhEDEQA/AC+vxdcXdYQhSBDEmMlnyNitiO0u1jRSmSABksKbrMaNxETsilt7I37VshP0bZ9NBSOq0//Z",
+      "credit": {
+        "name": "Sẹ́gun Toríọlá",
+        "url": "https://unsplash.com/@seguntoriola",
+        "photoUrl": "https://unsplash.com/photos/a-woman-holding-a-hat-over-her-face-x7QyaO9KHT4"
+      }
+    },
+    "story": {
+      "src": "https://images.unsplash.com/photo-1708234114270-16a791390e8d?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55&w=1600&h=2000&fm=jpg&q=85",
+      "width": 1600,
+      "height": 2000,
+      "alt": "Pattern cutter in an ivory blouse and woven waistcoat, tape measure around her neck, marking cloth with a ruler at an atelier cutting table",
+      "color": "#c0c0a6",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQMG/8QAIhAAAgICAgAHAAAAAAAAAAAAAQIDBAARITEFBiJBUYGh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwCSI5hq2oZjFKgZUbsbYhevvF9xJ6JHss68Mwfs+5zI3/MTPYEdOnDUETkqU50fnXX5hbeLXyxJtykk884IVf/Z",
+      "credit": {
+        "name": "Amirhossein Soltani",
+        "url": "https://unsplash.com/@soltanimedia",
+        "photoUrl": "https://unsplash.com/photos/a-woman-in-a-white-shirt-and-black-pants-holding-a-piece-of-paper-exFVWu1frv0"
+      }
+    },
+    "storyDetail": {
+      "src": "https://images.unsplash.com/photo-1745095037129-d266d5aa4b48?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.4&fp-z=1.3&w=1200&h=1200&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1200,
+      "alt": "Close-up of ecru cotton canvas pinned along a hem line over a paper sewing pattern",
+      "color": "#d9d9c0",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAKAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIG/8QAHRAAAQQCAwAAAAAAAAAAAAAAAQAREiECMQNRkv/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQEAAwAAAAAAAAAAAAAAAAAAAQIR/9oADAMBAAIRAxEAPwDUSDbDBHIdDyq56g1PkNJCbKEVPX//2Q==",
+      "credit": {
+        "name": "Kristina Tochilko",
+        "url": "https://unsplash.com/@tochilko",
+        "photoUrl": "https://unsplash.com/photos/fabric-marked-with-pins-for-sewing-AILKWsV8BjI"
+      }
+    },
+    "journal": {
+      "src": "https://images.unsplash.com/photo-1713881587420-113c1c43e28a?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1200&h=1500&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1500,
+      "alt": "Oatmeal linen henley shirt on a wooden hanger suspended from a bare branch above soft sand mounds, against a bone wall",
+      "color": "#d9d9d9",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEG/8QAHhAAAQQCAwEAAAAAAAAAAAAAAQACAxEEURIhQZH/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAMAwEAAhEDEQA/ANXHGwtvsVoqcW6HxExsp74i6gEgSOrxGm//2Q==",
+      "credit": {
+        "name": "tian dayong",
+        "url": "https://unsplash.com/@tonnnyj",
+        "photoUrl": "https://unsplash.com/photos/a-white-shirt-hanging-on-a-clothes-line-S4f4apZd-hA"
+      }
+    },
+    "notFound": {
+      "src": "https://images.unsplash.com/photo-1785013045678-634e31cf1ccf?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.4&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Sparse ivory clothing rail with empty wooden hangers in a warm cream-lit studio corner",
+      "color": "#f3d9c0",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwb/xAAfEAEAAgAGAwAAAAAAAAAAAAABAAIDBBESIjEzYpL/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/AKy1imnGy+pCc2D4cX4ji7oh1Cwh/9k=",
+      "credit": {
+        "name": "Aliaksei Liohenki",
+        "url": "https://unsplash.com/@alexlightart",
+        "photoUrl": "https://unsplash.com/photos/a-white-clothing-rack-with-wooden-hangers-and-a-radiator-LkZOpD2kBKI"
+      }
+    }
+  },
+  "categories": {
+    "t-shirts": {
+      "src": "https://images.unsplash.com/photo-1625843912772-78f4b5b33425?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&fp-z=1.1&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Girl in white crew neck t-shirt and blue denim shorts sitting on floor",
+      "color": "#d9d9f3",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACAQAAIBBAIDAQAAAAAAAAAAAAECAwAEESEFMRIUocH/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANPc3Qiu4iHxGqkPHjvOlI+5ohdcmoHJW7zciXFxLGBGCVU6OyP2m0jmCKPbnOB2fHfyqD//2Q==",
+      "credit": {
+        "name": "INHB WORLDWIDE",
+        "url": "https://unsplash.com/@inhb2014",
+        "photoUrl": "https://unsplash.com/photos/girl-in-white-crew-neck-t-shirt-and-blue-denim-shorts-sitting-on-floor-LQW8aYxNxOY"
+      }
+    },
+    "shirts": {
+      "src": "https://images.unsplash.com/photo-1738680483062-3d4dd4096bb0?fit=crop&crop=focalpoint&fp-x=0.42&fp-y=0.48&fp-z=1.15&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "A man sitting on a stool next to a potted plant",
+      "color": "#d9d9d9",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAG/8QAHxAAAgEEAgMAAAAAAAAAAAAAAQIRAAMSIQRRBUGh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDWOqqqxcCYnIiJyXr7VrqgeQU3H49yQCrgHUkiRqmzPoVI/9k=",
+      "credit": {
+        "name": "Christian Agbede",
+        "url": "https://unsplash.com/@chriscreations__",
+        "photoUrl": "https://unsplash.com/photos/a-man-sitting-on-a-stool-next-to-a-potted-plant-1qCM7-GA-sk"
+      }
+    },
+    "trousers": {
+      "src": "https://images.unsplash.com/photo-1767631338127-8cd80ee2f9df?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.52&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Woman in white shirt and black wide-leg pants",
+      "color": "#c0c0c0",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwEF/8QAIBAAAgEEAgMBAAAAAAAAAAAAAQIEAAMFERIxMkFRof/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDanTrcSfj4psFnkswD78QB890LZAhiOPRqZGK9/J468LvE2SzDa73+05hWyxJZiT3Qf//Z",
+      "credit": {
+        "name": "Ramo Roso",
+        "url": "https://unsplash.com/@rrramonar",
+        "photoUrl": "https://unsplash.com/photos/woman-in-white-shirt-and-black-wide-leg-pants-9E7s5oyDmxg"
+      }
+    },
+    "denim": {
+      "src": "https://images.unsplash.com/photo-1771012265541-c5968877ea08?fit=crop&crop=focalpoint&fp-x=0.47&fp-y=0.6&fp-z=1.5&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Young woman in white top and jeans squats",
+      "color": "#f3f3f3",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAiEAABAwMDBQAAAAAAAAAAAAABAgMRAAQFITFhBhMUMlH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAMAwEAAhEDEQA/AKXL5Jlu4YtvKQyUuIW6oriEg+vJPymJqdynTFpksm3eqWptUjuoSNHI2nmmw4UgATA03pCv/9k=",
+      "credit": {
+        "name": "sammy swae",
+        "url": "https://unsplash.com/@sammyswae",
+        "photoUrl": "https://unsplash.com/photos/young-woman-in-white-top-and-jeans-squats-dzlVuFRENxw"
+      }
+    },
+    "outerwear": {
+      "src": "https://images.unsplash.com/photo-1575862469270-f7e09a53a4a3?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Men's white crew-neck shirt and pink overcoat",
+      "color": "#f3f3f3",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgT/xAAkEAABAwIEBwAAAAAAAAAAAAABAgMEABEFBiFREhMxMkFhof/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AYzJC2XmbEBoG7u9joPtU2G1H8QfkHNDUVLqRGUGuYgoB4rlR6+O2kOnuoP/Z",
+      "credit": {
+        "name": "Sirio",
+        "url": "https://unsplash.com/@sirioberati",
+        "photoUrl": "https://unsplash.com/photos/mens-white-crew-neck-shirt-and-pink-overcoat-aQQYjr2D_Us"
+      }
+    },
+    "knitwear": {
+      "src": "https://images.unsplash.com/photo-1770909792243-5aaa0ecb279c?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "A man in a black sweater and pants",
+      "color": "#d9d9d9",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgIH/8QAIBAAAQMDBQEAAAAAAAAAAAAAAQIDEQAEBQYTITEyof/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCs9qZ6yz7TaLVLjVsuJJIKiRyPtN0kFIPUis3z76xrOxMzG1wevRp7vKoP/9k=",
+      "credit": {
+        "name": "Devin Santiago",
+        "url": "https://unsplash.com/@ydcphotography",
+        "photoUrl": "https://unsplash.com/photos/a-man-in-a-black-sweater-and-pants-FBL-jurwqqE"
+      }
+    },
+    "tailoring": {
+      "src": "https://images.unsplash.com/photo-1748290880596-2a2c80530bc0?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.4&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Woman poses confidently in a black blazer",
+      "color": "#d9d9d9",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgQF/8QAIBAAAQQBBAMAAAAAAAAAAAAAAQIDBBEABTFBoQYhUf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/AL9M1CRO1uSUTWXoSUkpbSPYF0kjk83m1Y+d4E8FeInSWqBCmgqzuKVt3jm8sK//2Q==",
+      "credit": {
+        "name": "Alexia",
+        "url": "https://unsplash.com/@alequissia",
+        "photoUrl": "https://unsplash.com/photos/woman-poses-confidently-in-a-black-blazer-ZMx43K8YS04"
+      }
+    },
+    "accessories": {
+      "src": "https://images.unsplash.com/photo-1624687943971-e86af76d57de?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55&w=1200&h=1600&fm=jpg&q=85",
+      "width": 1200,
+      "height": 1600,
+      "alt": "Brown leather handbag on white table",
+      "color": "#f3d9d9",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgQF/8QAIBAAAgEFAAIDAAAAAAAAAAAAAQIDAAQFESESEzFRkf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAYEQEAAwEAAAAAAAAAAAAAAAABAAIREv/aAAwDAQACEQMRAD8A0sxlRBkzCI23CgbyDc+zyr1uUZQdHo3QvsPZ3VwbiRX9kgAYh+EAa+KYsYgANt+0fNhirVDJ/9k=",
+      "credit": {
+        "name": "Ugluk Potroshitel",
+        "url": "https://unsplash.com/@uglug",
+        "photoUrl": "https://unsplash.com/photos/brown-leather-handbag-on-white-table-XwjrPFW7xw0"
+      }
+    }
+  },
+  "products": {
+    "heavyweight-boxy-tee": {
+      "name": "Heavyweight Boxy Tee",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1789110854055-fc924935fd09?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.62&fp-z=1.22&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Heavyweight boxy tee in ink, cut wide through the body with dropped shoulders",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACEQAAEDAwQDAAAAAAAAAAAAAAECAwQAERIFMUJxFCFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAWEQEBAQAAAAAAAAAAAAAAAAAAITH/2gAMAwEAAhEDEQA/AMjLjmLNejlYcLaykqTsSKIiAXEJWHGRkL+707O0xSnpchT4JDmRGG9z3VWNol4zR8jgOHzujVR//9k=",
+        "credit": {
+          "name": "engin akyurt",
+          "url": "https://unsplash.com/@enginakyurt",
+          "photoUrl": "https://unsplash.com/photos/person-wearing-oversized-black-t-shirt-sKGxVtKAGx0"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1789110854055-fc924935fd09?fit=crop&crop=focalpoint&fp-x=0.78&fp-y=0.5&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the heavyweight tee's dropped shoulder and dense cotton jersey",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgf/xAAgEAEAAQMEAwEAAAAAAAAAAAABAgADBAURITEGEhMj/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABURAQEAAAAAAAAAAAAAAAAAAABB/9oADAMBAAIRAxEAPwAYRZJEFXg2N2qbheQ3jBxy5gZTMtx9vxe9uaAaFNhreEnf1iVZKEf/2Q==",
+        "credit": {
+          "name": "engin akyurt",
+          "url": "https://unsplash.com/@enginakyurt",
+          "photoUrl": "https://unsplash.com/photos/person-wearing-oversized-black-t-shirt-sKGxVtKAGx0"
+        }
+      }
+    },
+    "oversized-cotton-tee": {
+      "name": "Oversized Cotton Tee",
+      "garmentColorName": "Taupe",
+      "garmentColorHex": "#857868",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1780566759999-4dbaa4218959?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.48&fp-z=1.15&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in an oversized taupe cotton tee and straight jeans against a pale studio wall",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQT/xAAhEAACAQQABwAAAAAAAAAAAAABAhEAAwQSBSEicYGxwf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AVzM26nHsS0hlNTI7zPoU3vRdxVOWjEdQWQfMfatkjlRX/9k=",
+        "credit": {
+          "name": "Anton K Wibowo",
+          "url": "https://unsplash.com/@antonkwibowo",
+          "photoUrl": "https://unsplash.com/photos/a-young-woman-in-an-oversized-t-shirt-and-sneakers-xsattfek-7A"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1780566759964-e101fe4a3d8c?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the oversized tee's relaxed sleeve and washed jersey",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgP/xAAgEAACAAYCAwAAAAAAAAAAAAABAgADBAURQRIhBiKh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAMf/aAAwDAQACEQMRAD8Aj5FVs9zm8SQ8shBjQHY+nMKaWqZqWSzA8iik5G8QWuNIguFZNB6Scvqdk5OYVpngO9Qi1//Z",
+        "credit": {
+          "name": "Anton K Wibowo",
+          "url": "https://unsplash.com/@antonkwibowo",
+          "photoUrl": "https://unsplash.com/photos/woman-in-a-loose-t-shirt-jeans-and-gold-leaf-necklace-NvhS2F5rZQg"
+        }
+      }
+    },
+    "pima-jersey-long-sleeve": {
+      "name": "Pima Jersey Long Sleeve",
+      "garmentColorName": "Ecru",
+      "garmentColorHex": "#E9E2D0",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1671438118257-cefa6c86fd50?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in an ecru pima jersey long-sleeve tee against a pale grey backdrop",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBv/EABwQAAIDAAMBAAAAAAAAAAAAAAECAAMRIkFRYf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDXCp3vVxZiBSGT09GPfsKDxeTsC//Z",
+        "credit": {
+          "name": "Mediamodifier",
+          "url": "https://unsplash.com/@mediamodifier",
+          "photoUrl": "https://unsplash.com/photos/a-man-standing-in-a-white-shirt-and-jeans-BFw2dgUN3EE"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1671438118257-cefa6c86fd50?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.4&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the long-sleeve tee's ribbed crew neck",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBv/EABwQAAICAwEBAAAAAAAAAAAAAAECAAMEETFRcf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8A1OTgJmW02Fij1MGDAb2PPksNQ30wKOx8IX//2Q==",
+        "credit": {
+          "name": "Mediamodifier",
+          "url": "https://unsplash.com/@mediamodifier",
+          "photoUrl": "https://unsplash.com/photos/a-man-standing-in-a-white-shirt-and-jeans-BFw2dgUN3EE"
+        }
+      }
+    },
+    "relaxed-linen-shirt": {
+      "name": "Relaxed Linen Shirt",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1738680487677-1f7698208a7c?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.54&fp-z=1.25&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model seated on a stool in a chalk relaxed linen shirt and matching shorts",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBv/EACAQAAMAAgEEAwAAAAAAAAAAAAECAwQRAAUxUbETFCH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANHW+M+XNGXdUIKDt3U7I8/nJKfY+RtRcjZ0fPGyxw+Vi5FHZnWJ9Dfvgp0iNKM5rYFiToNyR//Z",
+        "credit": {
+          "name": "Christian Agbede",
+          "url": "https://unsplash.com/@chriscreations__",
+          "photoUrl": "https://unsplash.com/photos/a-woman-sitting-on-a-stool-next-to-a-potted-plant-L8q8YqHM4o0"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1738680487677-1f7698208a7c?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.35&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the linen shirt's open collar and soft drape",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgP/xAAhEAACAAUEAwAAAAAAAAAAAAABAgADBBEhBRMxQRJhkf/EABUBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAMAwEAAhEDEQA/AEddp61z07MwAp54mWtcnHA+xcrk9+4O0mrvU0STJslRvTxhGZbE98whAdAE3GPji5MTTH//2Q==",
+        "credit": {
+          "name": "Christian Agbede",
+          "url": "https://unsplash.com/@chriscreations__",
+          "photoUrl": "https://unsplash.com/photos/a-woman-sitting-on-a-stool-next-to-a-potted-plant-L8q8YqHM4o0"
+        }
+      }
+    },
+    "washed-silk-camp-shirt": {
+      "name": "Washed Silk Camp Shirt",
+      "garmentColorName": "Sage",
+      "garmentColorHex": "#9CA38E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1698255469238-d23fc404aadc?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model seated in a sage washed-silk camp-collar shirt and light trousers",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIhAAAgEEAQQDAAAAAAAAAAAAAQIDAAQRIRIFMTJhQVHR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDW307x3cPCYxrGpkdSNOvbZ+MUuJ0liSRSCrqGBHupfUybwyW74ESEArjyz9/lMt5eNvEvBNIBoeqJf//Z",
+        "credit": {
+          "name": "caleb sampercy",
+          "url": "https://unsplash.com/@iam_calebpercy",
+          "photoUrl": "https://unsplash.com/photos/a-man-sitting-on-top-of-a-wooden-chair-kfhd58JIXJk"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1698255468828-ab4cc1e7ab46?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in the washed-silk camp shirt, one hand raised to his cap",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMG/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQIDAAQRIRIiMkGR8P/EABUBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAMAwEAAhEDEQA/ANlcyypcwqjqqHu0CTseqVgUSdGeVOLBdbyM5+zVmZuR6vNKa//Z",
+        "credit": {
+          "name": "caleb sampercy",
+          "url": "https://unsplash.com/@iam_calebpercy",
+          "photoUrl": "https://unsplash.com/photos/a-man-sitting-on-top-of-a-wooden-stool-_4DS8Sst4Lk"
+        }
+      }
+    },
+    "poplin-band-collar-shirt": {
+      "name": "Poplin Band-Collar Shirt",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1713881604560-085594ed2c3d?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.42&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Chalk poplin band-collar shirt on a wooden hanger against a pale wall",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBv/EABwQAAEFAQEBAAAAAAAAAAAAAAEAAgMREkFRof/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDWRwks0H1XKU4b59RHIaLeEJ6RJ//Z",
+        "credit": {
+          "name": "tian dayong",
+          "url": "https://unsplash.com/@tonnnyj",
+          "photoUrl": "https://unsplash.com/photos/a-white-shirt-hanging-on-a-clothes-line-snD-3d6cpbg"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1713881604560-085594ed2c3d?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.36&fp-z=2.4&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the band collar and short placket of the poplin shirt",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwAG/8QAIBABAAIABQUAAAAAAAAAAAAAAQACAwQSFCERMUFjkf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDXOULWrZsAd66RGW19dPkfDdVBfIsLc2OOhxAv/9k=",
+        "credit": {
+          "name": "tian dayong",
+          "url": "https://unsplash.com/@tonnnyj",
+          "photoUrl": "https://unsplash.com/photos/a-white-shirt-hanging-on-a-clothes-line-snD-3d6cpbg"
+        }
+      }
+    },
+    "knitted-polo": {
+      "name": "Knitted Polo",
+      "garmentColorName": "Sand",
+      "garmentColorHex": "#C9B592",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1540406267068-da1daa9c518c?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a sand knitted polo with navy-tipped collar",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgID/8QAIRAAAgEDAwUAAAAAAAAAAAAAAQIDABExBAUTBiEicaH/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAGBEAAwEBAAAAAAAAAAAAAAAAAAECEVH/2gAMAwEAAhEDEQA/AMNxSXqPeki42hWLxR74GSfeKeqQqhc2FrnJovs2q5NJNqDGBLDGTcYPb5VJPNMiymVgXAawOL0ZejpcP//Z",
+        "credit": {
+          "name": "Ron McClenny",
+          "url": "https://unsplash.com/@ronmcclenny",
+          "photoUrl": "https://unsplash.com/photos/man-wearing-yellow-polo-shirt-aNq1ixEKt3M"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1540406267068-da1daa9c518c?fit=crop&crop=focalpoint&fp-x=0.3&fp-y=0.72&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the knitted polo's textured stitch and tipped collar",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAJBAAAQIFAgcAAAAAAAAAAAAAAQIDAAQFERQSIRUxMkFCcYH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAExIf/aAAwDAQACEQMRAD8AK/ScibDpTcDZaFbEkcoNwp/tLo+g3jRUNw1CWDrps4EjUR5e4q4jVukQK2jSH//Z",
+        "credit": {
+          "name": "Ron McClenny",
+          "url": "https://unsplash.com/@ronmcclenny",
+          "photoUrl": "https://unsplash.com/photos/man-wearing-yellow-polo-shirt-aNq1ixEKt3M"
+        }
+      }
+    },
+    "merino-crewneck": {
+      "name": "Merino Crewneck",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1771092358802-982066deae6f?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a fine ink merino crewneck and black trousers against a pale wall",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgT/xAAhEAABAwMEAwAAAAAAAAAAAAABAgMRAAQFBhIhMRNRcf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCvMamVaZxm0RbOLaYWFOqSqJ46+CaWgEgECQejQbNFT2vMe0ojxpLSdscKmSZ99U5A4oP/2Q==",
+        "credit": {
+          "name": "Devin Santiago",
+          "url": "https://unsplash.com/@ydcphotography",
+          "photoUrl": "https://unsplash.com/photos/a-man-in-a-black-sweater-and-pants-sZA_YDy0QF8"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1771092358890-0db24db44e56?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in the ink merino crewneck, shown full length",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAiEAABAwQABwAAAAAAAAAAAAABAgMRAAQFIQYSJTFBgZH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AbyFxeI4lxDDTiU27vOVJImYGz8NUMiKLuU9UxyxGlOIOvBRPf1SlB//Z",
+        "credit": {
+          "name": "Devin Santiago",
+          "url": "https://unsplash.com/@ydcphotography",
+          "photoUrl": "https://unsplash.com/photos/a-man-in-a-black-sweater-and-pants-posing-jaQTN9X98wA"
+        }
+      }
+    },
+    "heavyweight-hoodie": {
+      "name": "Heavyweight Hoodie",
+      "garmentColorName": "Washed Black",
+      "garmentColorHex": "#2C2B2A",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1636737287879-1e87e06b42a3?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a washed-black heavyweight hoodie with white drawcords against a pale blue wall",
+        "color": "#d9d9f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABwUG/8QAIhAAAgICAQMFAAAAAAAAAAAAAQIDEQAEBQYSISIxQVFx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAwDAQACEQMRAD8AoNz2rq84dRjK0QCREIthXNm/v2r8zRGCOz6RhvPIy9basiHtLSxXXzfg4iGZrx5aL//Z",
+        "credit": {
+          "name": "Logan Gutierrez",
+          "url": "https://unsplash.com/@photosoflogan",
+          "photoUrl": "https://unsplash.com/photos/a-man-with-his-arms-crossed-posing-for-a-picture-nKw27ja4dSk"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1636737287879-1e87e06b42a3?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.5&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the hoodie's drawcords and brushed-back fleece",
+        "color": "#d9d9f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAkEAACAQMDAwUAAAAAAAAAAAABAwIABBEFBiESFDEiQWFxof/EABUBAQEAAAAAAAAAAAAAAAAAAAEC/8QAFxEBAAMAAAAAAAAAAAAAAAAAAQARMf/aAAwDAQACEQMRAD8ADbuC7uLq71BbSlscBYGPTHPA+fuk47v13pGdPTI48lUuf2pK8X217cW8JEwgww598Him0bk1NaFwixWIxAGVgnxQ2ZKKdn//2Q==",
+        "credit": {
+          "name": "Logan Gutierrez",
+          "url": "https://unsplash.com/@photosoflogan",
+          "photoUrl": "https://unsplash.com/photos/a-man-with-his-arms-crossed-posing-for-a-picture-nKw27ja4dSk"
+        }
+      }
+    },
+    "structured-overshirt": {
+      "name": "Structured Overshirt",
+      "garmentColorName": "Camel",
+      "garmentColorHex": "#B38A5E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1751193756975-14dd0c89911d?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a camel structured overshirt with a concealed placket",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAjEAACAQIFBQEAAAAAAAAAAAABAgMABAYREiExBRRBQmGx/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABcRAQEBAQAAAAAAAAAAAAAAAAEAAhL/2gAMAwEAAhEDEQA/AE8TS280kFm08yOjCRxHwBltn9HIpuPQ0akFWBAOo8n7UjiK3Fr1yN1YnuEZmB8biqG1kcWsI1eg/KLpGVyIX//Z",
+        "credit": {
+          "name": "Ayomikun Barry",
+          "url": "https://unsplash.com/@ayomikun93",
+          "photoUrl": "https://unsplash.com/photos/a-woman-is-wearing-a-brown-long-sleeved-shirt-BK_WIid7zLQ"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1751193756975-14dd0c89911d?fit=crop&crop=focalpoint&fp-x=0.6&fp-y=0.66&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the overshirt's cotton twill and hidden button placket",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAfEAACAgICAwEAAAAAAAAAAAABAgMRAAQSIQUxUXH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQAhMf/aAAwDAQACEQMRAD8AFrMDEkvRJFH9xybmzGixq5pRQ7+ZG8XJyIQr01H3i3jLOTyIs3WEcZfS/9k=",
+        "credit": {
+          "name": "Ayomikun Barry",
+          "url": "https://unsplash.com/@ayomikun93",
+          "photoUrl": "https://unsplash.com/photos/a-woman-is-wearing-a-brown-long-sleeved-shirt-BK_WIid7zLQ"
+        }
+      }
+    },
+    "carpenter-denim-jacket": {
+      "name": "Carpenter Denim Jacket",
+      "garmentColorName": "Indigo Rinse",
+      "garmentColorHex": "#2E3A52",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1665615837857-728ee6d583b5?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in an indigo-rinse carpenter denim jacket over a white tee",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAiEAABAgUEAwAAAAAAAAAAAAABAgMABAURMQYSIUEUMlH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAABh/9oADAMBAAIRAxEAPwBWr1aTkKswHAtbqbJISfUK7tj5DO2IqueM/qsyRliHHXmwXg4b826xF2QEnaBjiIR//9k=",
+        "credit": {
+          "name": "Azamat Zhanisov",
+          "url": "https://unsplash.com/@bonteque",
+          "photoUrl": "https://unsplash.com/photos/a-person-with-the-arms-crossed-k11hQr5r8aw"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1665615837857-728ee6d583b5?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.6&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the denim jacket's indigo weave and chest pocket",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgD/xAAiEAACAQMEAgMAAAAAAAAAAAABAgQAAxEFEhMhMVJhkbH/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABcRAQEBAQAAAAAAAAAAAAAAAAEAEQL/2gAMAwEAAhEDEQA/ADMqRdaMts33KLhVUnpR8Vbk9h90rn6NptuPzpFAbkII3HHf5RVrSqxUAYBx4q+XSExv/9k=",
+        "credit": {
+          "name": "Azamat Zhanisov",
+          "url": "https://unsplash.com/@bonteque",
+          "photoUrl": "https://unsplash.com/photos/a-person-with-the-arms-crossed-k11hQr5r8aw"
+        }
+      }
+    },
+    "suede-trucker-jacket": {
+      "name": "Suede Trucker Jacket",
+      "garmentColorName": "Olive",
+      "garmentColorHex": "#5B5A3C",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1575862469245-c43f1b89bee1?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.52&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in an olive suede trucker jacket over a white tee and chain necklace",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABf/EACAQAAICAQUAAwAAAAAAAAAAAAECAwQRAAUSITEiUWH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFREBAQAAAAAAAAAAAAAAAAAAADH/2gAMAwEAAhEDEQA/AGrW+Rw73OFdylRVSVOWAxYjsfoz3p8++aE3bZK7y2LYPATQNHIiDHIkj5Z++tI1rDitEDhjwGSR71oNf//Z",
+        "credit": {
+          "name": "Sirio",
+          "url": "https://unsplash.com/@sirioberati",
+          "photoUrl": "https://unsplash.com/photos/man-wearing-olive-green-jacket-and-white-shirt-HRe9IRwGKBY"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1575862469281-63389040c6fd?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the suede trucker jacket's front and silver jewellery",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgUH/8QAIhAAAgEDBAIDAAAAAAAAAAAAAQIDBAUhAAYSMRFxExRB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwC5cZxDuJZ6h1SGCmPxgnLOTnHrGsynQSTySN4VmYkqT0SetLN1Xsw3q4UZpUblEkQlDEOo79fp0tpbTQJSwr9ZG4oo5MoJOOzjRDX/2Q==",
+        "credit": {
+          "name": "Sirio",
+          "url": "https://unsplash.com/@sirioberati",
+          "photoUrl": "https://unsplash.com/photos/man-wearing-olive-green-jacket-white-shirt-and-black-jeans-VDt-qMYzpdE"
+        }
+      }
+    },
+    "lightweight-chore-coat": {
+      "name": "Lightweight Chore Coat",
+      "garmentColorName": "Camel",
+      "garmentColorHex": "#B38A5E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1641210246175-973ca6c7103f?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a camel lightweight chore coat against a warm studio wall",
+        "color": "#8c7359",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABf/EACAQAAIBBAEFAAAAAAAAAAAAAAECEQADBCFREhQiMfD/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ADMvIuWs1FDBlHkB6g8fc0skOiuIhhNDZqJ3NtmWSROjG5ilFudChQNAQKBQ/9k=",
+        "credit": {
+          "name": "nazanin salem",
+          "url": "https://unsplash.com/@nazaninmodelart",
+          "photoUrl": "https://unsplash.com/photos/a-woman-wearing-a-brown-jacket-and-tan-pants-GoNP9HI1voU"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1641210245881-63b8d4af5118?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model seated in the camel chore coat, sleeves pushed back",
+        "color": "#8c7359",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAfEAABBAICAwAAAAAAAAAAAAABAAIDESEiBRNRYfD/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ADI+QcnA1rtS2iK+zhUsekSOEdzXknUGkuh4CA7//2Q==",
+        "credit": {
+          "name": "nazanin salem",
+          "url": "https://unsplash.com/@nazaninmodelart",
+          "photoUrl": "https://unsplash.com/photos/a-woman-sitting-on-a-chair-with-her-legs-crossed-33VybY2TSPw"
+        }
+      }
+    },
+    "leather-crossbody-bag": {
+      "name": "Leather Crossbody Bag",
+      "garmentColorName": "Tobacco",
+      "garmentColorHex": "#6F4B2E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1751194078794-5bbe869f395c?fit=crop&crop=focalpoint&fp-x=0.52&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Tobacco leather crossbody bag with a curved brass bar, held in an open palm",
+        "color": "#d9d9c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwb/xAAgEAABBAEFAQEAAAAAAAAAAAACAQMEEQAFEhMxQSEy/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/AGn6hqgTybhk0bRfim93tUq5QNi5xjyODvpN1J8v3Djx247QtsigNj0CdJjXk8O1/9k=",
+        "credit": {
+          "name": "Ayomikun Barry",
+          "url": "https://unsplash.com/@ayomikun93",
+          "photoUrl": "https://unsplash.com/photos/a-person-is-holding-a-stylish-brown-purse--WbdCEVIlTM"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1751194078794-5bbe869f395c?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.45&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the crossbody bag's smooth leather and brass hardware",
+        "color": "#d9d9c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQEG/8QAIxAAAgECBQUBAAAAAAAAAAAAAQIEAAMREjEyQQUUIoKR0f/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAYEQACAwAAAAAAAAAAAAAAAAAAAREhMf/aAAwDAQACEQMRAD8AGlwGhT7kRvHLsZzgHXg46VO2XmRHHufytivRot4q0rPIcjc7UXce2lxlSNZCgkAYHT7Q2xpS0//Z",
+        "credit": {
+          "name": "Ayomikun Barry",
+          "url": "https://unsplash.com/@ayomikun93",
+          "photoUrl": "https://unsplash.com/photos/a-person-is-holding-a-stylish-brown-purse--WbdCEVIlTM"
+        }
+      }
+    },
+    "woven-leather-belt": {
+      "name": "Woven Leather Belt",
+      "garmentColorName": "Chocolate",
+      "garmentColorHex": "#45302A",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1711443982852-b3df5c563448?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Woven leather belts in chocolate, coiled on a pale surface",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQME/8QAHxABAAEEAgMBAAAAAAAAAAAAAQIAAwQRQmETIXEy/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AN9y/eMmWPYCUwJR0ek7fpp+0izlv8WDpaDxs+d3iRA0BV/JviUH/9k=",
+        "credit": {
+          "name": "saeed karimi",
+          "url": "https://unsplash.com/@saeedkarimistudio",
+          "photoUrl": "https://unsplash.com/photos/a-pair-of-brown-leather-belts-sitting-on-top-of-a-white-piece-of-paper-rH16wMV8ImM"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1711443982852-b3df5c563448?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.6&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the woven leather belt's brushed metal buckle",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBf/EACUQAAAFAgQHAAAAAAAAAAAAAAECAwQRABMFEhUiISMxQWFywf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8AJVm4WxFyQeU1dlLcMaOs9g81qaaWeK68+8fKkvXjgIpl2DtkJinZxoNf/9k=",
+        "credit": {
+          "name": "saeed karimi",
+          "url": "https://unsplash.com/@saeedkarimistudio",
+          "photoUrl": "https://unsplash.com/photos/a-pair-of-brown-leather-belts-sitting-on-top-of-a-white-piece-of-paper-rH16wMV8ImM"
+        }
+      }
+    },
+    "cotton-bucket-hat": {
+      "name": "Cotton Bucket Hat",
+      "garmentColorName": "Olive",
+      "garmentColorHex": "#5B5A3C",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1609160360691-56e01d025cbf?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in an olive cotton bucket hat and dark sunglasses against a peach backdrop",
+        "color": "#f3d9c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACEQAAIBAwMFAAAAAAAAAAAAAAECAwAEERIhQQUTIjEy/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABcRAAMBAAAAAAAAAAAAAAAAAAAREiH/2gAMAwEAAhEDEQA/ANEZZZb2NYpFESIe4pXJJ4xSj/bbc1Ov5JbfqIdJWxIoyvA3AzRW1aj5H3QzjGrUf//Z",
+        "credit": {
+          "name": "Rawmeo Walls",
+          "url": "https://unsplash.com/@rawmeo_walls",
+          "photoUrl": "https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-and-blue-denim-jeans-wearing-brown-hat-Bd1pBHYQjhA"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1609160360691-56e01d025cbf?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.22&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the olive bucket hat's stitched brim",
+        "color": "#f3d9c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAfEAACAQUAAwEAAAAAAAAAAAABAgMABAUREiEyQlH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAMAwEAAhEDEQA/ALmVyy465t4eezKCeVG2OvwU2O4jkjVwkoDAHRQ7FAYJcXjGVA5ErBSfnkeNU4XB16ijkV//2Q==",
+        "credit": {
+          "name": "Rawmeo Walls",
+          "url": "https://unsplash.com/@rawmeo_walls",
+          "photoUrl": "https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-and-blue-denim-jeans-wearing-brown-hat-Bd1pBHYQjhA"
+        }
+      }
+    },
+    "cropped-twill-jacket": {
+      "name": "Cropped Twill Jacket",
+      "garmentColorName": "Sand",
+      "garmentColorHex": "#C9B592",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1629172015687-c446c28cb858?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a sand cropped twill jacket over a white tee",
+        "color": "#c0c0d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQAB/8QAIhAAAgECBQUAAAAAAAAAAAAAAQIDAAQFERITITJBQnGh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQEBAQEAAAAAAAAAAAAAAAARAAEh/9oADAMBAAIRAxEAPwBiWIxzrdK40BdDITyfVbuRnnkZ0LBibXZvFMenaceWefaqG7leGNiepQflHXlRhf/Z",
+        "credit": {
+          "name": "Divine Effiong",
+          "url": "https://unsplash.com/@iamdivineeffiong",
+          "photoUrl": "https://unsplash.com/photos/man-in-brown-button-up-jacket-wearing-black-framed-eyeglasses-95o5-T5FGCQ"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1629172015687-c446c28cb858?fit=crop&crop=focalpoint&fp-x=0.62&fp-y=0.56&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the cropped twill jacket's collar and snap front",
+        "color": "#c0c0d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIEBf/EACMQAAIBAwIHAQAAAAAAAAAAAAECAwAEERMhEiIxQ1JhgeH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFhEBAQEAAAAAAAAAAAAAAAAAAQAh/9oADAMBAAIRAxEAPwDXvLa0tpTLCipc9xwNzxdB6+VOZJcnmaheu50ELZMsihmO5OF/KXSPnRrsoZf/2Q==",
+        "credit": {
+          "name": "Divine Effiong",
+          "url": "https://unsplash.com/@iamdivineeffiong",
+          "photoUrl": "https://unsplash.com/photos/man-in-brown-button-up-jacket-wearing-black-framed-eyeglasses-95o5-T5FGCQ"
+        }
+      }
+    },
+    "draped-merino-cardigan": {
+      "name": "Draped Merino Cardigan",
+      "garmentColorName": "Taupe",
+      "garmentColorHex": "#857868",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1628519471223-4af740268c74?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a taupe draped merino cardigan against a grey studio backdrop",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQQG/8QAHhABAAEEAwEBAAAAAAAAAAAAAQIAAwURBCExEhT/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AF8nkeNhohfVm9kInet+1dsexNNZrNx/Xm7U7nlqNt+fSW5IlIvIuCg+UU//2Q==",
+        "credit": {
+          "name": "semen zhuravlev",
+          "url": "https://unsplash.com/@sezha72",
+          "photoUrl": "https://unsplash.com/photos/woman-in-brown-cardigan-and-black-shirt-EtPUVApNme4"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1628519471223-4af740268c74?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.5&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the draped cardigan's soft, open front",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIhAAAgAFAwUAAAAAAAAAAAAAAQIAAwQFIRESEwZBcaGx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAXEQEAAwAAAAAAAAAAAAAAAAAAAQIh/9oADAMBAAIRAxEAPwChfL0bZO4ZaIWKbtzHAziMmaqqmEuRUndnUTjn3CusGLXCp17S0+QSWx418CDKlcf/2Q==",
+        "credit": {
+          "name": "semen zhuravlev",
+          "url": "https://unsplash.com/@sezha72",
+          "photoUrl": "https://unsplash.com/photos/woman-in-brown-cardigan-and-black-shirt-EtPUVApNme4"
+        }
+      }
+    },
+    "straight-leg-trousers": {
+      "name": "Straight-Leg Trousers",
+      "garmentColorName": "Stone",
+      "garmentColorHex": "#ADA597",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1625178494269-c91109fcc711?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.55&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Stone straight-leg trousers worn with a striped shirt and brown leather belt",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQEG/8QAIRAAAgIBAgcAAAAAAAAAAAAAAQIAEQMSIRQiJFGCkZL/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AQXN1qOyrQoEd4jxSnfl9TNLhUkHU48jLSjam+zA//9k=",
+        "credit": {
+          "name": "Jackson Morgan",
+          "url": "https://unsplash.com/@jacksonmorgan",
+          "photoUrl": "https://unsplash.com/photos/man-in-white-and-gray-pinstripe-dress-shirt-and-white-pants-vulvUnamEDw"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1625178494269-c91109fcc711?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the straight-leg trousers' waistband and belt loops",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQQG/8QAHhAAAQQDAAMAAAAAAAAAAAAAAQACAxEEEiEyYaH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwCuJzY8h8fXWfIEVadjxmiNoORGCAL6FnqAO9dEzfqU29JFr//Z",
+        "credit": {
+          "name": "Jackson Morgan",
+          "url": "https://unsplash.com/@jacksonmorgan",
+          "photoUrl": "https://unsplash.com/photos/man-in-white-and-gray-pinstripe-dress-shirt-and-white-pants-vulvUnamEDw"
+        }
+      }
+    },
+    "pleated-wide-trousers": {
+      "name": "Pleated Wide Trousers",
+      "garmentColorName": "Ecru",
+      "garmentColorHex": "#E9E2D0",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1756700413359-1b74664152c2?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in ecru pleated wide trousers and a tobacco jacket, hands in her hair",
+        "color": "#a6a6a6",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBf/EAB4QAAIBBAMBAAAAAAAAAAAAAAECAwAEESESMWHR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8ApPHJJcoYWjEA4qytnJ5E/KRrFSx0e61LWMKhHoB13RMYyd0i1//Z",
+        "credit": {
+          "name": "SoyBreno",
+          "url": "https://unsplash.com/@soybrenofotografia",
+          "photoUrl": "https://unsplash.com/photos/woman-with-curly-hair-in-a-brown-jacket-and-beige-pants-syRFUFTtRtY"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1756700413359-1b74664152c2?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.72&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the pleated wide trousers' front pleats and fall",
+        "color": "#a6a6a6",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EAB0QAAMAAgIDAAAAAAAAAAAAAAECAwARBBMSIXH/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwDRnx5Lw6QohpGjN2An2Q2VIvWiopJCjQJOFEMo002/E6+44INDCKr/2Q==",
+        "credit": {
+          "name": "SoyBreno",
+          "url": "https://unsplash.com/@soybrenofotografia",
+          "photoUrl": "https://unsplash.com/photos/woman-with-curly-hair-in-a-brown-jacket-and-beige-pants-syRFUFTtRtY"
+        }
+      }
+    },
+    "drawstring-linen-trousers": {
+      "name": "Drawstring Linen Trousers",
+      "garmentColorName": "Tobacco",
+      "garmentColorHex": "#6F4B2E",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1789110520148-bb52ba37759b?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.4&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Tobacco drawstring linen trousers worn with white trainers",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAfEAACAgEEAwAAAAAAAAAAAAABAgMEAAUREiEGE4H/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFREBAQAAAAAAAAAAAAAAAAAAAQD/2gAMAwEAAhEDEQA/AFdZe3H5HGY5WWuDCXQHo8m47n7lVheoURZtyt7ChauF6G+xD8gcUwCVv//Z",
+        "credit": {
+          "name": "engin akyurt",
+          "url": "https://unsplash.com/@enginakyurt",
+          "photoUrl": "https://unsplash.com/photos/brown-linen-trousers-with-drawstring-waist-bFCroqT-RO8"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1789110520148-bb52ba37759b?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.2&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the linen trousers' drawstring waist",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgMF/8QAJBAAAgEDAQkBAAAAAAAAAAAAAQIDAAQRBQYSEyFBQ1FxgrH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFhEBAQEAAAAAAAAAAAAAAAAAABEh/9oADAMBAAIRAxEAPwCEm0Gp8Zty4Kxk8lwCQPeKRwJHNBHKQMuoY5PkUZa1RYtR6m3dAh+yK3rGQixtxjtr+UOmr//Z",
+        "credit": {
+          "name": "engin akyurt",
+          "url": "https://unsplash.com/@enginakyurt",
+          "photoUrl": "https://unsplash.com/photos/brown-linen-trousers-with-drawstring-waist-bFCroqT-RO8"
+        }
+      }
+    },
+    "relaxed-denim": {
+      "name": "Relaxed Denim",
+      "garmentColorName": "Mid Wash",
+      "garmentColorHex": "#5B7190",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1780566760434-5f42a317b0a9?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model walking in mid-wash relaxed denim and a taupe tee",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIRAAAgEDBAMBAAAAAAAAAAAAAQIRAAMEBRIhMRMiUdH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A0GdlXLerafaQwjG4Wg9wvyn+QVMy7e7J3TDIqlTHXtz+UwiCeTQf/9k=",
+        "credit": {
+          "name": "Anton K Wibowo",
+          "url": "https://unsplash.com/@antonkwibowo",
+          "photoUrl": "https://unsplash.com/photos/a-young-woman-in-a-loose-top-and-blue-jeans-49hQ1AQLPLU"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1780566760434-5f42a317b0a9?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.65&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the relaxed denim's straight leg and faded wash",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIBAAAwABBAIDAAAAAAAAAAAAAQIDBAAREjEGYSZBgf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oADAMBAAIRAxEAPwBXk065byjFOTTm129gEDYe+9VpZsKSR1vPiygjdvrRA3yNx2FxVA/W1jszimbdEDBVowADdDfVkNf/2Q==",
+        "credit": {
+          "name": "Anton K Wibowo",
+          "url": "https://unsplash.com/@antonkwibowo",
+          "photoUrl": "https://unsplash.com/photos/a-young-woman-in-a-loose-top-and-blue-jeans-49hQ1AQLPLU"
+        }
+      }
+    },
+    "tropical-wool-trousers": {
+      "name": "Tropical Wool Trousers",
+      "garmentColorName": "Slate",
+      "garmentColorHex": "#6E6E6C",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1604822106141-d9dccd171fad?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in slate tropical wool suit trousers and matching jacket in a grey studio",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQME/8QAIxAAAQMCBQUAAAAAAAAAAAAAAQIDBAARBRITIaFBUWGBkf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwBt5bcZ6HDQ2DqHje5+VnXh7WdW3WqoXqCLJIs4jN7FjtzRi5rhWo+e9Jf/2Q==",
+        "credit": {
+          "name": "behrouz sasani",
+          "url": "https://unsplash.com/@behrouzsasani",
+          "photoUrl": "https://unsplash.com/photos/man-in-gray-suit-jacket-and-black-dress-pants-1mdpEQXnJ0A"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1604822106141-d9dccd171fad?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.75&fp-z=2.2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Close-up of the tropical wool trousers' pressed crease",
+        "color": "#d9d9d9",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAwQFBv/EACIQAAIBAwMFAQAAAAAAAAAAAAECAwAFIQQRExQiMUFhcf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8ALeIOS8JzIwaSWMRH0yeGH7WnBVQFAAAwM1Hvca6uPTQv2qZCxK4OFO1P9YwwEGw+0V//2Q==",
+        "credit": {
+          "name": "behrouz sasani",
+          "url": "https://unsplash.com/@behrouzsasani",
+          "photoUrl": "https://unsplash.com/photos/man-in-gray-suit-jacket-and-black-dress-pants-1mdpEQXnJ0A"
+        }
+      }
+    },
+    "tailored-wool-jacket": {
+      "name": "Tailored Wool Jacket",
+      "garmentColorName": "Charcoal",
+      "garmentColorHex": "#3B3B3D",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1617244147299-5ef406921c35?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a charcoal tailored wool jacket and white shirt beside a stone column",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgQF/8QAIhABAAEDBAEFAAAAAAAAAAAAAQIEESEAAxIiBRQycYGx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAXEQADAQAAAAAAAAAAAAAAAAAAAQIR/9oADAMBAAIRAxEAPwDcKun9S0K9iMVs5FvY+7arGFi5n40LajePN0NXyOdSQ5gY6zx+aYy3dmUlafK39zqdTo5Z/9k=",
+        "credit": {
+          "name": "Fortune Vieyra",
+          "url": "https://unsplash.com/@fortunevieyra",
+          "photoUrl": "https://unsplash.com/photos/man-in-black-suit-jacket-leaning-on-gray-concrete-wall-during-daytime-aAN9ocBHbyo"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1617244147299-5ef406921c35?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.45&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Portrait detail of the tailored jacket's notch lapel",
+        "color": "#c0c0c0",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgQFB//EACEQAAMAAQMEAwAAAAAAAAAAAAECAwAEBREGEyFhIlHh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8AfO7q28WWdmeEInuhQeEI585bjq4tGbLQEFQQfvxme6Czz6nqin42pWTD03P5hR3/AFUYpJQpCKFHPrEV/9k=",
+        "credit": {
+          "name": "Fortune Vieyra",
+          "url": "https://unsplash.com/@fortunevieyra",
+          "photoUrl": "https://unsplash.com/photos/man-in-black-suit-jacket-leaning-on-gray-concrete-wall-during-daytime-aAN9ocBHbyo"
+        }
+      }
+    },
+    "unstructured-linen-blazer": {
+      "name": "Unstructured Linen Blazer",
+      "garmentColorName": "Stone",
+      "garmentColorHex": "#ADA597",
+      "primary": {
+        "src": "https://images.unsplash.com/photo-1779406166699-662a041a12a9?fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.45&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model in a stone unstructured linen blazer and matching trousers",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwb/xAAfEAACAgEEAwAAAAAAAAAAAAABAgMRAAQFEkEhIiP/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAFxEAAwEAAAAAAAAAAAAAAAAAABEhAf/aAAwDAQACEQMRAD8ApNygklaNIQrMPp7GqrvGi1cbwozUpZQSB1iaxLTkDR4lcaKFBEg4jwo6wqwbxH//2Q==",
+        "credit": {
+          "name": "ola szkolda",
+          "url": "https://unsplash.com/@olaszkolda",
+          "photoUrl": "https://unsplash.com/photos/a-young-woman-in-a-beige-suit-and-white-shirt-6A1dE8VEENc"
+        }
+      },
+      "alternate": {
+        "src": "https://images.unsplash.com/photo-1779406166699-662a041a12a9?fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.5&fp-z=2&w=1600&h=2000&fm=jpg&q=85",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Detail of the linen blazer's soft shoulder and lapel",
+        "color": "#f3f3f3",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBv/EACQQAAECBQIHAAAAAAAAAAAAAAECAwAEBRExEiETIzRBgbHB/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABgRAQADAQAAAAAAAAAAAAAAAAEAESEC/9oADAMBAAIRAxEAPwDSVNsTLzMpr4anASlVu++3uLJpDKEhKTYAWAtiBNdfLm2AT5x9MIpbuo81WYNC9ij1WT//2Q==",
+        "credit": {
+          "name": "ola szkolda",
+          "url": "https://unsplash.com/@olaszkolda",
+          "photoUrl": "https://unsplash.com/photos/a-young-woman-in-a-beige-suit-and-white-shirt-6A1dE8VEENc"
+        }
+      }
+    }
+  }
+}

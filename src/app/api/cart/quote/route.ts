@@ -1,15 +1,22 @@
 import { z } from "zod";
 
-import { MAX_CART_LINES, MAX_LINE_QUANTITY, MAX_VARIANT_ID_LENGTH } from "@/components/cart/cart-lines";
+import { MAX_CART_LINES, MAX_VARIANT_ID_LENGTH } from "@/components/cart/cart-lines";
 import { quoteCart } from "@/lib/catalog/repository";
 
 /*
  * POST /api/cart/quote: prices a bag. The client may only say which variants and
  * how many; names, prices, stock and totals are resolved here, so nothing the
  * browser sends can influence what a customer pays.
+ *
+ * Only the request's shape is enforced here. Business limits (per-line maximum,
+ * stock, duplicate lines) are applied by quoteCart, which merges and clamps with
+ * an explanatory issue — so a bag saved under older limits corrects itself
+ * instead of failing every request.
  */
 
 const MAX_BODY_BYTES = 10 * 1024;
+/** Sanity ceiling for a single line; the real per-line limit is applied when pricing. */
+const MAX_REQUESTED_QUANTITY = 999;
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 
 const quoteRequestSchema = z.strictObject({
@@ -17,13 +24,10 @@ const quoteRequestSchema = z.strictObject({
     .array(
       z.strictObject({
         variantId: z.string().min(1).max(MAX_VARIANT_ID_LENGTH),
-        quantity: z.int().min(1).max(MAX_LINE_QUANTITY),
+        quantity: z.int().min(1).max(MAX_REQUESTED_QUANTITY),
       }),
     )
-    .max(MAX_CART_LINES)
-    .refine((lines) => new Set(lines.map((line) => line.variantId)).size === lines.length, {
-      error: "Each variant may appear only once.",
-    }),
+    .max(MAX_CART_LINES),
 });
 
 function errorResponse(status: number, error: string, message: string) {

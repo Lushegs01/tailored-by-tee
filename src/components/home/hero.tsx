@@ -148,7 +148,7 @@ function HeroPicture({ image, mobileImage }: { image: MediaAsset; mobileImage: M
   return (
     <picture>
       {mobileImage ? <source media="(min-width: 768px)" srcSet={desktop.srcSet} sizes="100vw" /> : null}
-      {/* eslint-disable-next-line @next/next/no-img-element -- art direction needs a native <picture>; props come from getImageProps */}
+      {/* Native <img> inside <picture> is the documented art-direction pattern; props come from getImageProps. */}
       <img {...small} alt={image.alt} className="absolute inset-0 size-full object-cover" />
     </picture>
   );

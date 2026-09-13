@@ -19,7 +19,7 @@
   --linen-deep: #e2ddd2;
   --ink: #161513;
   --ink-soft: #2c2a26;
-  --stone: #6e6a63; /* 4.7:1 on paper — smallest permitted text colour */
+  --stone: #6a665f; /* 5.0:1 on paper, 4.6:1 on linen — the lightest permitted text colour */
   --stone-light: #a39e94; /* decorative only (rules, disabled) — fails AA for text */
   --hairline: #d9d3c7;
   --hairline-strong: #b9b2a5;

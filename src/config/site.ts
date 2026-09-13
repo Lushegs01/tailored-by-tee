@@ -101,7 +101,8 @@ export const siteConfig = {
         title: "About",
         links: [
           { label: "Our Story", href: "/about" },
-          { label: "Journal", href: "/journal" },
+          // Points at the homepage newsletter band until a Journal page exists.
+          { label: "Journal", href: "/#journal" },
           { label: "Stockists", href: "/stockists" },
         ],
       },

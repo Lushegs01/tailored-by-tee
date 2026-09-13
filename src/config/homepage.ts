@@ -15,7 +15,7 @@ export const homepageBlocks: HomeBlock[] = [
     secondaryCta: { label: "Shop new arrivals", href: "/shop/new-arrivals" },
     image: "editorial:hero",
     mobileImage: "editorial:heroMobile",
-    caption: { label: "Look 03 — The Structured Overshirt", href: "/product/structured-overshirt" },
+    caption: { label: "Look 01 — The Cropped Twill Jacket in Ink", href: "/product/cropped-twill-jacket" },
   },
   {
     type: "statement",
