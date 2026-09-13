@@ -67,11 +67,11 @@ export function HeaderShell({ nav, announcement }: HeaderShellProps) {
     <header
       className={cn(
         "inset-x-0 top-0 z-40 border-b",
-        "transition-[translate,background-color,color,border-color] duration-[400ms] ease-editorial",
+        "transition-[translate,background-color,color,border-color,backdrop-filter] duration-[400ms] ease-editorial",
         overlay ? "fixed" : "sticky",
         !overlay && hasAnnouncement && "-top-(--announcement-height)",
         solid
-          ? "border-border bg-background text-foreground"
+          ? "border-border bg-background/85 text-foreground backdrop-blur-lg"
           : "border-transparent bg-transparent text-paper [--ring:var(--paper)]",
         hidden ? "-translate-y-full" : tuckAnnouncement && "-translate-y-(--announcement-height)",
       )}

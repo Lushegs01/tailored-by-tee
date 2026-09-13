@@ -26,7 +26,7 @@ export function IconButton({
       aria-label={label}
       title={label}
       className={cn(
-        "relative inline-flex shrink-0 items-center justify-center text-current",
+        "relative inline-flex shrink-0 items-center justify-center text-current rounded-full",
         "transition-opacity duration-300 ease-editorial hover:opacity-60",
         "disabled:pointer-events-none disabled:opacity-40",
         size === "md" ? "size-11 text-[1.375rem]" : "size-9 text-[1.125rem]",

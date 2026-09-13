@@ -92,12 +92,12 @@ export function Hero({ block, image, mobileImage, headingId }: HeroProps) {
             <p className="mt-6 max-w-md text-body text-paper/85 md:mt-8">{body}</p>
           </HeroFade>
 
-          <HeroFade delay={0.85} className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 md:mt-10">
-            <Button variant="light" arrow asChild>
+          <HeroFade delay={0.85} className="mt-8 flex flex-col items-stretch gap-y-4 md:mt-10 md:flex-row md:items-center md:gap-x-8">
+            <Button variant="light" arrow className="w-full md:w-auto" asChild>
               <Link href={primaryCta.href}>{primaryCta.label}</Link>
             </Button>
             {secondaryCta ? (
-              <Link href={secondaryCta.href} className="inline-flex min-h-11 items-center text-label text-paper">
+              <Link href={secondaryCta.href} className="inline-flex min-h-11 items-center justify-center text-label text-paper">
                 <span className="link-underline-static pb-1">{secondaryCta.label}</span>
               </Link>
             ) : null}

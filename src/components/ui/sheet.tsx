@@ -85,7 +85,7 @@ export function Sheet({
             >
               <m.div
                 className={cn(
-                  "fixed z-50 flex flex-col bg-background-raised text-foreground outline-none",
+                  "fixed z-50 flex flex-col bg-background-raised/95 backdrop-blur-xl text-foreground outline-none",
                   placement[side],
                   className,
                 )}

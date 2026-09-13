@@ -19,5 +19,5 @@ export function ProductBadge({ badge, soldOut = false, className }: ProductBadge
   const label = soldOut ? "Sold out" : badge ? productBadgeLabels[badge] : null;
   if (!label) return null;
 
-  return <p className={cn("bg-paper/90 px-2 py-1 text-eyebrow text-ink", className)}>{label}</p>;
+  return <p className={cn("bg-paper/85 backdrop-blur-md px-2.5 py-1 text-eyebrow text-ink rounded-full", className)}>{label}</p>;
 }
