@@ -65,7 +65,12 @@ export function CategoryIndex({ block, entries, headingId }: CategoryIndexProps)
         </div>
       </Container>
 
-      <ul className="mt-10 flex snap-x snap-mandatory scroll-px-(--gutter) gap-3 overflow-x-auto px-(--gutter) py-2 scrollbar-none md:mt-12 md:gap-4 lg:hidden">
+      {/*
+        `relative` makes the scroller the containing block for the tiles' sr-only
+        counts (absolutely positioned). Without it they escape the scroll clip and
+        widen the document, which on phones stretches the fixed header off-screen.
+      */}
+      <ul className="relative mt-10 flex snap-x snap-mandatory scroll-px-(--gutter) gap-3 overflow-x-auto px-(--gutter) py-2 scrollbar-none md:mt-12 md:gap-4 lg:hidden">
         {entries.map((entry) => (
           <li key={entry.slug} className="w-[64%] shrink-0 snap-start sm:w-[40%] md:w-[30%]">
             <Link href={entry.href} className="group/tile block">
