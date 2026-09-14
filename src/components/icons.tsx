@@ -78,6 +78,17 @@ export function MenuIcon(props: IconProps) {
   );
 }
 
+/** Two sliders — the filter control. */
+export function FilterIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M3.75 8h9.5M17.25 8h3M3.75 16h3M10.75 16h9.5" />
+      <circle cx="15.25" cy="8" r="2" />
+      <circle cx="8.75" cy="16" r="2" />
+    </Icon>
+  );
+}
+
 export function PlusIcon(props: IconProps) {
   return (
     <Icon {...props}>

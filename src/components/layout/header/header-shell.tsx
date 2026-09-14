@@ -71,7 +71,7 @@ export function HeaderShell({ nav, announcement }: HeaderShellProps) {
         overlay ? "fixed" : "sticky",
         !overlay && hasAnnouncement && "-top-(--announcement-height)",
         solid
-          ? "border-border bg-background/85 text-foreground backdrop-blur-lg"
+          ? "border-border bg-background text-foreground"
           : "border-transparent bg-transparent text-paper [--ring:var(--paper)]",
         hidden ? "-translate-y-full" : tuckAnnouncement && "-translate-y-(--announcement-height)",
       )}

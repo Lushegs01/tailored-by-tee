@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 export const buttonVariants = cva(
   [
     "group/button relative inline-flex shrink-0 select-none items-center justify-center gap-3",
-    "whitespace-nowrap text-label rounded-full",
-    "transition-all duration-300 ease-editorial",
+    "whitespace-nowrap text-label",
+    "transition-[background-color,color,border-color,opacity] duration-300 ease-editorial",
     "disabled:pointer-events-none disabled:opacity-40",
     "aria-disabled:pointer-events-none aria-disabled:opacity-40",
   ],

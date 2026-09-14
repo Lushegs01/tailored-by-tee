@@ -191,6 +191,44 @@ export interface ProductListResult {
   pageSize: number;
 }
 
+/* ── Listing facets ─────────────────────────────────────────────────────── */
+
+export interface FacetCount {
+  value: string;
+  count: number;
+}
+
+export interface FacetOption extends FacetCount {
+  label: string;
+}
+
+export interface SizeFacetOption extends FacetOption {
+  system: SizeSystem;
+}
+
+export interface ColorFacetOption extends FacetOption {
+  hex: string;
+}
+
+/**
+ * Filter options for a listing. Each count applies every *other* active filter,
+ * so an option never promises pieces it can't deliver. Options without matches
+ * are left out unless currently selected, so a selection can always be cleared.
+ */
+export interface ProductFacets {
+  sizes: SizeFacetOption[];
+  colors: ColorFacetOption[];
+  /** Count per price band id; every configured band is present. */
+  prices: FacetCount[];
+  collections: FacetOption[];
+  /** How many pieces would remain with "in stock only" switched on. */
+  inStock: number;
+}
+
+export interface CollectionSummary extends Collection {
+  productCount: number;
+}
+
 export interface SearchResults {
   query: string;
   products: ProductCardData[];

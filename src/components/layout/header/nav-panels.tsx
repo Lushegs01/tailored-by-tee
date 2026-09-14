@@ -4,6 +4,7 @@ import Link from "next/link";
 import { NavigationMenu } from "radix-ui";
 import * as m from "motion/react-m";
 
+import { collectionMeta } from "@/components/collection/collection-meta";
 import { ArrowRightIcon } from "@/components/icons";
 import { Container } from "@/components/ui/container";
 import { MediaImage } from "@/components/ui/media-image";
@@ -133,10 +134,6 @@ export function ShopPanel({ nav, pathname }: PanelProps) {
       {featured ? <FeaturedCard collection={featured} pathname={pathname} /> : null}
     </PanelMotion>
   );
-}
-
-function collectionMeta(collection: NavCollection) {
-  return [collection.code, collection.season].filter(Boolean).join(" · ");
 }
 
 /** Editorial card for the featured collection: wide photograph, caption beneath. */

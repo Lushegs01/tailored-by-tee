@@ -33,7 +33,7 @@ export function CartFooter({ subtotal, pending = false, canCheckout, onNavigate 
           />
         )}
       </div>
-      <p className="mt-1.5 text-caption text-muted-foreground">Delivery and duties calculated at checkout.</p>
+      <p className="mt-1.5 text-caption text-muted-foreground">Delivery calculated at checkout.</p>
 
       <Button asChild size="lg" fullWidth arrow className="mt-5">
         <Link
