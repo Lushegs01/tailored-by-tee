@@ -1,7 +1,9 @@
+import { after } from "next/server";
 import { z } from "zod";
 
 import { MAX_CART_LINES, MAX_VARIANT_ID_LENGTH } from "@/components/cart/cart-lines";
 import { quoteCart } from "@/lib/catalog/repository";
+import { sweepExpiredReservations } from "@/lib/orders/reservations";
 
 /*
  * POST /api/cart/quote: prices a bag. The client may only say which variants and
@@ -90,6 +92,8 @@ export async function POST(request: Request) {
 
   try {
     const quote = await quoteCart(parsed.data.lines);
+    // Housekeeping after the response: return stock held by lapsed, unpaid checkouts.
+    after(() => sweepExpiredReservations());
     return Response.json(quote, { headers: NO_STORE });
   } catch (error) {
     console.error("[api/cart/quote] Pricing failed", error);

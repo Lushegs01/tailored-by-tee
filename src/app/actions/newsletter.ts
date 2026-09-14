@@ -2,6 +2,8 @@
 
 import { z } from "zod";
 
+import { getDb, isDatabaseConfigured } from "@/lib/db";
+
 /**
  * Journal sign-up. Validates on the server regardless of what the browser
  * checked, and never logs the address.
@@ -49,8 +51,20 @@ export async function subscribeToNewsletter(
     };
   }
 
-  // TODO(phase-8): persist to the mailing-list provider with double opt-in
-  // (normalised address, consent timestamp, source "home:journal").
+  if (isDatabaseConfigured()) {
+    try {
+      const address = result.data.toLowerCase();
+      await getDb().newsletterSubscriber.upsert({
+        where: { email: address },
+        create: { email: address, source: "home:journal" },
+        update: { unsubscribedAt: null },
+      });
+    } catch (error) {
+      console.error("[newsletter] could not save the subscriber", error instanceof Error ? error.message : error);
+      return { status: "error", message: "We couldn’t sign you up just now. Please try again.", email };
+    }
+  }
+  // TODO: hand new subscribers to the mailing-list provider with double opt-in.
 
   return { status: "success", message: SUCCESS_MESSAGE };
 }

@@ -11,9 +11,10 @@ import { IconButton } from "@/components/ui/icon-button";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
+import { CheckoutHeader } from "./checkout-header";
 import { DesktopNav } from "./desktop-nav";
 import { HeaderActions } from "./header-actions";
-import { isOverlayRoute } from "./header-config";
+import { isCheckoutRoute, isOverlayRoute } from "./header-config";
 import { MobileNav } from "./mobile-nav";
 import type { HeaderNavData } from "./types";
 import { useHeaderScroll } from "./use-header-scroll";
@@ -62,6 +63,8 @@ export function HeaderShell({ nav, announcement }: HeaderShellProps) {
   const solid = !overlay || scrolled || panel !== "" || pointerInside || focusInside || menuOpen;
   // Only a fixed header needs moving to tuck the announcement away; a sticky one scrolls past it.
   const tuckAnnouncement = overlay && hasAnnouncement && scrolled && !announcementFocused;
+
+  if (isCheckoutRoute(pathname)) return <CheckoutHeader complete={pathname.startsWith("/checkout/complete")} />;
 
   return (
     <header

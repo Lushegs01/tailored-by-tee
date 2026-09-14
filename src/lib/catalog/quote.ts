@@ -121,6 +121,8 @@ export function buildCartQuote(
     lines.push({
       variantId,
       productId: product.id,
+      categoryId: product.categoryId,
+      sku: variant.sku,
       productSlug: product.slug,
       name: product.name,
       href: productHref(product.slug),

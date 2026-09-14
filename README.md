@@ -3,7 +3,7 @@
 A premium single-brand fashion storefront for a Lagos clothing label. Editorial in presentation, rigorous in commerce: server-priced carts, variant-level inventory, Paystack payments.
 
 > **Status: Phases 1–4 of 12 complete** — design system, homepage, shop / categories / collections with filters and sort, search, product pages with variant selection and size guides, cart drawer. All running on a typed seed catalogue.
-> **In progress:** persistence on Neon PostgreSQL + Prisma (schema, migration, seed and database-backed catalogue are in; see [Database](#database-neon--prisma)). **Next:** checkout, then Paystack. See [Roadmap](#roadmap).
+> **Also in:** Neon PostgreSQL + Prisma persistence ([Database](#database-neon--prisma)) and checkout up to payment ([Checkout](#checkout)) — orders are created with stock held, but payment isn't connected yet. **Next:** Paystack. See [Roadmap](#roadmap).
 
 ## Stack
 
@@ -24,6 +24,7 @@ A premium single-brand fashion storefront for a Lagos clothing label. Editorial 
 npm install
 npm run dev        # http://localhost:3000
 npm run check      # typegen + tsc + eslint
+npm test           # unit tests for the commerce rules (node:test via tsx)
 npm run build
 ```
 
@@ -49,6 +50,17 @@ The storefront runs without a database — it falls back to the typed seed catal
 
 How it fits together: `prisma/schema.prisma` is the data model; `src/lib/db.ts` is the one client (Neon adapter, pooled URL); `src/lib/catalog/sources/` loads the catalogue from the database or the seed files into one snapshot shape, cached under the `catalog` tag (refreshed every 5 minutes, or at once with `revalidateTag("catalog")`). **Stock that decides a purchase is never read from that cache** — cart quotes read live inventory.
 
+## Checkout
+
+Guest checkout: contact details, delivery to a Nigerian address (priced by state from `config/policies.ts`) or collection from the studio, an optional discount code, and a summary that is always the server's answer.
+
+- **Priced on the server.** Every change re-quotes the bag with live stock, re-checks the discount code against its stored rules (dates, limits, per-customer use, minimum spend, category/product restrictions) and quotes delivery. The order is created from a fresh quote — nothing the browser displayed is trusted.
+- **One transaction per order.** Stock is held with a conditional `UPDATE … WHERE onHand − reserved ≥ quantity` per line (so two shoppers can't both take the last piece), the order number comes from a locked per-year counter (`ORD-2026-000001`), the discount use is counted against its limit, and the order is written with immutable line snapshots, a stock audit trail and a timeline. Any failure rolls it all back.
+- **Holds expire.** Unpaid orders hold stock for `siteConfig.commerce.reservationMinutes` (30). Lapsed holds are released before each new order and, at most once a minute, after bag and checkout requests (via `after()`), so abandoned checkouts go back on sale without delaying anyone.
+- **Safe to retry.** A double click or retried submission returns the same order; a new checkout from the same browser replaces its older unpaid one.
+- **Private order pages.** Order numbers are guessable, so an order opens only with a random secret in its link; the database stores only its SHA-256.
+- **Modes** (`lib/commerce/checkout-mode.ts`): with a database in development, orders are placed as clearly labelled *test orders* (nothing charged). In production, checkout stays closed — with a clear message — until Paystack is connected.
+
 **On Vercel:** add the Neon integration (or set `DATABASE_URL` and `DATABASE_URL_UNPOOLED` yourself). `postinstall` runs `prisma generate`. Apply migrations deliberately with `npm run db:deploy` against production rather than on every build, so preview deployments can never alter the production schema.
 
 ## Routes
@@ -63,10 +75,13 @@ How it fits together: `prisma/schema.prisma` is the data model; `src/lib/db.ts` 
 | `/product/[slug]`     | Product page: gallery, colour/size selection, size guide, related pieces  |
 | `/search?q=`          | Full search results (the header overlay is the typeahead)                 |
 | `/size-guide`         | Every size chart                                                          |
+| `/cart`               | The bag as a full page                                                    |
+| `/checkout`           | Contact, delivery (by state) or studio collection, discount code, summary |
+| `/checkout/complete/[number]?key=` | An order's private page — opens only with the secret in its link |
 | `/api/cart/quote`     | `POST` — prices a bag from `{ variantId, quantity }[]` on the server      |
 | `/api/search`         | `GET` — typeahead results                                                 |
 
-Linked but not built yet: `/checkout`, `/account/*`, `/wishlist`, `/about`, `/contact`, `/shipping`, `/returns`, `/privacy`, `/terms`, `/admin/*`.
+Linked but not built yet: `/account/*`, `/wishlist`, `/about`, `/contact`, `/shipping`, `/returns`, `/privacy`, `/terms`, `/admin/*`.
 
 ## Architecture
 
@@ -144,7 +159,7 @@ These are deliberately obvious stand-ins. None of them should reach production a
 2. ~~Homepage & visual refinement~~
 3. ~~Shop, categories, collections, filtering, search~~
 4. ~~Product details, variants, size guide~~
-5. Cart page & checkout (validated delivery details, server-side totals & delivery fees)
+5. ~~Cart page & checkout (validated delivery details, server-side totals & delivery fees)~~ — orders and stock holds work; payment is step 6
 6. Paystack end-to-end (initialise → verify → webhook → idempotent order confirmation)
 7. Authentication & customer accounts, server-side wishlist
 8. PostgreSQL / Prisma persistence, Cloudinary media

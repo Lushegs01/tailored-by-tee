@@ -158,6 +158,15 @@ export function ArrowUpRightIcon(props: IconProps) {
   );
 }
 
+export function LockIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <rect x="5.75" y="10.75" width="12.5" height="9" rx="0.5" />
+      <path d="M8.75 10.75V8a3.25 3.25 0 0 1 6.5 0v2.75" />
+    </Icon>
+  );
+}
+
 export function CheckIcon(props: IconProps) {
   return (
     <Icon {...props}>

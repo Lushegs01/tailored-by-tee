@@ -247,6 +247,10 @@ export interface CartLineInput {
 export interface CartQuoteLine {
   variantId: string;
   productId: string;
+  /** For discount codes restricted to categories. */
+  categoryId: string;
+  /** Kept on the order, so it stays traceable after the catalogue changes. */
+  sku: string;
   productSlug: string;
   name: string;
   href: string;
