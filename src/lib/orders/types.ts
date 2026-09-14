@@ -7,6 +7,8 @@ export interface OrderView {
   paymentStatus: "pending" | "success" | "failed" | "abandoned" | "refunded";
   placedAt: string;
   reservedUntil: string | null;
+  /** The latest payment attempt, if any. `isTest`: Paystack test mode, no real money moved. */
+  lastPayment: { status: "pending" | "success" | "failed" | "abandoned" | "refunded"; isTest: boolean } | null;
   customerName: string;
   email: string;
   phone: string;

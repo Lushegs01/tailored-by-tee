@@ -601,6 +601,8 @@ model Payment {
   channel               String?
   gatewayResponse       String?
   providerTransactionId String?
+  /// Made with Paystack test keys: no real money moved, whatever the status says.
+  isTest                Boolean       @default(false)
   paidAt                DateTime?
   verifiedAt            DateTime?
   createdAt             DateTime      @default(now())

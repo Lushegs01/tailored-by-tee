@@ -9,6 +9,16 @@ import { getDb } from "@/lib/db";
 import { hashOrderAccessToken } from "./access";
 import type { OrderView } from "./types";
 
+/** The order a private link opens, for server-side actions on it (paying, returning from Paystack). */
+export async function findOrderForAccess(orderNumber: string, key: string): Promise<{ id: string; number: string } | null> {
+  if (!key || key.length > 128 || getCatalogSource() !== "database") return null;
+  const order = await getDb().order.findUnique({
+    where: { accessTokenHash: hashOrderAccessToken(key) },
+    select: { id: true, number: true },
+  });
+  return order && order.number === orderNumber ? order : null;
+}
+
 /**
  * An order, for its private link. Found by the hash of the link's secret, then
  * matched against the number in the URL; anything that doesn't line up is
@@ -19,9 +29,13 @@ export async function getOrderByAccessKey(orderNumber: string, key: string): Pro
 
   const order = await getDb().order.findUnique({
     where: { accessTokenHash: hashOrderAccessToken(key) },
-    include: { items: { orderBy: { id: "asc" } } },
+    include: {
+      items: { orderBy: { id: "asc" } },
+      payments: { orderBy: { createdAt: "desc" }, take: 1, select: { status: true, isTest: true } },
+    },
   });
   if (!order || order.number !== orderNumber) return null;
+  const lastPayment = order.payments[0];
 
   const zone = deliveryPolicy.zones.find((item) => item.id === order.deliveryZone);
   const method = fromDbEnum<OrderView["delivery"]["method"]>(order.deliveryMethod);
@@ -32,6 +46,9 @@ export async function getOrderByAccessKey(orderNumber: string, key: string): Pro
     paymentStatus: fromDbEnum<OrderView["paymentStatus"]>(order.paymentStatus),
     placedAt: order.createdAt.toISOString(),
     reservedUntil: order.reservedUntil?.toISOString() ?? null,
+    lastPayment: lastPayment
+      ? { status: fromDbEnum<OrderView["paymentStatus"]>(lastPayment.status), isTest: lastPayment.isTest }
+      : null,
     customerName: order.customerName,
     email: order.email,
     phone: order.phone,

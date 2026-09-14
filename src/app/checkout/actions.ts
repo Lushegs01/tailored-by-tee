@@ -17,9 +17,12 @@ import type { DeliveryQuote } from "@/lib/commerce/delivery";
 import type { OrderTotals } from "@/lib/commerce/totals";
 import type { CartQuote } from "@/lib/catalog/types";
 import { orderStatusPath } from "@/lib/orders/access";
-import { placeOrder } from "@/lib/orders/create-order";
+import { placeOrder, type PlacedOrder } from "@/lib/orders/create-order";
 import { CheckoutError } from "@/lib/orders/errors";
+import { paymentLinks, startPayment } from "@/lib/orders/payments";
+import { findOrderForAccess } from "@/lib/orders/queries";
 import { sweepExpiredReservations } from "@/lib/orders/reservations";
+import { requestOrigin } from "@/lib/security/origin";
 import { clientAddress, rateLimit } from "@/lib/security/rate-limit";
 
 /*
@@ -80,7 +83,7 @@ export async function getCheckoutQuote(input: unknown): Promise<CheckoutQuoteRes
 /* ── Place order ───────────────────────────────────────────────────────── */
 
 export type PlaceOrderResult =
-  | { ok: true; redirectTo: string }
+  | { ok: true; redirectTo: string; /** Paystack's checkout, outside this site. */ external: boolean }
   | {
       ok: false;
       code: string;
@@ -96,7 +99,8 @@ const placeOrderSchema = z.object({
 });
 
 export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult> {
-  if (getCheckoutMode() === "unavailable") {
+  const mode = getCheckoutMode();
+  if (mode === "unavailable") {
     return { ok: false, code: "unavailable", message: "Online checkout isn’t open yet. Please try again soon." };
   }
   if (!rateLimit(`checkout-order:${await clientAddress()}`, { limit: 10, windowMs: 10 * 60_000 }).ok) {
@@ -118,14 +122,14 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
     };
   }
 
+  let placed: PlacedOrder;
   try {
-    const placed = await placeOrder({
+    placed = await placeOrder({
       details: details.data,
       lines: envelope.data.lines,
       couponCode: envelope.data.couponCode || null,
       checkoutSession: envelope.data.checkoutSession,
     });
-    return { ok: true, redirectTo: orderStatusPath(placed.number, placed.accessToken) };
   } catch (error) {
     if (error instanceof CheckoutError) return { ok: false, code: error.code, message: error.message };
     console.error("[checkout] order failed", error);
@@ -134,5 +138,49 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
       code: "unknown",
       message: "We couldn’t place your order. Nothing has been charged — please try again.",
     };
+  }
+
+  const orderPage = orderStatusPath(placed.number, placed.accessToken);
+  if (mode === "live") {
+    try {
+      const order = await findOrderForAccess(placed.number, placed.accessToken);
+      if (order) {
+        const links = paymentLinks(await requestOrigin(), placed.number, placed.accessToken);
+        return { ok: true, redirectTo: await startPayment(order, links), external: true };
+      }
+    } catch (error) {
+      // The order exists and holds its pieces; its page offers "Complete payment" to try again.
+      if (!(error instanceof CheckoutError)) console.error("[checkout] could not start payment", error);
+    }
+  }
+  return { ok: true, redirectTo: orderPage, external: false };
+}
+
+/* ── Resume payment (from the order page) ──────────────────────────────── */
+
+export type ResumePaymentResult = { ok: true; redirectTo: string } | { ok: false; message: string };
+
+const resumeSchema = z.object({
+  orderNumber: z.string().regex(/^ORD-\d{4}-\d{6,}$/),
+  key: z.string().min(16).max(128),
+});
+
+export async function resumePaymentAction(input: unknown): Promise<ResumePaymentResult> {
+  if (getCheckoutMode() !== "live") return { ok: false, message: "Online payment isn’t available right now." };
+  if (!rateLimit(`checkout-pay:${await clientAddress()}`, { limit: 10, windowMs: 10 * 60_000 }).ok) {
+    return { ok: false, message: "Too many attempts. Please wait a few minutes and try again." };
+  }
+
+  const parsed = resumeSchema.safeParse(input);
+  const order = parsed.success ? await findOrderForAccess(parsed.data.orderNumber, parsed.data.key) : null;
+  if (!parsed.success || !order) return { ok: false, message: "We couldn’t find that order." };
+
+  try {
+    const links = paymentLinks(await requestOrigin(), order.number, parsed.data.key);
+    return { ok: true, redirectTo: await startPayment(order, links) };
+  } catch (error) {
+    if (error instanceof CheckoutError) return { ok: false, message: error.message };
+    console.error("[checkout] could not resume payment", error);
+    return { ok: false, message: "We couldn’t open the payment page. Please try again." };
   }
 }
