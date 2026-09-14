@@ -111,7 +111,9 @@ export function ProductCarousel({ products, label, className, headingLevel }: Pr
       <div
         ref={trackRef}
         id={trackId}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scrollbar-none md:gap-5"
+        // `relative`: the track must contain any absolutely positioned descendants so
+        // they're clipped by its overflow instead of widening the document.
+        className="relative flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scrollbar-none md:gap-5"
         style={{ paddingInline: INSET, scrollPaddingInline: INSET }}
       >
         {products.map((product, index) => (
