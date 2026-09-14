@@ -1,5 +1,4 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 
 import { productGridClassName, type ProductGridColumns } from "./product-layout";
 

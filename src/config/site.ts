@@ -72,7 +72,7 @@ export const siteConfig = {
     linkLabel: "Delivery details",
   },
   mainNav: [
-    { label: "New Arrivals", href: "/shop/new-arrivals" },
+    { label: "New In", href: "/shop/new-arrivals" },
     { label: "Shop", href: "/shop", panel: "shop" },
     { label: "Collections", href: "/collections", panel: "collections" },
     { label: "About", href: "/about" },

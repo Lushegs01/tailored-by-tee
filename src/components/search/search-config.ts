@@ -22,7 +22,7 @@ export function normaliseQuery(value: string): string {
   return value.replace(/\s+/g, " ").trim().slice(0, MAX_QUERY_LENGTH).trim();
 }
 
-/** The full results page (arrives in Phase 2). */
+/** The full results page. */
 export function searchPageHref(query: string): string {
   return `/search?q=${encodeURIComponent(normaliseQuery(query))}`;
 }

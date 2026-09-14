@@ -1,10 +1,20 @@
 import { isPurchasable } from "./inventory";
-import type { Category, Collection, Kobo, Product, ProductQuery, ProductSort, Size } from "./types";
+import type {
+  Category,
+  Collection,
+  Color,
+  Kobo,
+  Product,
+  ProductFacets,
+  ProductQuery,
+  ProductSort,
+  Size,
+} from "./types";
 import { NEW_ARRIVALS_LIMIT, isVirtualCategory } from "./virtual-categories";
 
 /*
- * Listing rules — filtering, sorting and pagination — over an in-memory product
- * list. Pure; Phase 8 expresses the same rules as Prisma queries.
+ * Listing rules — filtering, facet counts, sorting and pagination — over an
+ * in-memory product list. Pure; Phase 8 expresses the same rules as Prisma queries.
  */
 
 export const DEFAULT_PAGE_SIZE = 24;
@@ -13,7 +23,17 @@ export const MAX_PAGE_SIZE = 60;
 export interface QueryContext {
   categoriesBySlug: ReadonlyMap<string, Category>;
   collectionsBySlug: ReadonlyMap<string, Collection>;
+  /** Registry order, which is also filter display order. */
   sizes: ReadonlyMap<string, Size>;
+  /** Registry order, which is also filter display order. */
+  colors: ReadonlyMap<string, Color>;
+}
+
+/** A price band in kobo: `min` inclusive, `max` exclusive; null leaves that side open. */
+export interface PriceBandRange {
+  id: string;
+  min: Kobo | null;
+  max: Kobo | null;
 }
 
 /* ── Sorting ────────────────────────────────────────────────────────────── */
@@ -64,6 +84,30 @@ function resolveSizeIds(values: readonly string[], sizes: ReadonlyMap<string, Si
 const validPrice = (value: Kobo | undefined): value is Kobo =>
   typeof value === "number" && Number.isFinite(value) && value >= 0;
 
+interface ResolvedFilters {
+  sizeIds: ReadonlySet<string> | null;
+  colorIds: ReadonlySet<string> | null;
+  minPrice: Kobo | null;
+  maxPrice: Kobo | null;
+  inStockOnly: boolean;
+}
+
+/** Unknown sizes and colours are ignored, so a stale link widens instead of emptying the page. */
+function resolveFilters(query: ProductQuery, context: QueryContext): ResolvedFilters {
+  const sizeIds = query.sizes?.length ? resolveSizeIds(query.sizes, context.sizes) : new Set<string>();
+  const colorIds = new Set(
+    (query.colors ?? []).map((color) => color.trim().toLowerCase()).filter((id) => context.colors.has(id)),
+  );
+
+  return {
+    sizeIds: sizeIds.size > 0 ? sizeIds : null,
+    colorIds: colorIds.size > 0 ? colorIds : null,
+    minPrice: validPrice(query.minPrice) ? query.minPrice : null,
+    maxPrice: validPrice(query.maxPrice) ? query.maxPrice : null,
+    inStockOnly: query.inStockOnly === true,
+  };
+}
+
 /** Products narrowed by the category/virtual category and collection, before facet filters. */
 function scopeProducts(products: readonly Product[], query: ProductQuery, context: QueryContext): Product[] {
   let scoped = [...products];
@@ -94,8 +138,8 @@ function scopeProducts(products: readonly Product[], query: ProductQuery, contex
  */
 function matchesVariantFilters(
   product: Product,
-  sizeIds: Set<string> | null,
-  colorIds: Set<string> | null,
+  sizeIds: ReadonlySet<string> | null,
+  colorIds: ReadonlySet<string> | null,
   inStockOnly: boolean,
 ): boolean {
   if (!sizeIds && !colorIds && !inStockOnly) return true;
@@ -108,18 +152,84 @@ function matchesVariantFilters(
   );
 }
 
-export function filterProducts(products: readonly Product[], query: ProductQuery, context: QueryContext): Product[] {
-  const sizeIds = query.sizes?.length ? resolveSizeIds(query.sizes, context.sizes) : null;
-  const colorIds = query.colors?.length ? new Set(query.colors.map((color) => color.trim().toLowerCase())) : null;
-  const minPrice = validPrice(query.minPrice) ? query.minPrice : null;
-  const maxPrice = validPrice(query.maxPrice) ? query.maxPrice : null;
+function inPriceRange(product: Product, { minPrice, maxPrice }: ResolvedFilters): boolean {
+  return (minPrice === null || product.price >= minPrice) && (maxPrice === null || product.price <= maxPrice);
+}
 
-  return scopeProducts(products, query, context).filter(
-    (product) =>
-      (minPrice === null || product.price >= minPrice) &&
-      (maxPrice === null || product.price <= maxPrice) &&
-      matchesVariantFilters(product, sizeIds, colorIds, query.inStockOnly === true),
+function matchesFilters(product: Product, filters: ResolvedFilters): boolean {
+  return (
+    inPriceRange(product, filters) &&
+    matchesVariantFilters(product, filters.sizeIds, filters.colorIds, filters.inStockOnly)
   );
+}
+
+export function filterProducts(products: readonly Product[], query: ProductQuery, context: QueryContext): Product[] {
+  const filters = resolveFilters(query, context);
+  return scopeProducts(products, query, context).filter((product) => matchesFilters(product, filters));
+}
+
+/* ── Facets ─────────────────────────────────────────────────────────────── */
+
+function countWhere(products: readonly Product[], test: (product: Product) => boolean): number {
+  let count = 0;
+  for (const product of products) if (test(product)) count++;
+  return count;
+}
+
+/**
+ * Filter options with counts. Every facet is counted against all the *other*
+ * active filters (never itself), which is what lets a shopper widen a choice:
+ * with "M" ticked, "L" still shows how many pieces come in L.
+ */
+export function buildFacets(
+  products: readonly Product[],
+  query: ProductQuery,
+  context: QueryContext,
+  priceBands: readonly PriceBandRange[],
+): ProductFacets {
+  const filters = resolveFilters(query, context);
+  const { sizeIds, colorIds, inStockOnly } = filters;
+  const scoped = scopeProducts(products, query, context);
+  const priced = scoped.filter((product) => inPriceRange(product, filters));
+
+  // "One size" pieces have nothing to choose, so the size filter skips them.
+  const sizes = [...context.sizes.values()].flatMap((size) => {
+    if (size.system === "one-size") return [];
+    const only = new Set([size.id]);
+    const count = countWhere(priced, (product) => matchesVariantFilters(product, only, colorIds, inStockOnly));
+    return count > 0 || sizeIds?.has(size.id)
+      ? [{ value: size.id, label: size.label, system: size.system, count }]
+      : [];
+  });
+
+  const colors = [...context.colors.values()].flatMap((color) => {
+    const only = new Set([color.id]);
+    const count = countWhere(priced, (product) => matchesVariantFilters(product, sizeIds, only, inStockOnly));
+    return count > 0 || colorIds?.has(color.id) ? [{ value: color.id, label: color.name, hex: color.hex, count }] : [];
+  });
+
+  const variantMatched = scoped.filter((product) => matchesVariantFilters(product, sizeIds, colorIds, inStockOnly));
+  const prices = priceBands.map((band) => ({
+    value: band.id,
+    count: countWhere(
+      variantMatched,
+      (product) => (band.min === null || product.price >= band.min) && (band.max === null || product.price < band.max),
+    ),
+  }));
+
+  const acrossCollections = scopeProducts(products, { ...query, collection: undefined }, context).filter((product) =>
+    matchesFilters(product, filters),
+  );
+  const collections = [...context.collectionsBySlug.values()].flatMap((collection) => {
+    const count = countWhere(acrossCollections, (product) => product.collectionIds.includes(collection.id));
+    return count > 0 || query.collection === collection.slug
+      ? [{ value: collection.slug, label: collection.name, count }]
+      : [];
+  });
+
+  const inStock = countWhere(scoped, (product) => matchesFilters(product, { ...filters, inStockOnly: true }));
+
+  return { sizes, colors, prices, collections, inStock };
 }
 
 /* ── Pagination ─────────────────────────────────────────────────────────── */
@@ -133,7 +243,7 @@ export function normalizePagination(page?: number, pageSize?: number): { page: n
 }
 
 /** New arrivals default to newest-first; everything else to the featured order. */
-export function defaultSort(query: ProductQuery): ProductSort {
+export function defaultSort(query: Pick<ProductQuery, "category">): ProductSort {
   return query.category === "new-arrivals" ? "newest" : "featured";
 }
 

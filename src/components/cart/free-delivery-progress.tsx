@@ -2,6 +2,7 @@
 
 import * as m from "motion/react-m";
 
+import { deliveryPolicy } from "@/config/policies";
 import type { Kobo } from "@/lib/catalog/types";
 import { formatPrice } from "@/lib/format";
 import { DURATION, EASE_EDITORIAL } from "@/lib/motion";
@@ -16,6 +17,10 @@ export interface FreeDeliveryProgressProps {
   pending?: boolean;
   className?: string;
 }
+
+/** Where the threshold applies, named from the delivery policy (e.g. " in Lagos"). */
+const freeZone = deliveryPolicy.zones.find((zone) => zone.freeOver !== null);
+const whereFree = freeZone && freeZone.states !== null ? ` in ${freeZone.name}` : "";
 
 /** A single hairline that fills in ink as the bag approaches complimentary delivery. */
 export function FreeDeliveryProgress({
@@ -32,11 +37,11 @@ export function FreeDeliveryProgress({
     <div className={cn("border-b px-6 py-5", className)}>
       <p className={cn("text-body-sm transition-opacity duration-300", pending && "opacity-60")}>
         {qualifies ? (
-          "Your order qualifies for complimentary delivery."
+          `Your order qualifies for complimentary delivery${whereFree}.`
         ) : (
           <>
             You are <span className="tabular-nums">{formatPrice(remaining)}</span> away from complimentary
-            delivery.
+            delivery{whereFree}.
           </>
         )}
       </p>

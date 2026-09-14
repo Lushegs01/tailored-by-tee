@@ -1,5 +1,6 @@
 import "server-only";
 
+import { shopConfig } from "@/config/shop";
 import { siteConfig } from "@/config/site";
 import { getMedia, getProductMedia } from "@/lib/media";
 
@@ -8,12 +9,13 @@ import {
   categoryId,
   collectionId,
   findImage,
+  isProductSoldOut,
   toMediaAsset,
   toProductCardData,
   toProductDetail,
   type ReferenceData,
 } from "./mappers";
-import { bestsellers, newestProducts, queryProducts, type QueryContext } from "./query";
+import { bestsellers, buildFacets, byFeatured, newestProducts, queryProducts, type QueryContext } from "./query";
 import { buildCartQuote, type ResolvedVariant } from "./quote";
 import { buildSearchDocument, matchesLabels, parseQuery, rankDocuments, type SearchDocument } from "./search";
 import { CATEGORY_SEEDS } from "./seed/categories";
@@ -27,9 +29,11 @@ import type {
   Category,
   CategorySummary,
   Collection,
+  CollectionSummary,
   Product,
   ProductCardData,
   ProductDetail,
+  ProductFacets,
   ProductListResult,
   ProductQuery,
   ProductVariant,
@@ -146,6 +150,7 @@ function buildStore(): CatalogStore {
       categoriesBySlug: new Map(categories.map((category) => [category.slug, category])),
       collectionsBySlug: new Map(collections.map((collection) => [collection.slug, collection])),
       sizes: ref.sizes,
+      colors: ref.colors,
     },
   };
 }
@@ -181,12 +186,26 @@ export async function getCollectionBySlug(slug: string): Promise<Collection | nu
   return getStore().queryContext.collectionsBySlug.get(slug) ?? null;
 }
 
+export async function getCollectionSummaries(): Promise<CollectionSummary[]> {
+  const { collections, products } = getStore();
+  return collections.map((collection) => ({
+    ...collection,
+    productCount: products.filter((product) => product.collectionIds.includes(collection.id)).length,
+  }));
+}
+
 /* ── Products ───────────────────────────────────────────────────────────── */
 
 export async function listProducts(query: ProductQuery = {}): Promise<ProductListResult> {
   const { products, queryContext } = getStore();
   const result = queryProducts(products, query, queryContext);
   return { items: toCards(result.items), total: result.total, page: result.page, pageSize: result.pageSize };
+}
+
+/** Filter options (with counts) for the same query a listing page renders. */
+export async function getListingFacets(query: ProductQuery = {}): Promise<ProductFacets> {
+  const { products, queryContext } = getStore();
+  return buildFacets(products, query, queryContext, shopConfig.priceBands);
 }
 
 export async function getNewArrivals(limit = 8): Promise<ProductCardData[]> {
@@ -208,7 +227,50 @@ export async function getProductBySlug(slug: string): Promise<ProductDetail | nu
   return product ? toProductDetail(product, ref) : null;
 }
 
+/** Every listed product's slug, for static generation and the sitemap. */
+export async function getProductSlugs(): Promise<string[]> {
+  return getStore().products.map((product) => product.slug);
+}
+
+export interface RelatedProducts {
+  /** Same collection, other categories: pieces that are worn with this one. */
+  completeTheLook: ProductCardData[];
+  /** Same category: alternatives to this one. */
+  similar: ProductCardData[];
+}
+
+/**
+ * Cross-sells for a product page. Sold-out pieces are never recommended, and the
+ * two shelves never repeat each other.
+ */
+export async function getRelatedProducts(slug: string, limit = 4): Promise<RelatedProducts> {
+  const { productsBySlug, products } = getStore();
+  const product = productsBySlug.get(slug);
+  if (!product) return { completeTheLook: [], similar: [] };
+
+  const candidates = products.filter((other) => other.id !== product.id && !isProductSoldOut(other));
+  const completeTheLook = candidates
+    .filter(
+      (other) =>
+        other.categoryId !== product.categoryId &&
+        other.collectionIds.some((id) => product.collectionIds.includes(id)),
+    )
+    .sort(byFeatured)
+    .slice(0, limit);
+
+  const shown = new Set(completeTheLook.map((other) => other.id));
+  const similar = candidates
+    .filter((other) => other.categoryId === product.categoryId && !shown.has(other.id))
+    .sort(byFeatured)
+    .slice(0, limit);
+
+  return { completeTheLook: toCards(completeTheLook), similar: toCards(similar) };
+}
+
 /* ── Search ─────────────────────────────────────────────────────────────── */
+
+/** Ceiling for one search, whoever asks: the typeahead requests 6, the results page 48. */
+export const MAX_SEARCH_RESULTS = 48;
 
 export async function searchCatalog(query: string, limit = 6): Promise<SearchResults> {
   const parsed = parseQuery(query);
@@ -216,7 +278,7 @@ export async function searchCatalog(query: string, limit = 6): Promise<SearchRes
   if (parsed.tokens.length === 0) return empty;
 
   const { searchDocuments, cards, categories, collections } = getStore();
-  const cap = Math.min(24, Math.max(1, Math.floor(limit)));
+  const cap = Math.min(MAX_SEARCH_RESULTS, Math.max(1, Math.floor(limit)));
 
   const products = rankDocuments(searchDocuments, parsed)
     .slice(0, cap)

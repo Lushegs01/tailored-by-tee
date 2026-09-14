@@ -194,8 +194,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const label = describe(variantId);
       announce(label ? `Removed ${label} from your bag.` : "Removed from your bag.");
     },
-    // `describe` only reads a ref.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // `describe` only reads a ref, so it is safe to leave out.
     [announce, dropNotice],
   );
 
@@ -235,8 +234,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         if (limitNote) announce(limitNote);
       }
     },
-    // `describe` only reads a ref.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // `describe` only reads a ref, so it is safe to leave out.
     [announce, dropNotice],
   );
 
@@ -262,8 +260,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         label ? `Quantity of ${label} changed to ${nextQuantity}.` : `Quantity changed to ${nextQuantity}.`,
       );
     },
-    // `describe` only reads a ref.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // `describe` only reads a ref, so it is safe to leave out.
     [announce, dropNotice, removeItem],
   );
 
