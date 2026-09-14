@@ -1,24 +1,13 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import Link from "next/link";
 
 import { useCart } from "@/components/cart/cart-provider";
+import { useHasMounted } from "@/components/hooks/use-has-mounted";
 import { AccountIcon, BagIcon, SearchIcon } from "@/components/icons";
 import { useSearch } from "@/components/search/search-provider";
 import { IconButton } from "@/components/ui/icon-button";
 import { cn } from "@/lib/utils";
-
-const subscribeNothing = () => () => {};
-
-/** False during SSR and hydration, true afterwards — without a setState-in-effect. */
-function useHasMounted() {
-  return useSyncExternalStore(
-    subscribeNothing,
-    () => true,
-    () => false,
-  );
-}
 
 function bagLabel(count: number) {
   if (count === 0) return "Bag";

@@ -36,6 +36,11 @@ export function isOverlayRoute(pathname: string) {
   return OVERLAY_ROUTES.includes(pathname);
 }
 
+/** Checkout gets a quiet header: no navigation or search to pull a shopper away mid-purchase. */
+export function isCheckoutRoute(pathname: string) {
+  return pathname === "/checkout" || pathname.startsWith("/checkout/");
+}
+
 /** True when `pathname` is exactly `href`. Links carrying a query string never count as current. */
 export function isCurrentPage(pathname: string, href: string) {
   return !href.includes("?") && pathname === href;

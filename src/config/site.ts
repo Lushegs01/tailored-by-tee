@@ -37,6 +37,8 @@ export interface SiteConfig {
     freeDeliveryThreshold: number;
     maxQuantityPerLine: number;
     defaultLowStockThreshold: number;
+    /** Minutes an unpaid order holds its stock before it is released. */
+    reservationMinutes: number;
   };
   announcement: { message: string; href?: string; linkLabel?: string } | null;
   mainNav: MainNavItem[];
@@ -65,6 +67,7 @@ export const siteConfig = {
     freeDeliveryThreshold: 150_000_00,
     maxQuantityPerLine: 10,
     defaultLowStockThreshold: 3,
+    reservationMinutes: 30,
   },
   announcement: {
     message: "Complimentary delivery in Lagos on orders over ₦150,000",

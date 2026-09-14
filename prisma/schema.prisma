@@ -527,6 +527,11 @@ model Order {
   reservedUntil    DateTime?
   /// One key per checkout attempt, so a repeated submission returns the same order.
   checkoutKey      String?        @unique
+  /// The browser checkout session that placed it; a newer order from the same
+  /// session supersedes an unpaid one, so abandoned attempts don't hoard stock.
+  checkoutSession  String?
+  /// SHA-256 of the secret in the order's private link. The link itself is never stored.
+  accessTokenHash  String?        @unique
   paidAt           DateTime?
   cancelledAt      DateTime?
   shippedAt        DateTime?
@@ -548,6 +553,7 @@ model Order {
   @@index([status, createdAt])
   @@index([email])
   @@index([status, reservedUntil])
+  @@index([checkoutSession, status])
 }
 
 /// Per-year order sequence. Incremented with a row lock inside the order

@@ -1,15 +1,25 @@
 import type { CartIssue } from "@/lib/catalog/types";
+import { cn } from "@/lib/utils";
 
 /*
- * Status messages inside the drawer. Deliberately quiet: a hairline box and plain
- * copy, never a red block. Screen readers hear these through the cart live region.
+ * Status messages for the bag (drawer and page). Deliberately quiet: a hairline
+ * box and plain copy, never a red block. Screen readers hear these through the
+ * cart live region. `className` replaces the drawer's inset.
  */
 
-export function CartNotices({ notices, onDismiss }: { notices: CartIssue[]; onDismiss?: () => void }) {
+export function CartNotices({
+  notices,
+  onDismiss,
+  className = "px-6 pt-5",
+}: {
+  notices: CartIssue[];
+  onDismiss?: () => void;
+  className?: string;
+}) {
   if (notices.length === 0) return null;
 
   return (
-    <div className="px-6 pt-5">
+    <div className={cn(className)}>
       <div className="border px-4 pt-3.5 pb-1">
         <p className="text-eyebrow text-muted-foreground">Your bag has been updated</p>
         <ul className="mt-2 space-y-1 text-body-sm">
@@ -31,9 +41,9 @@ export function CartNotices({ notices, onDismiss }: { notices: CartIssue[]; onDi
   );
 }
 
-export function CartError({ onRetry }: { onRetry?: () => void }) {
+export function CartError({ onRetry, className = "px-6 pt-5" }: { onRetry?: () => void; className?: string }) {
   return (
-    <div className="px-6 pt-5">
+    <div className={cn(className)}>
       <div className="flex items-center justify-between gap-4 border py-1 pl-4 pr-3">
         <p className="py-2.5 text-body-sm">We could not update your bag just now.</p>
         {onRetry ? (
