@@ -3,7 +3,7 @@
 A premium single-brand fashion storefront for a Lagos clothing label. Editorial in presentation, rigorous in commerce: server-priced carts, variant-level inventory, Paystack payments.
 
 > **Status: Phases 1–4 of 12 complete** — design system, homepage, shop / categories / collections with filters and sort, search, product pages with variant selection and size guides, cart drawer. All running on a typed seed catalogue.
-> **Also in:** Neon PostgreSQL + Prisma persistence ([Database](#database-neon--prisma)) and checkout up to payment ([Checkout](#checkout)) — orders are created with stock held, but payment isn't connected yet. **Next:** Paystack. See [Roadmap](#roadmap).
+> **Also in:** Neon PostgreSQL + Prisma persistence ([Database](#database-neon--prisma)), checkout ([Checkout](#checkout)) and Paystack payments ([Payments](#payments-paystack)). **Next:** accounts. See [Roadmap](#roadmap).
 
 ## Stack
 
@@ -59,7 +59,22 @@ Guest checkout: contact details, delivery to a Nigerian address (priced by state
 - **Holds expire.** Unpaid orders hold stock for `siteConfig.commerce.reservationMinutes` (30). Lapsed holds are released before each new order and, at most once a minute, after bag and checkout requests (via `after()`), so abandoned checkouts go back on sale without delaying anyone.
 - **Safe to retry.** A double click or retried submission returns the same order; a new checkout from the same browser replaces its older unpaid one.
 - **Private order pages.** Order numbers are guessable, so an order opens only with a random secret in its link; the database stores only its SHA-256.
-- **Modes** (`lib/commerce/checkout-mode.ts`): with a database in development, orders are placed as clearly labelled *test orders* (nothing charged). In production, checkout stays closed — with a clear message — until Paystack is connected.
+- **Modes** (`lib/commerce/checkout-mode.ts`): *live* with a database and Paystack keys; *orders-only* with a database but no keys (development only — clearly labelled test orders, nothing charged); otherwise checkout stays closed with a clear message.
+
+## Payments (Paystack)
+
+1. **Start.** Placing an order starts a Paystack transaction for the order's stored total (kobo, NGN) with a fresh reference, and sends the shopper to Paystack's hosted checkout. Card details never touch this site.
+2. **Return.** Paystack sends the shopper to `/api/payments/paystack/return`, which verifies the transaction with Paystack's API and only then updates the order, before showing its private page. The redirect alone proves nothing.
+3. **Webhook.** `POST /api/webhooks/paystack` does the same independently, so an order is confirmed even if the shopper closes the tab. The HMAC-SHA512 signature must match; each delivery is recorded once; the body is only a trigger — the payment is re-verified with the API before anything changes.
+4. **Confirm once.** A payment confirms only on an exact match (our reference, NGN, the exact amount). The first of return, webhook or retry to claim it does the work: held stock becomes sold stock, the order becomes `PAID`, and the timeline records it. A payment that arrives after the hold lapsed keeps the sale if every piece is still free; otherwise — and for a second successful payment on a paid order — the order is flagged for a refund.
+5. **Try again.** If payment fails or is abandoned, the order keeps its hold and its private page offers *Pay with Paystack* until the hold ends.
+
+**Setup**
+
+- Add `PAYSTACK_SECRET_KEY` and `NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY` to `.env.local` and to Vercel. Test keys (`sk_test_…`) run in Paystack's sandbox: checkout and order pages say so, and payments are stored with `isTest`.
+- In the Paystack dashboard (*Settings → API Keys & Webhooks*), set the webhook URL to `https://<your-domain>/api/webhooks/paystack`.
+- Locally, Paystack can't reach your machine's webhook, so the return link confirms payments. To try it: place an order, pay on Paystack's page with one of the test cards from Paystack's documentation, and you'll land back on the order page, confirmed.
+- Refunds are issued from the Paystack dashboard for now; the admin phase adds them to the order screen.
 
 **On Vercel:** add the Neon integration (or set `DATABASE_URL` and `DATABASE_URL_UNPOOLED` yourself). `postinstall` runs `prisma generate`. Apply migrations deliberately with `npm run db:deploy` against production rather than on every build, so preview deployments can never alter the production schema.
 
@@ -160,7 +175,7 @@ These are deliberately obvious stand-ins. None of them should reach production a
 3. ~~Shop, categories, collections, filtering, search~~
 4. ~~Product details, variants, size guide~~
 5. ~~Cart page & checkout (validated delivery details, server-side totals & delivery fees)~~ — orders and stock holds work; payment is step 6
-6. Paystack end-to-end (initialise → verify → webhook → idempotent order confirmation)
+6. ~~Paystack end-to-end (initialise → verify → webhook → idempotent order confirmation)~~
 7. Authentication & customer accounts, server-side wishlist
 8. PostgreSQL / Prisma persistence, Cloudinary media
 9. Admin dashboard

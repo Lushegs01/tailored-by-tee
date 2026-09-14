@@ -32,7 +32,9 @@ import { CheckoutSummary } from "./checkout-summary";
 import { useCheckoutQuote } from "./use-checkout-quote";
 
 export interface CheckoutViewProps {
-  mode: "orders-only" | "unavailable";
+  mode: "live" | "orders-only" | "unavailable";
+  /** Paystack test keys: say plainly that no real money moves. */
+  testPayments: boolean;
   reservationMinutes: number;
   pickup: { name: string; estimate: string; address: string } | null;
   /** Lowest delivery fee, for "From ₦3,500" before a state is chosen. */
@@ -54,7 +56,7 @@ export function CheckoutView(props: CheckoutViewProps) {
   const cart = useCart();
   const router = useRouter();
   const mounted = useHasMounted();
-  const [redirecting, setRedirecting] = React.useState(false);
+  const [redirecting, setRedirecting] = React.useState<string | null>(null);
 
   if (props.mode === "unavailable") {
     return (
@@ -75,7 +77,7 @@ export function CheckoutView(props: CheckoutViewProps) {
     );
   }
 
-  if (!mounted || redirecting) return <CheckoutSkeleton label={redirecting ? "Opening your order" : "Loading checkout"} />;
+  if (!mounted || redirecting) return <CheckoutSkeleton label={redirecting ?? "Loading checkout"} />;
 
   if (cart.lines.length === 0) {
     return (
@@ -99,10 +101,12 @@ export function CheckoutView(props: CheckoutViewProps) {
     <CheckoutForm
       {...props}
       lines={cart.lines}
-      onPlaced={(url) => {
-        setRedirecting(true);
+      onPlaced={(url, external) => {
+        // The order now holds these pieces, so the bag is done with either way.
+        setRedirecting(external ? "Taking you to Paystack" : "Opening your order");
         cart.clear();
-        router.replace(url);
+        if (external) window.location.assign(url);
+        else router.replace(url);
       }}
       onBagChanged={() => cart.refresh?.()}
     />
@@ -112,6 +116,7 @@ export function CheckoutView(props: CheckoutViewProps) {
 function CheckoutForm({
   lines,
   mode,
+  testPayments,
   reservationMinutes,
   pickup,
   deliveryFromFee,
@@ -119,7 +124,7 @@ function CheckoutForm({
   onBagChanged,
 }: CheckoutViewProps & {
   lines: CartLineInput[];
-  onPlaced: (url: string) => void;
+  onPlaced: (url: string, external: boolean) => void;
   onBagChanged: () => void;
 }) {
   // Rendered only after mount, so reading the tab's draft here can't cause a hydration mismatch.
@@ -180,7 +185,7 @@ function CheckoutForm({
 
       if (result.ok) {
         clearCheckoutDraft();
-        onPlaced(result.redirectTo);
+        onPlaced(result.redirectTo, result.external);
         return;
       }
       setErrors(result.fieldErrors ?? {});
@@ -207,7 +212,7 @@ function CheckoutForm({
       ? `${quote.delivery.fee === 0 ? "Free" : formatPrice(quote.delivery.fee)} · ${quote.delivery.estimate}`
       : `From ${formatPrice(deliveryFromFee)} · fee depends on your state`;
   const total = quote ? formatPrice(quote.totals.total) : null;
-  const submitLabel = mode === "orders-only" ? "Place test order" : "Pay";
+  const submitLabel = mode === "live" ? "Pay" : "Place test order";
 
   return (
     <form
@@ -400,9 +405,19 @@ function CheckoutForm({
               </p>
             </div>
           ) : null}
+          {mode === "live" && testPayments ? (
+            <div className="mb-6 border border-accent-brand/40 bg-surface px-4 py-3 text-body-sm">
+              <p className="text-eyebrow text-accent-brand">Paystack test mode</p>
+              <p className="mt-1">
+                Payments go through Paystack&rsquo;s sandbox: use one of Paystack&rsquo;s test cards. No real money
+                moves.
+              </p>
+            </div>
+          ) : null}
           <p className="text-body-sm text-muted-foreground">
-            You&rsquo;ll pay securely with Paystack — card, bank transfer or USSD. We never see or store your card
-            details.
+            {mode === "live"
+              ? `You’ll pay on Paystack’s secure page — card, bank transfer or USSD — and come straight back here. We hold your pieces for ${reservationMinutes} minutes while you pay, and never see or store your card details.`
+              : "You’ll pay securely with Paystack — card, bank transfer or USSD. We never see or store your card details."}
           </p>
 
           <Button type="submit" size="lg" fullWidth disabled={submitting} aria-busy={submitting || undefined} className="mt-8">

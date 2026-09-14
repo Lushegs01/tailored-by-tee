@@ -4,7 +4,7 @@ import { CheckoutView } from "@/components/checkout/checkout-view";
 import { Container } from "@/components/ui/container";
 import { deliveryPolicy } from "@/config/policies";
 import { siteConfig } from "@/config/site";
-import { getCheckoutMode } from "@/lib/commerce/checkout-mode";
+import { getCheckoutMode, paymentsAreTest } from "@/lib/commerce/checkout-mode";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -24,6 +24,7 @@ export default function CheckoutPage() {
       <h1 className="mb-10 font-display text-display-sm md:mb-14">Checkout</h1>
       <CheckoutView
         mode={getCheckoutMode()}
+        testPayments={paymentsAreTest()}
         reservationMinutes={siteConfig.commerce.reservationMinutes}
         pickup={pickup}
         deliveryFromFee={Math.min(...deliveryPolicy.zones.map((zone) => zone.fee))}
