@@ -3,7 +3,7 @@
 A premium single-brand fashion storefront for a Lagos clothing label. Editorial in presentation, rigorous in commerce: server-priced carts, variant-level inventory, Paystack payments.
 
 > **Status: Phases 1–4 of 12 complete** — design system, homepage, shop / categories / collections with filters and sort, search, product pages with variant selection and size guides, cart drawer. All running on a typed seed catalogue.
-> **Next:** checkout, then persistence (PostgreSQL + Prisma) and Paystack. See [Roadmap](#roadmap).
+> **In progress:** persistence on Neon PostgreSQL + Prisma (schema, migration, seed and database-backed catalogue are in; see [Database](#database-neon--prisma)). **Next:** checkout, then Paystack. See [Roadmap](#roadmap).
 
 ## Stack
 
@@ -14,7 +14,7 @@ A premium single-brand fashion storefront for a Lagos clothing label. Editorial 
 | Primitives | Radix UI (`radix-ui`), shadcn/ui-compatible tokens (`components.json`) |
 | Motion     | Motion v13 via `LazyMotion` + `m.*`                                    |
 | Validation | Zod                                                                    |
-| Data       | Seed-backed repository → PostgreSQL + Prisma (planned)                 |
+| Data       | PostgreSQL on Neon + Prisma 7 (Neon driver adapter); seed catalogue when no database is configured |
 | Payments   | Paystack (planned) · amounts in kobo end-to-end                        |
 | Media      | Placeholder Unsplash manifest → Cloudinary (planned)                   |
 
@@ -28,6 +28,28 @@ npm run build
 ```
 
 Set `NEXT_PUBLIC_SITE_URL` in production so canonical URLs and structured data resolve correctly.
+
+## Database (Neon + Prisma)
+
+The storefront runs without a database — it falls back to the typed seed catalogue — so a fresh clone works immediately. To run it on PostgreSQL:
+
+1. **Connection strings.** Copy `.env.example` to `.env.local` and fill in both Neon URLs from the Neon console (*Connect → Prisma*):
+   - `DATABASE_URL` — the **pooled** string (host contains `-pooler`), used by the running app.
+   - `DATABASE_URL_UNPOOLED` — the **direct** string, used by migrations and the seed script.
+2. **Create the tables:** `npm run db:deploy` applies `prisma/migrations` (tables, indexes, and CHECK constraints that stop negative stock, overselling and inconsistent totals).
+3. **Load the demo catalogue:** `npm run db:seed`. Safe to re-run: content is updated, but stock is only set for new variants, so it never resets a trading store's inventory.
+4. Restart `npm run dev`. With `DATABASE_URL` set, the catalogue now comes from Neon (override with `CATALOG_SOURCE=seed|database`).
+
+| Script              | Does                                                                 |
+| ------------------- | -------------------------------------------------------------------- |
+| `npm run db:migrate`| Create a new migration after editing `prisma/schema.prisma` (development) |
+| `npm run db:deploy` | Apply pending migrations (CI / production)                           |
+| `npm run db:seed`   | Load or refresh the demo catalogue                                   |
+| `npm run db:studio` | Browse the data in Prisma Studio                                     |
+
+How it fits together: `prisma/schema.prisma` is the data model; `src/lib/db.ts` is the one client (Neon adapter, pooled URL); `src/lib/catalog/sources/` loads the catalogue from the database or the seed files into one snapshot shape, cached under the `catalog` tag (refreshed every 5 minutes, or at once with `revalidateTag("catalog")`). **Stock that decides a purchase is never read from that cache** — cart quotes read live inventory.
+
+**On Vercel:** add the Neon integration (or set `DATABASE_URL` and `DATABASE_URL_UNPOOLED` yourself). `postinstall` runs `prisma generate`. Apply migrations deliberately with `npm run db:deploy` against production rather than on every build, so preview deployments can never alter the production schema.
 
 ## Routes
 
