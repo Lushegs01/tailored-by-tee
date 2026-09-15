@@ -14,6 +14,7 @@ import { requireUser } from "@/lib/auth/session";
 import { pluralize } from "@/lib/format";
 import { accountOrderPath } from "@/lib/orders/account-payment";
 import { listOrdersForUser, type OrderSummary } from "@/lib/orders/queries";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Your orders",
@@ -45,7 +46,7 @@ export default async function AccountOrdersPage() {
           size="sm"
           className="mt-10 border-t pt-8 md:mt-14"
           title="No orders *yet.*"
-          body="Ordered with a different email? The private link in its confirmation email still opens it."
+          body="Ordered with a different email? Sign in with that address to see it."
           actions={
             <Button asChild arrow>
               <Link href="/shop">Browse the shop</Link>
@@ -107,10 +108,16 @@ function OrderRow({ order, now }: { order: OrderSummary; now: Date }) {
 
       <Price amount={order.total} className="justify-self-end text-body-sm md:order-4 md:w-28 md:justify-end" />
 
-      <div className="col-span-2 flex items-end justify-between gap-4 md:contents">
-        <div className="flex gap-2 md:order-1 md:w-40" aria-hidden="true">
+      {/* Wraps rather than overflows at 320px, where a long status badge needs the whole row. */}
+      <div className="col-span-2 flex flex-wrap items-end justify-between gap-x-4 gap-y-3 md:contents">
+        {/* First piece on phones; up to three from sm, as on the overview. */}
+        <div className="flex min-w-0 gap-2 md:order-1 md:w-40" aria-hidden="true">
           {order.previewItems.map((item, index) => (
-            <OrderThumbnail key={`${item.name}-${index}`} imageUrl={item.imageUrl} className="w-12" />
+            <OrderThumbnail
+              key={`${item.name}-${index}`}
+              imageUrl={item.imageUrl}
+              className={cn("w-12", index > 0 && "hidden sm:block")}
+            />
           ))}
         </div>
         <div className="md:order-3 md:w-40">

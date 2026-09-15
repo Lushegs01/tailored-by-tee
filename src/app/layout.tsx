@@ -7,6 +7,7 @@ import { AppProviders } from "@/components/providers/app-providers";
 import { SearchOverlay } from "@/components/search/search-overlay";
 import { JsonLd, organizationJsonLd } from "@/components/seo/json-ld";
 import { siteConfig } from "@/config/site";
+import { accountsEnabled } from "@/lib/auth/config";
 import { fontVariables } from "@/lib/fonts";
 
 import "./globals.css";
@@ -48,7 +49,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <AppProviders>
+        {/* Configuration only (is sign-in possible at all), so every page stays static. */}
+        <AppProviders accounts={accountsEnabled}>
           <SiteHeader />
           <main id="main" tabIndex={-1} className="outline-none">
             {children}

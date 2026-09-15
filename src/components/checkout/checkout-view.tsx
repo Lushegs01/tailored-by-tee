@@ -596,7 +596,8 @@ function ChoiceOption({
   );
 }
 
-function CheckoutSkeleton({ label }: { label: string }) {
+/** The form-and-summary geometry while checkout loads; also the route's loading state. */
+export function CheckoutSkeleton({ label }: { label: string }) {
   return (
     <div role="status" className="lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16">
       <span className="sr-only">{label}</span>

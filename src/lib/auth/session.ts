@@ -1,10 +1,12 @@
 import "server-only";
 
 import { cache } from "react";
+import { cookies } from "next/headers";
 import { redirect, unstable_rethrow } from "next/navigation";
+import { connection } from "next/server";
 
 import { auth } from "@/auth";
-import { isDatabaseConfigured } from "@/lib/db";
+import { accountsEnabled } from "@/lib/auth/config";
 
 /*
  * The signed-in customer, for server components, server actions and route
@@ -24,9 +26,13 @@ export interface CurrentUser {
  * signed out rather than throwing; only Next's own control-flow signals pass
  * through (e.g. "this route reads request headers", raised while prerendering),
  * so a page that reads the session is correctly left dynamic.
+ *
+ * Always per request — even with accounts switched off, when there is no session
+ * to read — so account pages never become prerendered pages.
  */
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
-  if (!isDatabaseConfigured()) return null;
+  await connection();
+  if (!accountsEnabled) return null;
   try {
     const session = await auth();
     const user = session?.user;
@@ -69,6 +75,29 @@ export function safeReturnPath(value: unknown, fallback = "/account"): string {
 
 export function signInPath(returnTo: string): string {
   return `/account/sign-in?callbackUrl=${encodeURIComponent(safeReturnPath(returnTo))}`;
+}
+
+const SIGN_IN_RETURN_COOKIE = "tbt_signin_return";
+
+/**
+ * Remembers where a sign-in started. Auth.js's error redirects (an expired link,
+ * a cancelled Google sign-in) land on the sign-in page without the return path,
+ * so the page falls back to this. Server actions only.
+ */
+export async function rememberSignInReturn(path: string): Promise<void> {
+  (await cookies()).set(SIGN_IN_RETURN_COOKIE, safeReturnPath(path), {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/account/sign-in",
+    maxAge: 60 * 60,
+  });
+}
+
+/** The return path remembered by rememberSignInReturn, if any (already checked to be same-site). */
+export async function recalledSignInReturn(): Promise<string | undefined> {
+  const value = (await cookies()).get(SIGN_IN_RETURN_COOKIE)?.value;
+  return value ? safeReturnPath(value) : undefined;
 }
 
 /** The signed-in user, or a redirect to sign in (coming back to `returnTo` afterwards). */

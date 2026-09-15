@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { enabledSignInMethods } from "@/auth";
-import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { TextLink } from "@/components/ui/text-link";
-import { getCurrentUser, safeReturnPath } from "@/lib/auth/session";
+import { enabledSignInMethods } from "@/lib/auth/config";
+import { getCurrentUser, recalledSignInReturn, safeReturnPath } from "@/lib/auth/session";
+import { signInLinkLifetime } from "@/lib/email/sign-in-email";
 
 import { signInWithGoogle } from "./actions";
 import { EmailSignInForm } from "./email-sign-in-form";
+import { GoogleSignInSubmit } from "./google-sign-in-submit";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -16,21 +17,36 @@ export const metadata: Metadata = {
 };
 
 /** Auth.js error codes, in words a customer can act on. Unknown codes get the generic line. */
-const ERRORS: Record<string, string> = {
-  Verification: "That sign-in link has expired or has already been used. Request a new one below.",
-  OAuthAccountNotLinked: "That email is already linked to another sign-in method. Use the one you signed up with.",
-  AccessDenied: "Sign-in was cancelled.",
-  Configuration: "Sign-in isn’t available right now. Please try again soon.",
-};
+function errorMessage(code: string, emailOffered: boolean): string {
+  switch (code) {
+    case "Verification":
+      return "That sign-in link has expired or has already been used. Request a new one below.";
+    case "OAuthAccountNotLinked":
+      return "That email is already linked to another sign-in method. Use the one you signed up with.";
+    case "OAuthCallbackError":
+      return "Google sign-in was cancelled or didn’t finish. Please try again.";
+    case "AccessDenied":
+      // Only Google is ever refused on this page: its email address wasn't confirmed by Google.
+      return `We couldn’t sign you in with that Google account, as Google hasn’t confirmed its email address.${
+        emailOffered ? " Try the email link instead." : ""
+      }`;
+    case "Configuration":
+      return "Sign-in isn’t available right now. Please try again soon.";
+    default:
+      return "We couldn’t sign you in. Please try again.";
+  }
+}
 
 export default async function SignInPage({ searchParams }: PageProps<"/account/sign-in">) {
   const params = await searchParams;
-  const callbackUrl = safeReturnPath(typeof params.callbackUrl === "string" ? params.callbackUrl : undefined);
+  const errorCode = typeof params.error === "string" ? params.error : null;
+  const requested = typeof params.callbackUrl === "string" ? params.callbackUrl : undefined;
+  // Auth.js's error redirects drop the return path; the sign-in action remembered it.
+  const callbackUrl = safeReturnPath(requested ?? (errorCode ? await recalledSignInReturn() : undefined));
   if (await getCurrentUser()) redirect(callbackUrl);
 
-  const errorCode = typeof params.error === "string" ? params.error : null;
-  const error = errorCode ? (ERRORS[errorCode] ?? "We couldn’t sign you in. Please try again.") : null;
   const { google, email } = enabledSignInMethods;
+  const error = errorCode ? errorMessage(errorCode, email) : null;
 
   return (
     <Container className="pt-12 pb-24 md:pt-20 md:pb-32">
@@ -53,9 +69,7 @@ export default async function SignInPage({ searchParams }: PageProps<"/account/s
             {google ? (
               <form action={signInWithGoogle}>
                 <input type="hidden" name="callbackUrl" value={callbackUrl} />
-                <Button type="submit" variant="outline" size="lg" fullWidth>
-                  Continue with Google
-                </Button>
+                <GoogleSignInSubmit />
               </form>
             ) : null}
 
@@ -67,7 +81,7 @@ export default async function SignInPage({ searchParams }: PageProps<"/account/s
               </div>
             ) : null}
 
-            {email ? <EmailSignInForm callbackUrl={callbackUrl} /> : null}
+            {email ? <EmailSignInForm callbackUrl={callbackUrl} linkLifetime={signInLinkLifetime()} /> : null}
           </div>
         ) : (
           <p className="mt-10 border px-4 py-3 text-body-sm">
