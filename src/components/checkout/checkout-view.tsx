@@ -28,6 +28,18 @@ import {
   type CheckoutFormState,
 } from "./checkout-draft";
 import { SelectField, TextareaField, TextField } from "./checkout-field";
+import {
+  EMPTY_ADDRESS,
+  addressFields,
+  addressOf,
+  hasAddress,
+  initialCheckoutForm,
+  matchingAddressId,
+  phoneForField,
+  type AddressFields,
+  type CheckoutPrefill,
+  type SavedAddress,
+} from "./checkout-prefill";
 import { CheckoutSummary } from "./checkout-summary";
 import { useCheckoutQuote } from "./use-checkout-quote";
 
@@ -40,6 +52,8 @@ export interface CheckoutViewProps {
   /** Lowest delivery fee, for "From ₦3,500" before a state is chosen. */
   deliveryFromFee: number;
   supportEmail: string;
+  /** A signed-in customer's details; fills only what the tab's draft left empty. Absent for guests. */
+  prefill?: CheckoutPrefill;
 }
 
 type FieldErrors = Partial<Record<CheckoutField, string>>;
@@ -120,6 +134,7 @@ function CheckoutForm({
   reservationMinutes,
   pickup,
   deliveryFromFee,
+  prefill,
   onPlaced,
   onBagChanged,
 }: CheckoutViewProps & {
@@ -128,11 +143,17 @@ function CheckoutForm({
   onBagChanged: () => void;
 }) {
   // Rendered only after mount, so reading the tab's draft here can't cause a hydration mismatch.
-  const [form, setForm] = React.useState<CheckoutFormState>(loadCheckoutDraft);
+  const [form, setForm] = React.useState<CheckoutFormState>(() => initialCheckoutForm(loadCheckoutDraft(), prefill));
   const [errors, setErrors] = React.useState<FieldErrors>({});
   const [formError, setFormError] = React.useState<{ message: string; code: string } | null>(null);
+  const [addressNotice, setAddressNotice] = React.useState("");
   const [submitting, startSubmitting] = React.useTransition();
   const errorRef = React.useRef<HTMLDivElement>(null);
+  /** An address typed by hand, kept while a saved one is chosen so "Use a new address" brings it back. */
+  const typedAddress = React.useRef<AddressFields | null>(null);
+
+  const savedAddresses = prefill?.addresses ?? [];
+  const selectedAddressId = matchingAddressId(form, savedAddresses);
 
   React.useEffect(() => saveCheckoutDraft(form), [form]);
 
@@ -145,14 +166,39 @@ function CheckoutForm({
     email: form.email.trim() || null,
   });
 
-  function set<K extends keyof CheckoutFormState>(key: K, value: CheckoutFormState[K]) {
-    setForm((current) => ({ ...current, [key]: value }));
+  /** Changes some fields and clears their errors. */
+  function update(patch: Partial<CheckoutFormState>) {
+    setForm((current) => ({ ...current, ...patch }));
     setErrors((current) => {
-      if (!(key in current)) return current;
+      const cleared = Object.keys(patch).filter((key) => key in current);
+      if (cleared.length === 0) return current;
       const next = { ...current };
-      delete next[key as CheckoutField];
+      for (const key of cleared) delete next[key as CheckoutField];
       return next;
     });
+  }
+
+  function set<K extends keyof CheckoutFormState>(key: K, value: CheckoutFormState[K]) {
+    update({ [key]: value } as Partial<CheckoutFormState>);
+  }
+
+  function chooseSavedAddress(address: SavedAddress, title: string) {
+    // Stepping through the list (arrow keys move and select at once) must never lose a hand-typed address.
+    if (selectedAddressId === null && hasAddress(form)) typedAddress.current = addressOf(form);
+    update({
+      ...addressFields(address),
+      // Contact details the customer has already entered are theirs to keep; only gaps are filled.
+      ...(form.fullName.trim() ? {} : { fullName: address.fullName }),
+      ...(form.phone.trim() ? {} : { phone: phoneForField(address.phone) }),
+    });
+    setAddressNotice(`Delivery address filled in from ${title}. You can still edit it.`);
+  }
+
+  function chooseNewAddress() {
+    const typed = typedAddress.current;
+    typedAddress.current = null;
+    update(typed ?? EMPTY_ADDRESS);
+    setAddressNotice(typed ? "The address you typed earlier is back in the fields." : "Address fields cleared for a new address.");
   }
 
   function showFormError(message: string, code: string) {
@@ -306,14 +352,16 @@ function CheckoutForm({
           <fieldset>
             <legend className="sr-only">How would you like to receive your order?</legend>
             <div className={cn("grid gap-3", pickup && "sm:grid-cols-2")}>
-              <MethodOption
+              <ChoiceOption
+                name="checkout-delivery-method"
                 checked={delivery}
                 onSelect={() => set("deliveryMethod", "delivery")}
                 title="Deliver to an address"
                 detail={deliveryDetail}
               />
               {pickup ? (
-                <MethodOption
+                <ChoiceOption
+                  name="checkout-delivery-method"
                   checked={!delivery}
                   onSelect={() => set("deliveryMethod", "pickup")}
                   title={pickup.name}
@@ -322,6 +370,36 @@ function CheckoutForm({
               ) : null}
             </div>
           </fieldset>
+
+          {delivery && savedAddresses.length > 0 ? (
+            <fieldset className="mt-8">
+              <legend className="text-label">Saved addresses</legend>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {savedAddresses.map((address) => {
+                  const title = address.label?.trim() || address.fullName;
+                  return (
+                    <ChoiceOption
+                      key={address.id}
+                      name="checkout-saved-address"
+                      checked={selectedAddressId === address.id}
+                      onSelect={() => chooseSavedAddress(address, title)}
+                      title={title}
+                      detail={`${address.line1}, ${address.city}`}
+                    />
+                  );
+                })}
+                <ChoiceOption
+                  name="checkout-saved-address"
+                  checked={selectedAddressId === null}
+                  onSelect={chooseNewAddress}
+                  title="Use a new address"
+                />
+              </div>
+              <p aria-live="polite" className="sr-only">
+                {addressNotice}
+              </p>
+            </fieldset>
+          ) : null}
 
           {delivery ? (
             <div className="mt-8 grid gap-5 sm:grid-cols-2">
@@ -477,16 +555,19 @@ function Section({
   );
 }
 
-function MethodOption({
+/** One option of a radio group drawn as a bordered choice (delivery method, saved address). */
+function ChoiceOption({
+  name,
   checked,
   onSelect,
   title,
   detail,
 }: {
+  name: string;
   checked: boolean;
   onSelect: () => void;
   title: string;
-  detail: string;
+  detail?: string;
 }) {
   return (
     <label
@@ -498,14 +579,14 @@ function MethodOption({
     >
       <input
         type="radio"
-        name="checkout-delivery-method"
+        name={name}
         checked={checked}
         onChange={onSelect}
         className="mt-0.5 size-4 shrink-0 appearance-none rounded-full border border-border-strong transition-[border-width,border-color] duration-200 checked:border-[5px] checked:border-foreground focus-visible:outline-none"
       />
-      <span>
+      <span className="min-w-0 break-words">
         <span className="block text-body-sm font-medium">{title}</span>
-        <span className="mt-1 block text-caption text-muted-foreground">{detail}</span>
+        {detail ? <span className="mt-1 block text-caption text-muted-foreground">{detail}</span> : null}
       </span>
     </label>
   );

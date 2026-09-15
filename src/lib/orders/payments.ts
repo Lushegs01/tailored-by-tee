@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Prisma } from "@/generated/prisma/client";
 import { getDb } from "@/lib/db";
+import { scheduleOrderConfirmationEmail } from "@/lib/email/order-emails";
 import { createPaymentReference, evaluatePayment, type PaystackTransaction } from "@/lib/payments/paystack-core";
 import { initializeTransaction, isPaystackTestMode, verifyTransaction } from "@/lib/payments/paystack";
 
@@ -123,8 +124,12 @@ export async function settlePayment(reference: string): Promise<SettleOutcome> {
         data: { status: outcome === "failed" ? "FAILED" : "ABANDONED", ...gateway },
       });
       return outcome;
-    case "confirmed":
-      return confirmPayment(payment.id, payment.orderId, reference, transaction, gateway);
+    case "confirmed": {
+      const settled = await confirmPayment(payment.id, payment.orderId, reference, transaction, gateway);
+      // This call won the claim and the order is now paid: confirm by email after the response. Never throws.
+      if (settled === "paid" || settled === "paid_after_release") scheduleOrderConfirmationEmail(payment.orderId);
+      return settled;
+    }
     default: {
       // Money may have moved, but not what we asked for: never confirm; record it for a person to resolve.
       const note = `Rejected (${outcome}): Paystack reported ${transaction.status}, ${transaction.amount} ${transaction.currency}; expected ${payment.amount} ${payment.currency}.`;

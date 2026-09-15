@@ -35,6 +35,12 @@ export interface PlaceOrderInput {
   couponCode: string | null;
   /** Random id of this browser checkout session. */
   checkoutSession: string;
+  /**
+   * The signed-in customer placing the order (from the server-side session, never
+   * the browser), or null for a guest. Deliberately not part of the idempotency
+   * key: the same checkout submitted twice is one order either way.
+   */
+  userId: string | null;
 }
 
 export interface PlacedOrder {
@@ -124,6 +130,7 @@ export async function placeOrder(input: PlaceOrderInput, now = new Date()): Prom
       const order = await tx.order.create({
         data: {
           number: orderNumber,
+          userId: input.userId,
           email: details.email,
           phone: details.phone,
           customerName: details.fullName,

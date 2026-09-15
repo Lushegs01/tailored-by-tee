@@ -16,6 +16,7 @@ import {
 import type { DeliveryQuote } from "@/lib/commerce/delivery";
 import type { OrderTotals } from "@/lib/commerce/totals";
 import type { CartQuote } from "@/lib/catalog/types";
+import { getCurrentUser } from "@/lib/auth/session";
 import { orderStatusPath } from "@/lib/orders/access";
 import { placeOrder, type PlacedOrder } from "@/lib/orders/create-order";
 import { CheckoutError } from "@/lib/orders/errors";
@@ -122,6 +123,9 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
     };
   }
 
+  // The account comes from the session cookie on the server, never from the request body. Guests are null.
+  const user = await getCurrentUser();
+
   let placed: PlacedOrder;
   try {
     placed = await placeOrder({
@@ -129,6 +133,7 @@ export async function placeOrderAction(input: unknown): Promise<PlaceOrderResult
       lines: envelope.data.lines,
       couponCode: envelope.data.couponCode || null,
       checkoutSession: envelope.data.checkoutSession,
+      userId: user?.id ?? null,
     });
   } catch (error) {
     if (error instanceof CheckoutError) return { ok: false, code: error.code, message: error.message };
