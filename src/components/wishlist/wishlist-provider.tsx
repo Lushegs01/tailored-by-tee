@@ -127,6 +127,13 @@ function restore(productId: string, baseline: PendingChange["baseline"]) {
   });
 }
 
+/** Undoes every unconfirmed change, lowest position first so re-inserted pieces land where they were. */
+function restoreAll(pending: Map<string, PendingChange>) {
+  const changes = [...pending].sort(([, a], [, b]) => a.baseline.index - b.baseline.index);
+  pending.clear();
+  for (const [productId, change] of changes) restore(productId, change.baseline);
+}
+
 function nextUnsent(pending: ReadonlyMap<string, PendingChange>): [string, PendingChange] | null {
   for (const entry of pending) {
     if (entry[1].sentSeq !== entry[1].seq) return entry;
@@ -160,15 +167,20 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const syncingRef = React.useRef(false);
   /** The user this tab has synced, or is syncing, with. */
   const syncedUserRef = React.useRef<string | null>(null);
-  /** Set once the server has said the session is gone, until the account state catches up. */
-  const nudgedRef = React.useRef(false);
+  /** Set while the session is being re-checked, so a burst of refusals asks only once. */
+  const refreshingRef = React.useRef(false);
 
   const refreshSession = React.useCallback(() => {
-    if (nudgedRef.current) return;
-    nudgedRef.current = true;
-    // The server says this session has ended: have the session provider fetch it
-    // again, so the account state — and with it this list — catches up.
-    void getSession().catch(() => null);
+    if (refreshingRef.current) return;
+    refreshingRef.current = true;
+    // The server no longer sees a session: have the session provider fetch it again
+    // (getSession broadcasts to it), so the account state catches up. If the session
+    // really has ended, the sign-out handling below clears this list.
+    void getSession()
+      .catch(() => null)
+      .finally(() => {
+        refreshingRef.current = false;
+      });
   }, []);
 
   /** Sends this tab's unconfirmed changes to the server, one at a time and in order. */
@@ -194,7 +206,17 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
           // A newer change is waiting; if it fails, this is the state to return to.
           else if (latest) latest.baseline = { saved, index: 0 };
         } else if (result.reason === "signed-out") {
-          if (latest?.seq === seq) latest.sentSeq = null;
+          // Without a session nothing queued can be saved: undo it all rather than leave
+          // it showing unsaved, and have the account state re-checked.
+          const several = pendingRef.current.size > 1;
+          restoreAll(pendingRef.current);
+          announce(
+            several
+              ? "We couldn’t update your wishlist. Please try again."
+              : saved
+                ? "We couldn’t save that to your wishlist. Please try again."
+                : "We couldn’t remove that from your wishlist. Please try again.",
+          );
           refreshSession();
           break;
         } else if (latest?.seq === seq) {
@@ -254,10 +276,9 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
           void flush();
           return;
         }
-        if (result.reason === "signed-out") {
-          refreshSession();
-          return;
-        }
+        // The server doesn't see the session: re-check it. A real sign-out moves this
+        // tab to a new generation, which ends this loop; a passing fault is retried.
+        if (result.reason === "signed-out") refreshSession();
         // Keep what's on screen, and let this tab's own changes through meanwhile.
         void flush();
         if (attempt >= SYNC_RETRY_DELAYS_MS.length) return;
@@ -274,7 +295,6 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     modeRef.current = "local";
     syncedUserRef.current = null;
     syncingRef.current = false;
-    nudgedRef.current = false;
     pendingRef.current.clear();
     // A list mirrored from an account leaves with the account; a guest's own list stays.
     if (wasSignedIn || ownerStore.get() !== null) {
@@ -284,7 +304,6 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   });
 
   const onSignedIn = React.useEffectEvent((signedInId: string) => {
-    nudgedRef.current = false;
     if (syncedUserRef.current === signedInId) return;
 
     const storedOwner = ownerStore.get();

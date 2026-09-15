@@ -17,6 +17,12 @@ import { CheckoutError } from "./errors";
  * never from the browser, and never from a webhook body alone — and applies it
  * exactly once: a conditional claim on the payment row means callback, webhook
  * and retries can arrive in any order, any number of times.
+ *
+ * A hold guarantees stock; it is not a payment deadline. A payment that completes
+ * after `reservedUntil` while the order is still PENDING (not yet swept) is accepted:
+ * its pieces were still held for it, so no one else could have bought them. Only
+ * once a hold has been released — its stock back on sale — does a late payment
+ * have to find every piece still free, or be flagged for a refund.
  */
 
 const TRANSACTION = { maxWait: 10_000, timeout: 20_000 } as const;
@@ -197,11 +203,13 @@ async function confirmPayment(
 
     const order = await tx.order.findUniqueOrThrow({
       where: { id: orderId },
-      select: { status: true, items: { select: { variantId: true, quantity: true } } },
+      select: { status: true, reservedUntil: true, items: { select: { variantId: true, quantity: true } } },
     });
     const lines = order.items.flatMap((item) => (item.variantId ? [{ variantId: item.variantId, quantity: item.quantity }] : []));
 
-    if (order.status === "PENDING") {
+    let status = order.status;
+
+    if (status === "PENDING") {
       const promoted = await tx.order.updateMany({
         where: { id: orderId, status: "PENDING" },
         data: { status: "PAID", paymentStatus: "SUCCESS", paidAt, reservedUntil: null },
@@ -224,14 +232,32 @@ async function confirmPayment(
             note: `Sold on payment ${reference}`,
           })),
         });
+        // Past the deadline but not yet swept: the pieces were still held for this order (see header).
+        const late = order.reservedUntil !== null && paidAt > order.reservedUntil;
         await tx.orderEvent.create({
-          data: { orderId, type: "payment_confirmed", fromStatus: "PENDING", toStatus: "PAID", note: `Paid via Paystack${how ? ` (${how})` : ""}; ${reference}.` },
+          data: {
+            orderId,
+            type: "payment_confirmed",
+            fromStatus: "PENDING",
+            toStatus: "PAID",
+            note: [
+              `Paid via Paystack${how ? ` (${how})` : ""}; ${reference}.`,
+              late ? "Completed after the hold deadline; the pieces were still held for this order." : null,
+            ]
+              .filter(Boolean)
+              .join(" "),
+          },
         });
         return "paid";
       }
+
+      // A sweep released the order between our read and this claim: the update waited for
+      // the sweep's lock, then matched nothing. Re-read, so the payment takes the
+      // after-release path below instead of being mistaken for a duplicate.
+      status = (await tx.order.findUniqueOrThrow({ where: { id: orderId }, select: { status: true } })).status;
     }
 
-    if (order.status === "CANCELLED") {
+    if (status === "CANCELLED") {
       // Paid after the hold lapsed. Keep the sale only if every piece is still free; otherwise undo and refund.
       const sold: typeof lines = [];
       for (const line of lines) {

@@ -71,18 +71,41 @@ function sanitize(value: unknown): CheckoutFormState {
   };
 }
 
-export function loadCheckoutDraft(): CheckoutFormState {
+/**
+ * Who a draft belongs to: the signed-in account's email, or null for a guest.
+ * A draft written while signed in holds that account's details (prefilled or
+ * typed), so it is dropped as soon as someone else is at checkout in the tab —
+ * signed out on a shared device, or another account. A guest's draft carries
+ * into a sign-in, so signing in part-way through checkout loses nothing.
+ */
+export type DraftOwner = string | null;
+
+function ownerOf(value: unknown): DraftOwner {
+  if (!value || typeof value !== "object") return null;
+  const owner = (value as Record<string, unknown>).owner;
+  return typeof owner === "string" && owner !== "" ? owner : null;
+}
+
+export function loadCheckoutDraft(owner: DraftOwner): CheckoutFormState {
   try {
     const raw = tabStorage()?.getItem(DRAFT_KEY);
-    return raw ? sanitize(JSON.parse(raw)) : EMPTY_CHECKOUT_FORM;
+    if (!raw) return EMPTY_CHECKOUT_FORM;
+    const stored: unknown = JSON.parse(raw);
+    const storedOwner = ownerOf(stored);
+    if (storedOwner !== null && storedOwner !== owner) {
+      // Also forgets the checkout session id, so this person's order can't replace the last one's unpaid order.
+      clearCheckoutDraft();
+      return EMPTY_CHECKOUT_FORM;
+    }
+    return sanitize(stored);
   } catch {
     return EMPTY_CHECKOUT_FORM;
   }
 }
 
-export function saveCheckoutDraft(state: CheckoutFormState): void {
+export function saveCheckoutDraft(state: CheckoutFormState, owner: DraftOwner): void {
   try {
-    tabStorage()?.setItem(DRAFT_KEY, JSON.stringify(state));
+    tabStorage()?.setItem(DRAFT_KEY, JSON.stringify({ ...state, owner }));
   } catch {
     // Storage unavailable: the form still works, it just won't survive a refresh.
   }

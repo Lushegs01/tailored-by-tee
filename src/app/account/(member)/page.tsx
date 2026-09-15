@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { AccountSection } from "@/components/account/account-section";
+import { formatOrderDate } from "@/components/orders/format";
+import { OrderThumbnail } from "@/components/orders/order-items";
 import { orderStatusLabel } from "@/components/orders/order-status";
-import { MediaImage } from "@/components/ui/media-image";
+import { OrderStatusBadge } from "@/components/orders/order-status-badge";
 import { Price } from "@/components/ui/price";
 import { findState } from "@/config/nigeria";
 import { getDefaultAddress, type SavedAddress } from "@/lib/account/addresses";
@@ -12,6 +14,7 @@ import { countWishlistItems } from "@/lib/account/wishlist";
 import { requireUser } from "@/lib/auth/session";
 import { formatNigerianPhone } from "@/lib/commerce/phone";
 import { pluralize } from "@/lib/format";
+import { accountOrderPath } from "@/lib/orders/account-payment";
 import { listOrdersForUser, type OrderSummary } from "@/lib/orders/queries";
 import { cn } from "@/lib/utils";
 
@@ -20,28 +23,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const placedDate = new Intl.DateTimeFormat("en-NG", {
-  timeZone: "Africa/Lagos",
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-});
-
-const monthYear = new Intl.DateTimeFormat("en-NG", {
-  timeZone: "Africa/Lagos",
-  month: "long",
-  year: "numeric",
-});
-
-/** The marker beside a status. Decorative — the label carries the meaning, in text that meets contrast. */
-const TONE_MARKER = {
-  neutral: "bg-muted-foreground",
-  positive: "bg-success",
-  attention: "bg-accent-brand",
-} as const;
-
 /** Overview: the latest few orders, the default address, saved pieces and contact details. */
 export default async function AccountOverviewPage() {
+  // The layout checks too, but layouts and pages render in parallel.
   const user = await requireUser("/account");
 
   const [orders, address, savedCount, profile] = await Promise.all([
@@ -77,8 +61,8 @@ export default async function AccountOverviewPage() {
           </ul>
         ) : (
           <p className="max-w-md text-body-sm text-muted-foreground">
-            No orders yet. Orders you place while signed in — and any placed as a guest with {user.email} — will
-            appear here.
+            No orders yet. Orders you place while signed in — and any placed as a guest with{" "}
+            <span className="break-all">{user.email}</span> — will appear here.
           </p>
         )}
       </AccountSection>
@@ -127,12 +111,9 @@ export default async function AccountOverviewPage() {
           <dl className="space-y-4 text-body-sm">
             <Detail term="Name">{profile?.name ?? user.name ?? <NotAdded />}</Detail>
             <Detail term="Email">
-              <span className="break-words">{profile?.email ?? user.email}</span>
+              <span className="break-all">{profile?.email ?? user.email}</span>
             </Detail>
             <Detail term="Phone">{profile?.phone ? formatNigerianPhone(profile.phone) : <NotAdded />}</Detail>
-            {profile?.memberSince ? (
-              <Detail term="Member since">{monthYear.format(new Date(profile.memberSince))}</Detail>
-            ) : null}
           </dl>
         </AccountSection>
       </div>
@@ -144,23 +125,27 @@ function OrderRow({ order, now }: { order: OrderSummary; now: Date }) {
   const status = orderStatusLabel(order, now);
 
   return (
-    <Link href={`/account/orders/${encodeURIComponent(order.number)}`} className="group flex items-start gap-4 py-5">
+    <Link href={accountOrderPath(order.number)} className="group flex items-start gap-4 py-5">
       <OrderThumbnails items={order.previewItems} />
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline justify-between gap-4">
           <p className="min-w-0 text-body-sm font-medium break-words">
-            <span className="link-underline pb-0.5 group-hover:bg-size-[100%_1px]">Order {order.number}</span>
+            <span className="link-underline pb-0.5 group-hover:bg-size-[100%_1px]">
+              <span className="sr-only">Order </span>
+              {order.number}
+            </span>
           </p>
           <Price amount={order.total} className="shrink-0 text-body-sm" />
         </div>
         <p className="mt-1 text-caption text-muted-foreground">
-          <time dateTime={order.placedAt}>{placedDate.format(new Date(order.placedAt))}</time>
-          {" · "}
+          <time dateTime={order.placedAt}>{formatOrderDate(order.placedAt)}</time>
+          <span aria-hidden="true"> · </span>
+          <span className="sr-only">, </span>
           {pluralize(order.itemCount, "piece")}
         </p>
-        <p className="mt-2 flex items-center gap-2 text-caption">
-          <span aria-hidden="true" className={cn("size-1.5 shrink-0", TONE_MARKER[status.tone])} />
-          {status.label}
+        <p className="mt-3">
+          <span className="sr-only">Status: </span>
+          <OrderStatusBadge label={status.label} tone={status.tone} />
         </p>
       </div>
     </Link>
@@ -174,18 +159,11 @@ function OrderThumbnails({ items }: { items: OrderSummary["previewItems"] }) {
   return (
     <div aria-hidden="true" className="flex shrink-0 gap-1.5">
       {items.slice(0, 3).map((item, index) => (
-        <div key={index} className={cn("w-12", index > 0 && "hidden sm:block")}>
-          {item.imageUrl ? (
-            <MediaImage
-              image={{ src: item.imageUrl, width: 800, height: 1000, alt: "", color: "#ece8df" }}
-              ratio="4/5"
-              sizes="48px"
-              quality={60}
-            />
-          ) : (
-            <div className="aspect-4/5 bg-surface" />
-          )}
-        </div>
+        <OrderThumbnail
+          key={`${item.name}-${index}`}
+          imageUrl={item.imageUrl}
+          className={cn("w-12", index > 0 && "hidden sm:block")}
+        />
       ))}
     </div>
   );
