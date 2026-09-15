@@ -61,9 +61,7 @@ const contactShape = {
   newsletter: z.boolean().default(false),
 };
 
-const deliverySchema = z.object({
-  ...contactShape,
-  deliveryMethod: z.literal("delivery"),
+const addressShape = {
   line1: z
     .string({ error: "Enter the street address." })
     .trim()
@@ -84,7 +82,24 @@ const deliverySchema = z.object({
     (value) => value === undefined || /^\d{6}$/.test(value),
     "Postal codes are six digits.",
   ),
+};
+
+const deliverySchema = z.object({
+  ...contactShape,
+  deliveryMethod: z.literal("delivery"),
+  ...addressShape,
 });
+
+/**
+ * The fields of a delivery address — who it goes to and where — exactly as
+ * checkout validates them. The account address book builds on these (not copies
+ * of them), so a saved address always passes checkout.
+ */
+export const deliveryAddressShape = {
+  fullName: contactShape.fullName,
+  phone: contactShape.phone,
+  ...addressShape,
+};
 
 const pickupSchema = z.object({
   ...contactShape,

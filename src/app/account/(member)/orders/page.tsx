@@ -8,7 +8,6 @@ import { OrderThumbnail } from "@/components/orders/order-items";
 import { orderStatusLabel } from "@/components/orders/order-status";
 import { OrderStatusBadge } from "@/components/orders/order-status-badge";
 import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import { Price } from "@/components/ui/price";
 import { siteConfig } from "@/config/site";
 import { requireUser } from "@/lib/auth/session";
@@ -23,67 +22,59 @@ export const metadata: Metadata = {
 
 const HISTORY_LIMIT = 50;
 
+/** Order history. The account layout supplies the frame (Container, greeting, navigation). */
 export default async function AccountOrdersPage() {
+  // The layout checks too, but layouts and pages render in parallel.
   const user = await requireUser("/account/orders");
   const orders = await listOrdersForUser(user, { limit: HISTORY_LIMIT });
   const now = new Date();
 
   return (
-    <Container className="pt-12 pb-24 md:pt-20 md:pb-32">
-      <div className="mx-auto max-w-5xl">
-        {orders.length === 0 ? (
-          <EmptyState
-            as="h1"
-            align="start"
-            eyebrow="Your orders"
-            title="No orders *yet.*"
-            body={
-              <>
-                <p>
-                  Orders you place while signed in, or with <span className="break-all">{user.email}</span>, will
-                  appear here.
-                </p>
-                <p className="mt-3">
-                  Ordered with a different email? The private link in its confirmation email still opens it.
-                </p>
-              </>
-            }
-            actions={
-              <Button asChild arrow>
-                <Link href="/shop">Browse the shop</Link>
-              </Button>
-            }
-          />
-        ) : (
-          <>
-            <p className="text-eyebrow text-muted-foreground">Account</p>
-            <h1 className="mt-4 font-display text-display-md">Your orders</h1>
-            <p className="mt-5 max-w-xl text-body text-muted-foreground">
-              Orders placed while signed in, or with <span className="break-all">{user.email}</span>, newest
-              first.
+    <div>
+      <header className="max-w-2xl">
+        <h1 className="font-display text-display-sm">Orders</h1>
+        <p className="mt-5 text-body text-muted-foreground">
+          Orders placed while signed in, or with <span className="break-all">{user.email}</span>, newest first.
+        </p>
+      </header>
+
+      {orders.length === 0 ? (
+        <EmptyState
+          as="h2"
+          align="start"
+          size="sm"
+          className="mt-10 border-t pt-8 md:mt-14"
+          title="No orders *yet.*"
+          body="Ordered with a different email? The private link in its confirmation email still opens it."
+          actions={
+            <Button asChild arrow>
+              <Link href="/shop">Browse the shop</Link>
+            </Button>
+          }
+        />
+      ) : (
+        <>
+          <h2 className="sr-only">Your orders, newest first</h2>
+          <ul className="mt-10 border-t md:mt-14">
+            {orders.map((order) => (
+              <li key={order.number} className="border-b">
+                <OrderRow order={order} now={now} />
+              </li>
+            ))}
+          </ul>
+
+          {orders.length === HISTORY_LIMIT ? (
+            <p className="mt-6 text-caption text-muted-foreground">
+              Showing your {HISTORY_LIMIT} most recent orders. For an older one, email{" "}
+              <a href={`mailto:${siteConfig.contact.email}`} className="link-underline-static text-foreground">
+                {siteConfig.contact.email}
+              </a>{" "}
+              quoting its number.
             </p>
-
-            <ul className="mt-10 border-t md:mt-12">
-              {orders.map((order) => (
-                <li key={order.number} className="border-b">
-                  <OrderRow order={order} now={now} />
-                </li>
-              ))}
-            </ul>
-
-            {orders.length === HISTORY_LIMIT ? (
-              <p className="mt-6 text-caption text-muted-foreground">
-                Showing your {HISTORY_LIMIT} most recent orders. For an older one, email{" "}
-                <a href={`mailto:${siteConfig.contact.email}`} className="link-underline-static text-foreground">
-                  {siteConfig.contact.email}
-                </a>{" "}
-                quoting its number.
-              </p>
-            ) : null}
-          </>
-        )}
-      </div>
-    </Container>
+          ) : null}
+        </>
+      )}
+    </div>
   );
 }
 
@@ -97,11 +88,14 @@ function OrderRow({ order, now }: { order: OrderSummary; now: Date }) {
   return (
     <Link
       href={accountOrderPath(order.number)}
-      className="group grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-4 py-6 md:flex md:items-center md:gap-x-8"
+      className="group grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-4 py-6 md:flex md:items-center md:gap-x-6"
     >
       <div className="min-w-0 md:order-2 md:flex-1">
-        <p className="text-body-sm font-medium">
-          <span className="link-underline pb-0.5">{order.number}</span>
+        <p className="text-body-sm font-medium break-words">
+          <span className="link-underline pb-0.5 group-hover:bg-size-[100%_1px]">
+            <span className="sr-only">Order </span>
+            {order.number}
+          </span>
         </p>
         <p className="mt-1 text-caption text-muted-foreground">
           <time dateTime={order.placedAt}>{formatOrderDate(order.placedAt)}</time>

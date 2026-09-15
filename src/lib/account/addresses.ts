@@ -3,7 +3,7 @@ import "server-only";
 import { z } from "zod";
 
 import type { Prisma } from "@/generated/prisma/client";
-import { checkoutDetailsSchema } from "@/lib/commerce/checkout-schema";
+import { deliveryAddressShape as checkoutAddress } from "@/lib/commerce/checkout-schema";
 import { getDb, isDatabaseConfigured } from "@/lib/db";
 
 /*
@@ -36,12 +36,9 @@ export interface SavedAddress {
 /* ── Validation ────────────────────────────────────────────────────────── */
 
 /*
- * Checkout's delivery branch owns the address rules; reusing its fields (not
- * copies of them) guarantees a saved address always passes checkout. Reordering
- * the union's branches makes these property reads a type error, not a silent drift.
+ * Checkout owns the address rules; reusing its fields (not copies of them)
+ * guarantees a saved address always passes checkout.
  */
-const checkoutAddress = checkoutDetailsSchema.options[0].shape;
-
 export const addressInputSchema = z.object({
   label: z
     .string()

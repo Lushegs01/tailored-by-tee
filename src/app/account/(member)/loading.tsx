@@ -26,7 +26,8 @@ export default function AccountLoading() {
                     <Skeleton className="h-3 w-16" />
                   </div>
                   <Skeleton className="mt-2.5 h-2.5 w-40 max-w-full" />
-                  <Skeleton className="mt-3 h-2.5 w-24" />
+                  {/* The status badge. */}
+                  <Skeleton className="mt-3 h-6 w-28" />
                 </div>
               </li>
             ))}

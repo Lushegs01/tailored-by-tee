@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { after } from "next/server";
 
-import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { ChevronLeftIcon } from "@/components/icons";
 import { formatOrderDate, lagosTime } from "@/components/orders/format";
 import { OrderBreakdown } from "@/components/orders/order-breakdown";
 import { orderState, orderStatusLabel, type OrderState } from "@/components/orders/order-status";
 import { OrderStatusBadge } from "@/components/orders/order-status-badge";
 import { PayOrderButton } from "@/components/orders/pay-order-button";
-import { Container } from "@/components/ui/container";
 import { TextLink } from "@/components/ui/text-link";
 import { requireUser } from "@/lib/auth/session";
 import { getCheckoutMode, paymentsAreTest, type CheckoutMode } from "@/lib/commerce/checkout-mode";
@@ -59,8 +59,10 @@ function statusMessage(order: OrderView, state: OrderState, mode: CheckoutMode):
   }
 }
 
+/** One order in the account. The account layout supplies the frame (Container, greeting, navigation). */
 export default async function AccountOrderPage({ params }: PageProps<"/account/orders/[number]">) {
   const { number } = await params;
+  // The layout checks too, but layouts and pages render in parallel.
   const user = await requireUser(accountOrderPath(number));
 
   // Not theirs and doesn't exist look the same: a plain 404.
@@ -82,52 +84,51 @@ export default async function AccountOrderPage({ params }: PageProps<"/account/o
   const testPayment = state === "paid" && (order.lastPayment?.isTest ?? false);
 
   return (
-    <Container className="pt-10 pb-24 md:pt-16 md:pb-32">
-      <div className="mx-auto max-w-5xl">
-        <Breadcrumbs
-          items={[
-            { label: "Account", href: "/account" },
-            { label: "Orders", href: "/account/orders" },
-            { label: order.number },
-          ]}
-        />
+    <div>
+      {/* The navigation already marks Orders; this is the one step back. */}
+      <Link
+        href="/account/orders"
+        className="-ml-1 inline-flex min-h-8 items-center gap-1.5 text-caption text-muted-foreground transition-colors duration-300 hover:text-foreground"
+      >
+        <ChevronLeftIcon />
+        <span className="link-underline pb-0.5">All orders</span>
+      </Link>
 
-        <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
-          <p className="text-eyebrow text-muted-foreground">
-            Placed <time dateTime={order.placedAt}>{formatOrderDate(order.placedAt)}</time>
-          </p>
-          <OrderStatusBadge label={status.label} tone={status.tone} />
-        </div>
-        <h1 className="mt-5 font-display text-display-md break-words">
-          <span className="sr-only">Order </span>
-          {order.number}
-        </h1>
-        <p className="mt-6 max-w-xl text-lead text-muted-foreground">{statusMessage(order, state, mode)}</p>
-
-        {testPayment ? (
-          <p className="mt-6 inline-block border border-accent-brand/40 px-3 py-1.5 text-eyebrow text-accent-brand">
-            Test payment — no money moved
-          </p>
-        ) : null}
-
-        {canPay ? (
-          <div className="mt-10">
-            <PayOrderButton orderNumber={order.number} label={`Pay ${formatPrice(order.totals.total)} with Paystack`} />
-            {paymentsAreTest() ? (
-              <p className="mt-3 text-caption text-muted-foreground">
-                Paystack test mode — use a Paystack test card. No real money moves.
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-
-        <OrderBreakdown order={order} paid={state === "paid"} />
-
-        <div className="mt-16 flex flex-wrap items-center gap-x-8 gap-y-5 border-t pt-10">
-          <TextLink href="/account/orders">All your orders</TextLink>
-          <TextLink href="/shop">Continue shopping</TextLink>
-        </div>
+      <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+        <p className="text-eyebrow text-muted-foreground">
+          Placed <time dateTime={order.placedAt}>{formatOrderDate(order.placedAt)}</time>
+        </p>
+        <OrderStatusBadge label={status.label} tone={status.tone} />
       </div>
-    </Container>
+      <h1 className="mt-5 font-display text-display-sm break-words">
+        <span className="sr-only">Order </span>
+        {order.number}
+      </h1>
+      <p className="mt-5 max-w-xl text-body text-muted-foreground">{statusMessage(order, state, mode)}</p>
+
+      {testPayment ? (
+        <p className="mt-6 inline-block border border-accent-brand/40 px-3 py-1.5 text-eyebrow text-accent-brand">
+          Test payment — no money moved
+        </p>
+      ) : null}
+
+      {canPay ? (
+        <div className="mt-10">
+          <PayOrderButton orderNumber={order.number} label={`Pay ${formatPrice(order.totals.total)} with Paystack`} />
+          {paymentsAreTest() ? (
+            <p className="mt-3 text-caption text-muted-foreground">
+              Paystack test mode — use a Paystack test card. No real money moves.
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+
+      <OrderBreakdown order={order} paid={state === "paid"} />
+
+      <div className="mt-16 flex flex-wrap items-center gap-x-8 gap-y-5 border-t pt-10">
+        <TextLink href="/account/orders">All your orders</TextLink>
+        <TextLink href="/shop">Continue shopping</TextLink>
+      </div>
+    </div>
   );
 }

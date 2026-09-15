@@ -19,11 +19,19 @@ import { cn } from "@/lib/utils";
 import { WishlistItem } from "./wishlist-item";
 import { WishlistItemSkeleton, WishlistSkeleton } from "./wishlist-skeleton";
 
-/** signInPath("/wishlist"), spelled out: lib/auth/session is server-only. */
-const SIGN_IN_HREF = "/account/sign-in?callbackUrl=%2Fwishlist";
 const GRID_SIZES = productGridSizes(4);
 
 type Notice = { kind: "moved"; name: string } | { kind: "returned"; name: string } | { kind: "bag-full" };
+
+export interface WishlistViewProps {
+  className?: string;
+  /**
+   * Where a guest signs in to keep the list on their account (signInPath("/wishlist"),
+   * built by the server page because lib/auth/session is server-only). Null when no
+   * sign-in method is switched on, so the invitation isn't offered.
+   */
+  signInHref: string | null;
+}
 
 /**
  * The saved pieces. Resolved in the browser: a guest's list lives in
@@ -35,7 +43,7 @@ type Notice = { kind: "moved"; name: string } | { kind: "returned"; name: string
  * added, the wishlist what was removed); the notices here are for sighted
  * shoppers and are deliberately not live regions, so nothing is read twice.
  */
-export function WishlistView({ className }: { className?: string }) {
+export function WishlistView({ className, signInHref }: WishlistViewProps) {
   const wishlist = useWishlist();
   const { restoring, forget } = useWishlistStatus();
   const account = useAccount();
@@ -145,7 +153,8 @@ export function WishlistView({ className }: { className?: string }) {
 
   if (!mounted || restoring) return <WishlistSkeleton className={className} />;
 
-  const signedOut = account.status === "signed-out";
+  const signInLine =
+    account.status === "signed-out" && signInHref !== null ? <SignInLine href={signInHref} /> : null;
   const items = ids.flatMap((id) => resolved.get(id) ?? []);
 
   if (ids.length === 0) {
@@ -161,14 +170,14 @@ export function WishlistView({ className }: { className?: string }) {
           id={headingId}
           align="start"
           title="Nothing *saved* yet."
-          body="Tap the heart on any piece to keep it here for later."
+          body="Use the heart on any piece to keep it here for later."
           actions={
             <Button asChild arrow>
               <Link href="/shop">Browse the shop</Link>
             </Button>
           }
         >
-          {signedOut ? <SignInLine /> : null}
+          {signInLine}
         </EmptyState>
       </section>
     );
@@ -207,7 +216,7 @@ export function WishlistView({ className }: { className?: string }) {
       </h2>
       <div className="flex flex-col gap-x-8 gap-y-3 border-b pb-4 sm:flex-row sm:items-baseline sm:justify-between">
         <p className="text-caption tabular-nums text-muted-foreground">{pluralize(ids.length, "piece")}</p>
-        {signedOut ? <SignInLine /> : null}
+        {signInLine}
       </div>
 
       {notice ? <WishlistNotice notice={notice} className="mt-6" /> : null}
@@ -255,10 +264,10 @@ export function WishlistView({ className }: { className?: string }) {
   );
 }
 
-function SignInLine() {
+function SignInLine({ href }: { href: string }) {
   return (
     <Link
-      href={SIGN_IN_HREF}
+      href={href}
       className="self-start text-body-sm text-muted-foreground transition-colors duration-300 ease-editorial hover:text-foreground"
     >
       <span className="link-underline-static pb-0.5">Sign in to keep your saved pieces across devices</span>

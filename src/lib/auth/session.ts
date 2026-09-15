@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
 
 import { auth } from "@/auth";
 import { isDatabaseConfigured } from "@/lib/db";
@@ -19,7 +19,12 @@ export interface CurrentUser {
   role: "customer" | "admin";
 }
 
-/** The signed-in user, or null. Cached per request; never throws (a broken session reads as signed out). */
+/**
+ * The signed-in user, or null. Cached per request. A broken session reads as
+ * signed out rather than throwing; only Next's own control-flow signals pass
+ * through (e.g. "this route reads request headers", raised while prerendering),
+ * so a page that reads the session is correctly left dynamic.
+ */
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   if (!isDatabaseConfigured()) return null;
   try {
@@ -33,6 +38,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
       role: user.role === "ADMIN" ? "admin" : "customer",
     };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("[auth] could not read the session", error instanceof Error ? error.message : error);
     return null;
   }

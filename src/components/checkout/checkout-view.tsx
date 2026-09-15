@@ -142,8 +142,12 @@ function CheckoutForm({
   onPlaced: (url: string, external: boolean) => void;
   onBagChanged: () => void;
 }) {
+  /** The account the tab's draft is kept for; a draft kept for anyone else is dropped, never shown. */
+  const draftOwner = prefill?.email ?? null;
   // Rendered only after mount, so reading the tab's draft here can't cause a hydration mismatch.
-  const [form, setForm] = React.useState<CheckoutFormState>(() => initialCheckoutForm(loadCheckoutDraft(), prefill));
+  const [form, setForm] = React.useState<CheckoutFormState>(() =>
+    initialCheckoutForm(loadCheckoutDraft(draftOwner), prefill),
+  );
   const [errors, setErrors] = React.useState<FieldErrors>({});
   const [formError, setFormError] = React.useState<{ message: string; code: string } | null>(null);
   const [addressNotice, setAddressNotice] = React.useState("");
@@ -155,7 +159,7 @@ function CheckoutForm({
   const savedAddresses = prefill?.addresses ?? [];
   const selectedAddressId = matchingAddressId(form, savedAddresses);
 
-  React.useEffect(() => saveCheckoutDraft(form), [form]);
+  React.useEffect(() => saveCheckoutDraft(form, draftOwner), [form, draftOwner]);
 
   const delivery = form.deliveryMethod === "delivery";
   const { quote, pending, error: quoteError, retry } = useCheckoutQuote({

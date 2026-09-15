@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
-import { getCurrentUser } from "@/lib/auth/session";
+import { getCurrentUser, signInPath } from "@/lib/auth/session";
 import { getDb } from "@/lib/db";
 import { orderStatusPath } from "@/lib/orders/access";
 import { accountOrderPath } from "@/lib/orders/account-payment";
@@ -20,8 +20,12 @@ import { clientAddress, rateLimit } from "@/lib/security/rate-limit";
  *   the shopper goes back to that private page — unchanged;
  * - without a key (paying from the account): the signed-in customer must be able to
  *   see the order, and goes back to it in their account. Paystack's redirect is a
- *   top-level GET navigation, so the Lax session cookie comes with it.
- * Anything invalid or unauthorised goes to the homepage, confirming nothing.
+ *   top-level GET navigation, so the Lax session cookie comes with it. If the
+ *   session has lapsed meanwhile, they're asked to sign in and then land on the
+ *   order: every well-formed number gets that same redirect, so it confirms
+ *   nothing, and nothing is settled without a viewer who can see the order (the
+ *   webhook settles it regardless).
+ * Anything else invalid or unauthorised goes to the homepage, confirming nothing.
  */
 
 const orderNumber = z.string().max(32).regex(/^ORD-\d{4}-\d{6,}$/);
@@ -30,12 +34,16 @@ const paymentReference = z.string().min(1).max(100);
 const keyedSchema = z.object({ order: orderNumber, key: z.string().min(16).max(128), reference: paymentReference });
 const accountSchema = z.object({ order: orderNumber, reference: paymentReference });
 
-interface ReturnTarget {
-  order: { id: string; number: string };
-  reference: string;
-  /** The page to land on afterwards. */
-  path: string;
-}
+type ReturnTarget =
+  | {
+      kind: "settle";
+      order: { id: string; number: string };
+      reference: string;
+      /** The page to land on afterwards. */
+      path: string;
+    }
+  /** An account return whose session has lapsed: sign in, then see the order. */
+  | { kind: "sign-in"; path: string };
 
 async function resolveReturn(search: URLSearchParams): Promise<ReturnTarget | null> {
   const input = { order: search.get("order"), reference: search.get("reference") ?? search.get("trxref") };
@@ -45,15 +53,17 @@ async function resolveReturn(search: URLSearchParams): Promise<ReturnTarget | nu
     if (!parsed.success) return null;
     const { order: number, key, reference } = parsed.data;
     const order = await findOrderForAccess(number, key);
-    return order ? { order, reference, path: orderStatusPath(order.number, key) } : null;
+    return order ? { kind: "settle", order, reference, path: orderStatusPath(order.number, key) } : null;
   }
 
   const parsed = accountSchema.safeParse(input);
   if (!parsed.success) return null;
   const user = await getCurrentUser();
-  if (!user) return null;
+  if (!user) return { kind: "sign-in", path: signInPath(accountOrderPath(parsed.data.order)) };
   const order = await findOrderForUser(user, parsed.data.order);
-  return order ? { order, reference: parsed.data.reference, path: accountOrderPath(order.number) } : null;
+  return order
+    ? { kind: "settle", order, reference: parsed.data.reference, path: accountOrderPath(order.number) }
+    : null;
 }
 
 export async function GET(request: NextRequest) {
@@ -65,6 +75,7 @@ export async function GET(request: NextRequest) {
 
   const target = await resolveReturn(request.nextUrl.searchParams);
   if (!target) return Response.redirect(home, 303);
+  if (target.kind === "sign-in") return Response.redirect(new URL(target.path, request.url), 303);
   const { order, reference, path } = target;
 
   // Only a payment that belongs to this order is settled from this link.
