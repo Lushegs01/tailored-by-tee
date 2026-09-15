@@ -1,0 +1,134 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+import { EmptyState } from "@/components/feedback/empty-state";
+import { ArrowRightIcon } from "@/components/icons";
+import { formatOrderDate } from "@/components/orders/format";
+import { OrderThumbnail } from "@/components/orders/order-items";
+import { orderStatusLabel } from "@/components/orders/order-status";
+import { OrderStatusBadge } from "@/components/orders/order-status-badge";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { Price } from "@/components/ui/price";
+import { siteConfig } from "@/config/site";
+import { requireUser } from "@/lib/auth/session";
+import { pluralize } from "@/lib/format";
+import { accountOrderPath } from "@/lib/orders/account-payment";
+import { listOrdersForUser, type OrderSummary } from "@/lib/orders/queries";
+
+export const metadata: Metadata = {
+  title: "Your orders",
+  robots: { index: false, follow: false },
+};
+
+const HISTORY_LIMIT = 50;
+
+export default async function AccountOrdersPage() {
+  const user = await requireUser("/account/orders");
+  const orders = await listOrdersForUser(user, { limit: HISTORY_LIMIT });
+  const now = new Date();
+
+  return (
+    <Container className="pt-12 pb-24 md:pt-20 md:pb-32">
+      <div className="mx-auto max-w-5xl">
+        {orders.length === 0 ? (
+          <EmptyState
+            as="h1"
+            align="start"
+            eyebrow="Your orders"
+            title="No orders *yet.*"
+            body={
+              <>
+                <p>
+                  Orders you place while signed in, or with <span className="break-all">{user.email}</span>, will
+                  appear here.
+                </p>
+                <p className="mt-3">
+                  Ordered with a different email? The private link in its confirmation email still opens it.
+                </p>
+              </>
+            }
+            actions={
+              <Button asChild arrow>
+                <Link href="/shop">Browse the shop</Link>
+              </Button>
+            }
+          />
+        ) : (
+          <>
+            <p className="text-eyebrow text-muted-foreground">Account</p>
+            <h1 className="mt-4 font-display text-display-md">Your orders</h1>
+            <p className="mt-5 max-w-xl text-body text-muted-foreground">
+              Orders placed while signed in, or with <span className="break-all">{user.email}</span>, newest
+              first.
+            </p>
+
+            <ul className="mt-10 border-t md:mt-12">
+              {orders.map((order) => (
+                <li key={order.number} className="border-b">
+                  <OrderRow order={order} now={now} />
+                </li>
+              ))}
+            </ul>
+
+            {orders.length === HISTORY_LIMIT ? (
+              <p className="mt-6 text-caption text-muted-foreground">
+                Showing your {HISTORY_LIMIT} most recent orders. For an older one, email{" "}
+                <a href={`mailto:${siteConfig.contact.email}`} className="link-underline-static text-foreground">
+                  {siteConfig.contact.email}
+                </a>{" "}
+                quoting its number.
+              </p>
+            ) : null}
+          </>
+        )}
+      </div>
+    </Container>
+  );
+}
+
+/**
+ * One order, the whole row a link. Stacked as a small card on phones; a single
+ * aligned line (pieces, number and date, status, total) from tablet up.
+ */
+function OrderRow({ order, now }: { order: OrderSummary; now: Date }) {
+  const status = orderStatusLabel(order, now);
+
+  return (
+    <Link
+      href={accountOrderPath(order.number)}
+      className="group grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-4 py-6 md:flex md:items-center md:gap-x-8"
+    >
+      <div className="min-w-0 md:order-2 md:flex-1">
+        <p className="text-body-sm font-medium">
+          <span className="link-underline pb-0.5">{order.number}</span>
+        </p>
+        <p className="mt-1 text-caption text-muted-foreground">
+          <time dateTime={order.placedAt}>{formatOrderDate(order.placedAt)}</time>
+          <span aria-hidden="true"> · </span>
+          <span className="sr-only">, </span>
+          {pluralize(order.itemCount, "piece")}
+        </p>
+      </div>
+
+      <Price amount={order.total} className="justify-self-end text-body-sm md:order-4 md:w-28 md:justify-end" />
+
+      <div className="col-span-2 flex items-end justify-between gap-4 md:contents">
+        <div className="flex gap-2 md:order-1 md:w-40" aria-hidden="true">
+          {order.previewItems.map((item, index) => (
+            <OrderThumbnail key={`${item.name}-${index}`} imageUrl={item.imageUrl} className="w-12" />
+          ))}
+        </div>
+        <div className="md:order-3 md:w-40">
+          <span className="sr-only">Status: </span>
+          <OrderStatusBadge label={status.label} tone={status.tone} />
+        </div>
+      </div>
+
+      <ArrowRightIcon
+        aria-hidden="true"
+        className="hidden shrink-0 text-muted-foreground transition-transform duration-500 ease-editorial group-hover:translate-x-1 group-hover:text-foreground md:order-5 md:block"
+      />
+    </Link>
+  );
+}

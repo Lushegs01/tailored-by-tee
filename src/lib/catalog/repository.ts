@@ -180,6 +180,12 @@ export async function getProductsBySlugs(slugs: string[]): Promise<ProductCardDa
   );
 }
 
+/** Cards for the given product ids, in the order given. Unknown or unlisted ids are skipped. */
+export async function getProductsByIds(ids: string[]): Promise<ProductCardData[]> {
+  const store = await getStore();
+  return ids.flatMap((id) => store.cards.get(id) ?? []);
+}
+
 export async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
   const { productsBySlug, ref } = await getStore();
   const product = productsBySlug.get(slug);

@@ -3,17 +3,20 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { after } from "next/server";
 
+import { enabledSignInMethods } from "@/auth";
 import { PayNowButton } from "@/components/checkout/pay-now-button";
+import { lagosTime } from "@/components/orders/format";
+import { OrderBreakdown } from "@/components/orders/order-breakdown";
+import { orderState, type OrderState } from "@/components/orders/order-status";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Emphasis } from "@/components/ui/emphasis";
-import { MediaImage } from "@/components/ui/media-image";
-import { Price } from "@/components/ui/price";
-import { siteConfig } from "@/config/site";
+import { TextLink } from "@/components/ui/text-link";
+import { getCurrentUser, signInPath, type CurrentUser } from "@/lib/auth/session";
 import { getCheckoutMode, paymentsAreTest, type CheckoutMode } from "@/lib/commerce/checkout-mode";
-import { formatNigerianPhone } from "@/lib/commerce/phone";
 import { formatPrice } from "@/lib/format";
-import { getOrderByAccessKey } from "@/lib/orders/queries";
+import { accountOrderPath } from "@/lib/orders/account-payment";
+import { findOrderForUser, getOrderByAccessKey } from "@/lib/orders/queries";
 import { sweepExpiredReservations } from "@/lib/orders/reservations";
 import type { OrderView } from "@/lib/orders/types";
 
@@ -22,23 +25,6 @@ export const metadata: Metadata = {
   title: "Your order",
   robots: { index: false, follow: false },
 };
-
-const lagosTime = new Intl.DateTimeFormat("en-NG", {
-  timeZone: "Africa/Lagos",
-  hour: "numeric",
-  minute: "2-digit",
-  day: "numeric",
-  month: "short",
-});
-
-type OrderState = "paid" | "awaiting_payment" | "hold_ended" | "released" | "needs_refund";
-
-function orderState(order: OrderView, now: Date): OrderState {
-  if (order.status === "cancelled") return order.paymentStatus === "success" ? "needs_refund" : "released";
-  if (order.status !== "pending" || order.paymentStatus === "success") return "paid";
-  if (order.reservedUntil && new Date(order.reservedUntil) <= now) return "hold_ended";
-  return "awaiting_payment";
-}
 
 function headline(order: OrderView, state: OrderState, mode: CheckoutMode): { title: string; body: string } {
   const firstName = order.customerName.split(/\s+/)[0]?.replace(/\*/g, "") ?? "";
@@ -82,6 +68,17 @@ function headline(order: OrderView, state: OrderState, mode: CheckoutMode): { ti
   }
 }
 
+/** Whether the signed-in viewer will find this order in their account. A failed lookup just hides the link. */
+async function isInAccount(viewer: CurrentUser | null, orderNumber: string): Promise<boolean> {
+  if (!viewer) return false;
+  try {
+    return (await findOrderForUser(viewer, orderNumber)) !== null;
+  } catch (error) {
+    console.error("[orders] could not check the account for an order", error instanceof Error ? error.message : error);
+    return false;
+  }
+}
+
 export default async function OrderCompletePage({ params, searchParams }: PageProps<"/checkout/complete/[number]">) {
   const [{ number }, { key }] = await Promise.all([params, searchParams]);
   const accessKey = typeof key === "string" ? key : "";
@@ -95,7 +92,11 @@ export default async function OrderCompletePage({ params, searchParams }: PagePr
   const state = orderState(order, new Date());
   const copy = headline(order, state, mode);
   const testPayment = order.lastPayment?.isTest ?? false;
-  const { totals, delivery } = order;
+
+  // This page is already dynamic (it reads the link's key), so reading the session costs nothing extra.
+  const viewer = await getCurrentUser();
+  const inAccount = await isInAccount(viewer, order.number);
+  const accountsEnabled = enabledSignInMethods.email || enabledSignInMethods.google;
 
   return (
     <Container className="pt-10 pb-24 md:pt-16 md:pb-32">
@@ -117,7 +118,7 @@ export default async function OrderCompletePage({ params, searchParams }: PagePr
             <PayNowButton
               orderNumber={order.number}
               accessKey={accessKey}
-              label={`Pay ${formatPrice(totals.total)} with Paystack`}
+              label={`Pay ${formatPrice(order.totals.total)} with Paystack`}
             />
             {paymentsAreTest() ? (
               <p className="mt-3 text-caption text-muted-foreground">
@@ -127,107 +128,7 @@ export default async function OrderCompletePage({ params, searchParams }: PagePr
           </div>
         ) : null}
 
-        <div className="mt-14 grid gap-y-14 border-t pt-10 md:grid-cols-12 md:gap-x-10 md:pt-12">
-          <section aria-labelledby="order-pieces-heading" className="md:col-span-7">
-            <h2 id="order-pieces-heading" className="text-label">
-              Your pieces
-            </h2>
-            <ul className="mt-2 [&>li+li]:border-t">
-              {order.items.map((item) => (
-                <li key={item.id} className="flex items-start gap-4 py-5">
-                  <div className="w-16 shrink-0">
-                    {item.imageUrl ? (
-                      <MediaImage
-                        image={{ src: item.imageUrl, width: 800, height: 1000, alt: "", color: "#ece8df" }}
-                        ratio="4/5"
-                        sizes="64px"
-                        quality={60}
-                      />
-                    ) : (
-                      <div aria-hidden="true" className="aspect-4/5 bg-surface" />
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-body-sm font-medium">
-                      <Link href={item.href} className="link-underline">
-                        {item.name}
-                      </Link>
-                    </p>
-                    <p className="mt-1 text-caption text-muted-foreground">
-                      {item.colorName} · {item.sizeLabel} · Qty {item.quantity}
-                    </p>
-                  </div>
-                  <Price amount={item.lineTotal} className="shrink-0 text-body-sm" />
-                </li>
-              ))}
-            </ul>
-
-            <dl className="mt-4 space-y-3 border-t pt-6 text-body-sm">
-              <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">Subtotal</dt>
-                <dd>
-                  <Price amount={totals.subtotal} />
-                </dd>
-              </div>
-              {totals.discountTotal > 0 ? (
-                <div className="flex justify-between gap-4">
-                  <dt className="text-muted-foreground">Discount{order.couponCode ? ` (${order.couponCode})` : ""}</dt>
-                  <dd className="tabular-nums">−{formatPrice(totals.discountTotal)}</dd>
-                </div>
-              ) : null}
-              <div className="flex justify-between gap-4">
-                <dt className="text-muted-foreground">{delivery.method === "pickup" ? "Collection" : "Delivery"}</dt>
-                <dd>{totals.shippingTotal === 0 ? "Free" : <Price amount={totals.shippingTotal} />}</dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4 border-t pt-4">
-                <dt className="text-label">{state === "paid" ? "Paid" : "Total"}</dt>
-                <dd className="text-lead font-medium">
-                  <Price amount={totals.total} />
-                </dd>
-              </div>
-            </dl>
-          </section>
-
-          <div className="space-y-10 md:col-span-5">
-            <section aria-labelledby="order-delivery-heading">
-              <h2 id="order-delivery-heading" className="text-label">
-                {delivery.method === "pickup" ? "Collection" : "Delivery"}
-              </h2>
-              <p className="mt-4 text-body-sm font-medium">{delivery.label}</p>
-              {delivery.estimate ? <p className="text-body-sm text-muted-foreground">{delivery.estimate}</p> : null}
-              <address className="mt-3 text-body-sm not-italic text-muted-foreground">
-                {delivery.addressLines.map((line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ))}
-              </address>
-              {delivery.notes ? <p className="mt-3 text-caption text-muted-foreground">Note: {delivery.notes}</p> : null}
-            </section>
-
-            <section aria-labelledby="order-contact-heading">
-              <h2 id="order-contact-heading" className="text-label">
-                Contact
-              </h2>
-              <p className="mt-4 text-body-sm">{order.customerName}</p>
-              <p className="text-body-sm text-muted-foreground">{order.email}</p>
-              <p className="text-body-sm text-muted-foreground">{formatNigerianPhone(order.phone)}</p>
-            </section>
-
-            <section aria-labelledby="order-help-heading" className="border-t pt-8">
-              <h2 id="order-help-heading" className="text-label">
-                Need help?
-              </h2>
-              <p className="mt-4 text-body-sm text-muted-foreground">
-                Email{" "}
-                <a href={`mailto:${siteConfig.contact.email}`} className="link-underline-static text-foreground">
-                  {siteConfig.contact.email}
-                </a>{" "}
-                or call {siteConfig.contact.phone}, quoting {order.number}. {siteConfig.contact.hours}.
-              </p>
-            </section>
-          </div>
-        </div>
+        <OrderBreakdown order={order} paid={state === "paid"} />
 
         <div className="mt-16 flex flex-wrap items-center gap-x-8 gap-y-4 border-t pt-10">
           <Button asChild variant={state === "awaiting_payment" && mode === "live" ? "outline" : "primary"} arrow>
@@ -235,6 +136,22 @@ export default async function OrderCompletePage({ params, searchParams }: PagePr
           </Button>
           <p className="text-caption text-muted-foreground">Keep this page&rsquo;s link to check on your order later.</p>
         </div>
+
+        {inAccount ? (
+          <TextLink href={accountOrderPath(order.number)} className="mt-8">
+            View in your account
+          </TextLink>
+        ) : !viewer && accountsEnabled ? (
+          <p className="mt-8 max-w-xl text-body-sm break-words text-muted-foreground">
+            <Link
+              href={signInPath(accountOrderPath(order.number))}
+              className="link-underline-static text-foreground"
+            >
+              Sign in with {order.email}
+            </Link>{" "}
+            to see all your orders in one place.
+          </p>
+        ) : null}
       </div>
     </Container>
   );

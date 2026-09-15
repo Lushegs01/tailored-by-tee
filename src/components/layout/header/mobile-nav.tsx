@@ -5,9 +5,11 @@ import Link from "next/link";
 import { Accordion } from "radix-ui";
 import * as m from "motion/react-m";
 
+import { useAccount } from "@/components/account/use-account";
 import { PlusIcon } from "@/components/icons";
 import { Sheet } from "@/components/ui/sheet";
-import { siteConfig, type MainNavItem } from "@/config/site";
+import { useWishlist } from "@/components/wishlist/wishlist-provider";
+import { siteConfig, type MainNavItem, type NavLink } from "@/config/site";
 import { DURATION, EASE_EDITORIAL } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -41,6 +43,9 @@ function current(pathname: string, href: string) {
  */
 export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps) {
   const [section, setSection] = useState("");
+  // Client-only state is safe here: the drawer's contents render only while it is open, never on the server.
+  const accountLink = accountLinkFor(useAccount().status);
+  const { count: wishlistCount } = useWishlist();
 
   const closeOnLink = (event: React.MouseEvent<HTMLElement>) => {
     if (event.target instanceof Element && event.target.closest("a")) onOpenChange(false);
@@ -73,13 +78,25 @@ export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps)
         </Accordion.Root>
 
         <ul className="mt-10 flex flex-col">
-          {DRAWER_SECONDARY_LINKS.map((link) => (
+          <li>
+            <Link href={accountLink.href} aria-current={current(pathname, accountLink.href)} className={secondaryLink}>
+              {accountLink.label}
+            </Link>
+          </li>
+          <li>
+            <Link href="/wishlist" aria-current={current(pathname, "/wishlist")} className={secondaryLink}>
+              Wishlist
+              {wishlistCount > 0 ? (
+                <span className="text-micro tabular-nums tracking-normal text-muted-foreground">
+                  {wishlistCount}
+                  <span className="sr-only"> {wishlistCount === 1 ? "piece" : "pieces"} saved</span>
+                </span>
+              ) : null}
+            </Link>
+          </li>
+          {staticSecondaryLinks.map((link) => (
             <li key={link.href}>
-              <Link
-                href={link.href}
-                aria-current={current(pathname, link.href)}
-                className="flex min-h-11 items-center text-label aria-[current=page]:underline aria-[current=page]:underline-offset-[6px]"
-              >
+              <Link href={link.href} aria-current={current(pathname, link.href)} className={secondaryLink}>
                 {link.label}
               </Link>
             </li>
@@ -88,6 +105,20 @@ export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps)
       </nav>
     </Sheet>
   );
+}
+
+const secondaryLink =
+  "flex min-h-11 items-center gap-2 text-label aria-[current=page]:underline aria-[current=page]:underline-offset-[6px]";
+
+/** Account and wishlist depend on the visitor, so MobileNav builds those two; the rest come from config. */
+const VISITOR_HREFS = new Set(["/account", "/account/sign-in", "/wishlist"]);
+const staticSecondaryLinks = DRAWER_SECONDARY_LINKS.filter((link) => !VISITOR_HREFS.has(link.href));
+
+/** "Sign in" once we know nobody is; "Account" otherwise (while loading it resolves to sign-in anyway). */
+function accountLinkFor(status: ReturnType<typeof useAccount>["status"]): NavLink {
+  return status === "signed-out"
+    ? { label: "Sign in", href: "/account/sign-in" }
+    : { label: "Account", href: "/account" };
 }
 
 interface PanelSectionProps {
