@@ -8,7 +8,11 @@ export type CheckoutErrorCode =
   | "stock_conflict"
   | "coupon_invalid"
   | "delivery_unavailable"
-  | "unavailable";
+  | "unavailable"
+  /** A new checkout was asked for, but an earlier payment has already paid for the order. */
+  | "already_paid"
+  /** A new checkout was asked for while Paystack is still confirming an earlier payment. */
+  | "payment_in_progress";
 
 export class CheckoutError extends Error {
   readonly code: CheckoutErrorCode;

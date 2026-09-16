@@ -38,7 +38,9 @@ export interface PlaceOrderInput {
   /**
    * The signed-in customer placing the order (from the server-side session, never
    * the browser), or null for a guest. Deliberately not part of the idempotency
-   * key: the same checkout submitted twice is one order either way.
+   * key: the same checkout submitted twice is one order either way — and if the
+   * first submission was a guest's (its answer lost) and the repeat comes after
+   * signing in, in the same tab, that order joins the account.
    */
   userId: string | null;
 }
@@ -99,7 +101,7 @@ export async function placeOrder(input: PlaceOrderInput, now = new Date()): Prom
   });
   for (const { id } of superseded) await releaseOrder(id, "superseded");
 
-  const existing = await findExisting(checkoutKey, access.hash);
+  const existing = await findExisting(checkoutKey, access.hash, input.userId);
   if (existing) return { number: existing, accessToken: access.token, created: false };
 
   const reservedUntil = new Date(now.getTime() + siteConfig.commerce.reservationMinutes * 60_000);
@@ -205,7 +207,7 @@ export async function placeOrder(input: PlaceOrderInput, now = new Date()): Prom
   } catch (error) {
     // Two identical submissions racing past the idempotency check: the loser returns the winner's order.
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
-      const winner = await findExisting(checkoutKey, access.hash);
+      const winner = await findExisting(checkoutKey, access.hash, input.userId);
       if (winner) return { number: winner, accessToken: access.token, created: false };
     }
     throw error;
@@ -215,12 +217,18 @@ export async function placeOrder(input: PlaceOrderInput, now = new Date()): Prom
 /**
  * The live order already placed for this exact checkout, if any. Its private link
  * is re-issued (the old secret was never stored), so the same browser can open it.
+ * A guest order repeated by a signed-in customer joins their account; an order
+ * already in an account is never moved to another.
  */
-async function findExisting(checkoutKey: string, accessTokenHash: string): Promise<string | null> {
+async function findExisting(checkoutKey: string, accessTokenHash: string, userId: string | null): Promise<string | null> {
   const db = getDb();
-  const order = await db.order.findUnique({ where: { checkoutKey }, select: { id: true, number: true, status: true } });
+  const order = await db.order.findUnique({
+    where: { checkoutKey },
+    select: { id: true, number: true, status: true, userId: true },
+  });
   if (!order || order.status === "CANCELLED") return null;
-  await db.order.update({ where: { id: order.id }, data: { accessTokenHash } });
+  const joinAccount = userId !== null && order.userId === null;
+  await db.order.update({ where: { id: order.id }, data: { accessTokenHash, ...(joinAccount ? { userId } : {}) } });
   return order.number;
 }
 

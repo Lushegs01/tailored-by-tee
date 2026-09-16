@@ -1,7 +1,24 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { isVerifiedGoogleProfile, publicSession, signInEmailLimitKey } from "./callbacks";
+import { isClosedAuthPost, isVerifiedGoogleProfile, publicSession, signInEmailLimitKey } from "./callbacks";
+
+describe("isClosedAuthPost", () => {
+  it("closes starting a sign-in over HTTP, for every provider", () => {
+    assert.equal(isClosedAuthPost("/api/auth/signin/resend"), true);
+    assert.equal(isClosedAuthPost("/api/auth/signin/google"), true);
+    assert.equal(isClosedAuthPost("/api/auth/signin"), true);
+    assert.equal(isClosedAuthPost("/api/auth/signin/resend/"), true);
+  });
+
+  it("leaves callbacks, sign-out and the session endpoint open", () => {
+    assert.equal(isClosedAuthPost("/api/auth/callback/resend"), false);
+    assert.equal(isClosedAuthPost("/api/auth/callback/google"), false);
+    assert.equal(isClosedAuthPost("/api/auth/signout"), false);
+    assert.equal(isClosedAuthPost("/api/auth/session"), false);
+    assert.equal(isClosedAuthPost("/api/auth/signinfo"), false);
+  });
+});
 
 describe("publicSession", () => {
   const expires = new Date("2026-10-15T12:00:00.000Z");

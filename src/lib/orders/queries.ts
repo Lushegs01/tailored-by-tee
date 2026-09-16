@@ -114,16 +114,23 @@ export async function getOrderByAccessKey(orderNumber: string, key: string): Pro
 /*
  * ORDER VISIBILITY RULE. A signed-in customer sees an order when it was placed
  * while signed in to their account (order.userId = user.id) OR it was placed with
- * their email address (order.email = user.email, case-insensitively) — so guest
- * orders appear in the account as soon as the customer signs in.
+ * their email address (order.email = user.email) — so guest orders appear in the
+ * account as soon as the customer signs in.
  *
  * The email half is safe only because every sign-in method enabled in src/auth.ts
  * proves the customer controls that inbox: the one-time email link is delivered to
- * it, and Google only returns verified addresses. NEVER add a provider that does
- * not verify email ownership (a password sign-up without confirmation, an OAuth
- * provider that returns unverified emails) without revisiting this rule — anyone
- * could otherwise claim an address and read its orders: names, phone numbers and
- * delivery addresses.
+ * it, and Google identities are refused in auth.ts's signIn callback unless Google
+ * reports the address as verified (enforced in code, not assumed). NEVER add a
+ * provider that does not verify email ownership (a password sign-up without
+ * confirmation, an OAuth provider that returns unverified emails) without
+ * revisiting this rule — anyone could otherwise claim an address and read its
+ * orders: names, phone numbers and delivery addresses.
+ *
+ * Addresses are compared lower-cased and exactly. Checkout stores every order's
+ * email lower-cased (checkout-schema), and the adapter does the same for accounts,
+ * so an exact match finds them — and can use the email index, where a
+ * case-insensitive match would scan every order. Anything else that ever writes
+ * orders must store the email lower-cased too.
  *
  * Every query below applies the rule twice: in the database to find candidates,
  * then exactly in code (ownsOrder), which is what decides.
@@ -134,16 +141,10 @@ interface OrderViewer {
   email: string;
 }
 
-/** Postgres LIKE wildcards. Prisma's case-insensitive `equals` compiles to ILIKE, so they must be escaped. */
-function escapeLikePattern(value: string): string {
-  return value.replace(/[\\%_]/g, (char) => `\\${char}`);
-}
-
 function visibleTo(user: OrderViewer): Prisma.OrderWhereInput {
   const email = user.email.trim().toLowerCase();
   const conditions: Prisma.OrderWhereInput[] = [{ userId: user.id }];
-  // Uses ILIKE: an unescaped "_" in "jo_ade@…" would otherwise also match "joxade@…".
-  if (email) conditions.push({ email: { equals: escapeLikePattern(email), mode: "insensitive" } });
+  if (email) conditions.push({ email });
   return { OR: conditions };
 }
 

@@ -8,9 +8,10 @@ import { AccountContext, type AccountContextValue, type AccountState } from "./u
 /**
  * getSession() broadcasts on next-auth's channel, which the SessionProvider in
  * this tab — and in any other open tab — answers by fetching the session again.
+ * That also recovers a provider stuck on "nobody" after a failed request.
  */
-function refreshSession() {
-  void getSession().catch(() => null);
+async function refreshSession(): Promise<void> {
+  await getSession().catch(() => null);
 }
 
 /**

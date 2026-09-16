@@ -1,7 +1,20 @@
 /*
- * The decisions inside Auth.js's callbacks, kept free of Next and Auth.js runtime
- * imports so they can be tested on their own (src/auth.ts wires them in).
+ * The decisions inside Auth.js's callbacks and its route, kept free of Next and
+ * Auth.js runtime imports so they can be tested on their own (src/auth.ts and
+ * the /api/auth route wire them in).
  */
+
+/**
+ * Auth.js POST endpoints the site keeps closed: starting a sign-in over HTTP
+ * (/api/auth/signin and /api/auth/signin/<provider>). The site's own buttons are
+ * server actions that call Auth.js in-process, so these would only ever be a way
+ * round their validation — a script could otherwise mint sign-in emails to any
+ * address. Callbacks, sign-out and the session endpoint stay open.
+ */
+export function isClosedAuthPost(pathname: string): boolean {
+  const path = pathname.replace(/\/+$/, "");
+  return path === "/api/auth/signin" || path.startsWith("/api/auth/signin/");
+}
 
 /** The user as the session callback receives it from the database. */
 export interface SessionUserRecord {

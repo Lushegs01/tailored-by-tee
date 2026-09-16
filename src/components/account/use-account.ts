@@ -29,11 +29,14 @@ export type AccountState =
 
 export interface AccountContextValue {
   state: AccountState;
-  /** Reads the session again, in this tab and any other open one. Does nothing when accounts are off. */
-  refresh: () => void;
+  /** Reads the session again, in this tab and any other open one. Never rejects; does nothing when accounts are off. */
+  refresh: () => Promise<void>;
 }
 
-const ACCOUNTS_OFF: AccountContextValue = { state: { status: "signed-out", user: null }, refresh: () => {} };
+const ACCOUNTS_OFF: AccountContextValue = {
+  state: { status: "signed-out", user: null },
+  refresh: () => Promise.resolve(),
+};
 
 export const AccountContext = React.createContext<AccountContextValue>(ACCOUNTS_OFF);
 
@@ -41,6 +44,6 @@ export function useAccount(): AccountState {
   return React.useContext(AccountContext).state;
 }
 
-export function useRefreshAccount(): () => void {
+export function useRefreshAccount(): () => Promise<void> {
   return React.useContext(AccountContext).refresh;
 }
