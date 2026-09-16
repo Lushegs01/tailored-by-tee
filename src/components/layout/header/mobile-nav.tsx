@@ -94,7 +94,7 @@ export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps)
               ) : null}
             </Link>
           </li>
-          {staticSecondaryLinks.map((link) => (
+          {DRAWER_SECONDARY_LINKS.map((link) => (
             <li key={link.href}>
               <Link href={link.href} aria-current={current(pathname, link.href)} className={secondaryLink}>
                 {link.label}
@@ -109,10 +109,6 @@ export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps)
 
 const secondaryLink =
   "flex min-h-11 items-center gap-2 text-label aria-[current=page]:underline aria-[current=page]:underline-offset-[6px]";
-
-/** Account and wishlist depend on the visitor, so MobileNav builds those two; the rest come from config. */
-const VISITOR_HREFS = new Set(["/account", "/account/sign-in", "/wishlist"]);
-const staticSecondaryLinks = DRAWER_SECONDARY_LINKS.filter((link) => !VISITOR_HREFS.has(link.href));
 
 /** "Sign in" once we know nobody is; "Account" otherwise (while loading it resolves to sign-in anyway). */
 function accountLinkFor(status: ReturnType<typeof useAccount>["status"]): NavLink {

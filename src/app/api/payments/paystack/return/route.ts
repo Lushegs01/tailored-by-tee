@@ -21,8 +21,10 @@ import { clientAddress, rateLimit } from "@/lib/security/rate-limit";
  * - without a key (paying from the account): the signed-in customer must be able to
  *   see the order, and goes back to it in their account. Paystack's redirect is a
  *   top-level GET navigation, so the Lax session cookie comes with it. If the
- *   session has lapsed meanwhile, they're asked to sign in and then land on the
- *   order: every well-formed number gets that same redirect, so it confirms
+ *   session has lapsed meanwhile, they're asked to sign in and then come back
+ *   through this same return, so the payment is still verified and settled
+ *   before they see the order (never an unpaid-looking order inviting a second
+ *   payment). Every well-formed number gets that same redirect, so it confirms
  *   nothing, and nothing is settled without a viewer who can see the order (the
  *   webhook settles it regardless).
  * Anything else invalid or unauthorised goes to the homepage, confirming nothing.
@@ -59,7 +61,10 @@ async function resolveReturn(search: URLSearchParams): Promise<ReturnTarget | nu
   const parsed = accountSchema.safeParse(input);
   if (!parsed.success) return null;
   const user = await getCurrentUser();
-  if (!user) return { kind: "sign-in", path: signInPath(accountOrderPath(parsed.data.order)) };
+  if (!user) {
+    const again = new URLSearchParams({ order: parsed.data.order, reference: parsed.data.reference });
+    return { kind: "sign-in", path: signInPath(`/api/payments/paystack/return?${again}`) };
+  }
   const order = await findOrderForUser(user, parsed.data.order);
   return order
     ? { kind: "settle", order, reference: parsed.data.reference, path: accountOrderPath(order.number) }

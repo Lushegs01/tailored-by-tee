@@ -53,8 +53,8 @@ export async function saveProfile(_previous: ProfileActionResult | null, formDat
       };
     }
 
-    revalidatePath("/account/profile");
-    revalidatePath("/account");
+    // The whole account area, layout included: its greeting shows the name.
+    revalidatePath("/account", "layout");
     return {
       ok: true,
       message: "Your details are saved.",

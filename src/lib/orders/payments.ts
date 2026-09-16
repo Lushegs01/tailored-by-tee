@@ -8,6 +8,7 @@ import { initializeTransaction, isPaystackTestMode, verifyTransaction } from "@/
 
 import { orderStatusPath } from "./access";
 import { CheckoutError } from "./errors";
+import { confirmationEmailDue, paymentStillInProgress, settlementPath, type SettleOutcome } from "./settlement";
 
 /*
  * Paying for an order.
@@ -41,14 +42,24 @@ export function paymentLinks(origin: string, orderNumber: string, accessToken: s
   return { callbackUrl: callback.toString(), cancelUrl: orderPage };
 }
 
+/** Statuses of an order that has been paid for and is going ahead. */
+const PAID_STATUSES: ReadonlySet<string> = new Set(["PAID", "PROCESSING", "SHIPPED", "DELIVERED"]);
+
 /** Opens a Paystack checkout. Throws a CheckoutError with a shopper-facing message when it can't. */
 export async function startPayment(order: PayableOrder, links: { callbackUrl: string; cancelUrl: string }): Promise<string> {
   const db = getDb();
+  // An earlier attempt may already have gone through without our hearing (a late webhook, a
+  // return that never arrived): settle those first, so a paid order is never offered a second checkout.
+  await settleEarlierAttempts(order.id);
+
   const current = await db.order.findUnique({
     where: { id: order.id },
     select: { number: true, email: true, total: true, status: true, reservedUntil: true },
   });
 
+  if (current && PAID_STATUSES.has(current.status)) {
+    throw new CheckoutError("already_paid", "This order has already been paid. Refresh the page to see it confirmed.");
+  }
   if (!current || current.status !== "PENDING" || !current.reservedUntil || current.reservedUntil <= new Date()) {
     throw new CheckoutError("unavailable", "This order can no longer be paid — its hold on the pieces has ended.");
   }
@@ -88,16 +99,50 @@ export async function startPayment(order: PayableOrder, links: { callbackUrl: st
   }
 }
 
-export type SettleOutcome =
-  | "paid"
-  | "paid_after_release"
-  | "already_paid"
-  | "needs_refund"
-  | "rejected"
-  | "failed"
-  | "abandoned"
-  | "pending"
-  | "unknown_reference";
+/** How far back a new checkout looks for earlier attempts on the same order (holds are far shorter). */
+const EARLIER_ATTEMPTS_MS = 2 * 60 * 60_000;
+
+/**
+ * Re-checks, with Paystack, the order's recent payment attempts that are still
+ * unsettled, before another checkout opens. One that has paid settles the order
+ * (and the caller then finds it paid); one Paystack says is still going through
+ * stops the new checkout, since both could otherwise be charged. "Abandoned"
+ * attempts are asked again too: Paystack reports that until the shopper pays,
+ * so one left open in another tab may have been completed since.
+ */
+async function settleEarlierAttempts(orderId: string): Promise<void> {
+  const now = new Date();
+  const attempts = await getDb().payment.findMany({
+    where: {
+      orderId,
+      status: { in: ["PENDING", "ABANDONED"] },
+      createdAt: { gt: new Date(now.getTime() - EARLIER_ATTEMPTS_MS) },
+    },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    select: { reference: true, createdAt: true },
+  });
+
+  for (const attempt of attempts) {
+    let outcome: SettleOutcome;
+    try {
+      outcome = await settlePayment(attempt.reference);
+    } catch (error) {
+      // Paystack couldn't be asked, which decides nothing, so paying isn't blocked. A second
+      // successful payment would still be recognised when it settles, and flagged for a refund.
+      console.error(`[payments] could not re-check ${attempt.reference}`, error instanceof Error ? error.message : error);
+      continue;
+    }
+    if (paymentStillInProgress(outcome, attempt.createdAt, now)) {
+      throw new CheckoutError(
+        "payment_in_progress",
+        "Your last payment is still being confirmed. Please wait a minute, then refresh this page.",
+      );
+    }
+  }
+}
+
+export type { SettleOutcome } from "./settlement";
 
 /** Asks Paystack what happened to a payment and applies it to the order. Safe to call repeatedly. */
 export async function settlePayment(reference: string): Promise<SettleOutcome> {
@@ -107,7 +152,11 @@ export async function settlePayment(reference: string): Promise<SettleOutcome> {
     select: { id: true, orderId: true, amount: true, currency: true, status: true },
   });
   if (!payment) return "unknown_reference";
-  if (payment.status === "SUCCESS") return "already_paid";
+  if (payment.status === "SUCCESS") {
+    // Settled before. If its confirmation email never went out, this is another chance (see settlement.ts).
+    scheduleOrderConfirmationEmail(payment.orderId);
+    return "already_paid";
+  }
 
   const transaction = await verifyTransaction(reference);
   const outcome = evaluatePayment({ reference, amount: payment.amount, currency: payment.currency }, transaction);
@@ -132,8 +181,9 @@ export async function settlePayment(reference: string): Promise<SettleOutcome> {
       return outcome;
     case "confirmed": {
       const settled = await confirmPayment(payment.id, payment.orderId, reference, transaction, gateway);
-      // This call won the claim and the order is now paid: confirm by email after the response. Never throws.
-      if (settled === "paid" || settled === "paid_after_release") scheduleOrderConfirmationEmail(payment.orderId);
+      // Paid, by this call or one just before it: confirm by email after the response, unless that
+      // has already gone. Never throws.
+      if (confirmationEmailDue(settled)) scheduleOrderConfirmationEmail(payment.orderId);
       return settled;
     }
     default: {
@@ -207,9 +257,9 @@ async function confirmPayment(
     });
     const lines = order.items.flatMap((item) => (item.variantId ? [{ variantId: item.variantId, quantity: item.quantity }] : []));
 
-    let status = order.status;
+    let path = settlementPath(order.status);
 
-    if (status === "PENDING") {
+    if (path === "promote") {
       const promoted = await tx.order.updateMany({
         where: { id: orderId, status: "PENDING" },
         data: { status: "PAID", paymentStatus: "SUCCESS", paidAt, reservedUntil: null },
@@ -254,10 +304,16 @@ async function confirmPayment(
       // A sweep released the order between our read and this claim: the update waited for
       // the sweep's lock, then matched nothing. Re-read, so the payment takes the
       // after-release path below instead of being mistaken for a duplicate.
-      status = (await tx.order.findUniqueOrThrow({ where: { id: orderId }, select: { status: true } })).status;
+      const reread = await tx.order.findUniqueOrThrow({ where: { id: orderId }, select: { status: true } });
+      path = settlementPath(reread.status);
+      if (path === "promote") {
+        // Can't happen (the update would have matched it). Roll back rather than guess: the
+        // payment stays unclaimed, and the next verification settles it.
+        throw new Error(`Order ${orderId} is still pending after a failed promote (${reference})`);
+      }
     }
 
-    if (status === "CANCELLED") {
+    if (path === "after_release") {
       // Paid after the hold lapsed. Keep the sale only if every piece is still free; otherwise undo and refund.
       const sold: typeof lines = [];
       for (const line of lines) {

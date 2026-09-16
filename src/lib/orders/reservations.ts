@@ -3,6 +3,7 @@ import "server-only";
 import type { Prisma } from "@/generated/prisma/client";
 import { getCatalogSource } from "@/lib/catalog/sources";
 import { getDb } from "@/lib/db";
+import { retryUnsentConfirmations } from "@/lib/email/order-emails";
 
 /*
  * Stock held for unpaid orders.
@@ -91,6 +92,8 @@ const SWEEP_INTERVAL_MS = 60_000;
  * Releases lapsed holds at most once a minute per server instance. Called after
  * bag and checkout responses (via `after()`), so abandoned checkouts go back on
  * sale soon after any shopper activity — without adding a moment to anyone's request.
+ * The same tick retries order confirmations whose first send failed (on its own,
+ * slower schedule).
  */
 export async function sweepExpiredReservations(now = new Date()): Promise<void> {
   if (getCatalogSource() !== "database" || now.getTime() - lastSweepAt < SWEEP_INTERVAL_MS) return;
@@ -101,6 +104,7 @@ export async function sweepExpiredReservations(now = new Date()): Promise<void> 
   } catch (error) {
     console.error("[reservations] sweep failed", error instanceof Error ? error.message : error);
   }
+  await retryUnsentConfirmations(now);
 }
 
 /** Releases unpaid orders whose hold has lapsed. Cheap when there are none (indexed on status + reservedUntil). */

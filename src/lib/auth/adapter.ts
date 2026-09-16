@@ -138,6 +138,8 @@ export function authAdapter(): Adapter {
     },
 
     async useVerificationToken({ identifier, token }) {
+      // A link cut short by a mail client: treat it as an expired link, not a server fault.
+      if (!identifier || !token) return null;
       try {
         // Deleting is the use: a second click on the same link finds nothing.
         return await getDb().verificationToken.delete({ where: { identifier_token: { identifier, token } } });

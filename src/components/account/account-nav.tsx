@@ -38,8 +38,9 @@ const underline =
 
 /**
  * Account navigation. Below lg: a swipeable row of tabs under the greeting
- * (scrolling inside its own box, never the page). From lg: a quiet rail beside
- * the content, with sign-out beneath it.
+ * (scrolling inside its own box, never the page), fading out across the right
+ * gutter so a tab cut off at the edge reads as "more this way". From lg: a quiet
+ * rail beside the content, with sign-out beneath it.
  */
 export function AccountNav({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -66,7 +67,8 @@ export function AccountNav({ className }: { className?: string }) {
         ref={listRef}
         className={cn(
           "relative -mx-(--gutter) flex snap-x gap-x-7 overflow-x-auto scroll-px-(--gutter) border-b px-(--gutter) py-1.5 scrollbar-none",
-          "lg:mx-0 lg:snap-none lg:flex-col lg:overflow-visible lg:border-t lg:border-b-0 lg:px-0 lg:pt-3 lg:pb-0",
+          "[mask-image:linear-gradient(to_right,black_calc(100%_-_var(--gutter)),transparent)]",
+          "lg:mx-0 lg:snap-none lg:flex-col lg:overflow-visible lg:border-t lg:border-b-0 lg:px-0 lg:pt-3 lg:pb-0 lg:[mask-image:none]",
         )}
       >
         {ACCOUNT_LINKS.map((link) => (

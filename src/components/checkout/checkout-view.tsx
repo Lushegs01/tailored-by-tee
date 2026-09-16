@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { placeOrderAction } from "@/app/checkout/actions";
+import { useAccount } from "@/components/account/use-account";
 import { useCart } from "@/components/cart/cart-provider";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { useHasMounted } from "@/components/hooks/use-has-mounted";
@@ -71,6 +72,21 @@ export function CheckoutView(props: CheckoutViewProps) {
   const router = useRouter();
   const mounted = useHasMounted();
   const [redirecting, setRedirecting] = React.useState<string | null>(null);
+  const accountStatus = useAccount().status;
+  const previousStatus = React.useRef(accountStatus);
+
+  // Someone signed out (or in) in another tab while this checkout was open: ask the server
+  // to render it again for whoever is here now. After a sign-out the account's details and
+  // addresses leave the page, and the form below starts again (keyed by owner), dropping the
+  // account's draft — so the next person on a shared device never sees them. A session
+  // request that merely failed changes nothing: the server still renders the same account.
+  React.useEffect(() => {
+    const previous = previousStatus.current;
+    previousStatus.current = accountStatus;
+    const signedOutHere = previous === "signed-in" && accountStatus === "signed-out" && props.prefill !== undefined;
+    const signedInHere = previous === "signed-out" && accountStatus === "signed-in" && props.prefill === undefined;
+    if (signedOutHere || signedInHere) router.refresh();
+  }, [accountStatus, props.prefill, router]);
 
   if (props.mode === "unavailable") {
     return (
@@ -113,6 +129,8 @@ export function CheckoutView(props: CheckoutViewProps) {
 
   return (
     <CheckoutForm
+      // A different person at checkout starts a fresh form, reading only the draft kept for them.
+      key={props.prefill?.email ?? "guest"}
       {...props}
       lines={cart.lines}
       onPlaced={(url, external) => {
@@ -596,7 +614,8 @@ function ChoiceOption({
   );
 }
 
-function CheckoutSkeleton({ label }: { label: string }) {
+/** The form-and-summary geometry while checkout loads; also the route's loading state. */
+export function CheckoutSkeleton({ label }: { label: string }) {
   return (
     <div role="status" className="lg:grid lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16">
       <span className="sr-only">{label}</span>

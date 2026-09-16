@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-import { enabledSignInMethods } from "@/auth";
 import { Container } from "@/components/ui/container";
 import { WishlistView } from "@/components/wishlist/wishlist-view";
+import { accountsEnabled } from "@/lib/auth/config";
 import { signInPath } from "@/lib/auth/session";
 import { pageMetadata } from "@/lib/seo/metadata";
 
@@ -22,9 +22,7 @@ export const metadata: Metadata = {
  * loads — so this page stays cacheable and never reads the session.
  */
 export default function WishlistPage() {
-  // Configuration only (which sign-in methods have keys), never the visitor's session.
-  const accountsEnabled = enabledSignInMethods.google || enabledSignInMethods.email;
-
+  // Configuration only (can anyone sign in on this deployment), never the visitor's session.
   return (
     <Container className="pt-8 pb-24 md:pt-12 md:pb-32">
       <h1 className="font-display text-display-sm">Wishlist</h1>

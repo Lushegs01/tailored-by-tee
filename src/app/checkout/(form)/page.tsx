@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 
-import { enabledSignInMethods } from "@/auth";
 import type { CheckoutPrefill } from "@/components/checkout/checkout-prefill";
 import { CheckoutView } from "@/components/checkout/checkout-view";
 import { Container } from "@/components/ui/container";
@@ -10,9 +9,9 @@ import { deliveryPolicy } from "@/config/policies";
 import { siteConfig } from "@/config/site";
 import { listAddresses } from "@/lib/account/addresses";
 import { getProfile } from "@/lib/account/profile";
+import { accountsEnabled } from "@/lib/auth/config";
 import { getCurrentUser, signInPath, type CurrentUser } from "@/lib/auth/session";
 import { getCheckoutMode, paymentsAreTest } from "@/lib/commerce/checkout-mode";
-import { isDatabaseConfigured } from "@/lib/db";
 import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = pageMetadata({
@@ -22,15 +21,20 @@ export const metadata: Metadata = pageMetadata({
   noindex: true,
 });
 
+/*
+ * Lives in the (form) route group so its loading state covers /checkout alone,
+ * never the order pages beneath it (/checkout/complete/…).
+ */
 export default async function CheckoutPage() {
   // Rendered for each request, never prerendered or cached: a signed-in customer's
   // details go into this page. Reading the session cookie already opts the route in;
-  // connection() keeps it so even when there is no database (and so no session) to ask.
+  // connection() keeps it so even when accounts are off (and so no session to ask).
   await connection();
 
   const user = await getCurrentUser();
   const prefill = user ? await accountPrefill(user) : undefined;
-  const offerSignIn = !user && isDatabaseConfigured() && (enabledSignInMethods.google || enabledSignInMethods.email);
+  // Configuration only: offered when someone could actually sign in on this deployment.
+  const offerSignIn = !user && accountsEnabled;
 
   const pickup = deliveryPolicy.pickup?.enabled
     ? { name: deliveryPolicy.pickup.name, estimate: deliveryPolicy.pickup.estimate, address: deliveryPolicy.pickup.address }

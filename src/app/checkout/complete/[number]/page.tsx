@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { after } from "next/server";
 
-import { enabledSignInMethods } from "@/auth";
 import { PayNowButton } from "@/components/checkout/pay-now-button";
 import { lagosTime } from "@/components/orders/format";
 import { OrderBreakdown } from "@/components/orders/order-breakdown";
@@ -12,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Emphasis } from "@/components/ui/emphasis";
 import { TextLink } from "@/components/ui/text-link";
+import { accountsEnabled } from "@/lib/auth/config";
 import { getCurrentUser, signInPath, type CurrentUser } from "@/lib/auth/session";
 import { getCheckoutMode, paymentsAreTest, type CheckoutMode } from "@/lib/commerce/checkout-mode";
 import { formatPrice } from "@/lib/format";
@@ -96,7 +96,6 @@ export default async function OrderCompletePage({ params, searchParams }: PagePr
   // This page is already dynamic (it reads the link's key), so reading the session costs nothing extra.
   const viewer = await getCurrentUser();
   const inAccount = await isInAccount(viewer, order.number);
-  const accountsEnabled = enabledSignInMethods.email || enabledSignInMethods.google;
 
   return (
     <Container className="pt-10 pb-24 md:pt-16 md:pb-32">

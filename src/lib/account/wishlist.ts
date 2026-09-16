@@ -16,6 +16,9 @@ import { getDb, isDatabaseConfigured } from "@/lib/db";
 /** Matches the browser's cap. Beyond it the oldest saves make way for the newest. */
 export const MAX_WISHLIST_ITEMS = 100;
 
+/** Saved pieces since withdrawn are kept (they come back if the piece does), up to this many. */
+const MAX_HIDDEN_ITEMS = 100;
+
 /** Listed in the storefront: active and photographed — the catalogue shows nothing else. */
 const visibleProduct = {
   status: "ACTIVE",
@@ -48,7 +51,7 @@ export async function countWishlistItems(userId: string): Promise<number> {
 /** Saves one product (nothing happens if it is already saved or not listed). Returns the list, newest first. */
 export async function addWishlistItem(userId: string, productId: string): Promise<string[]> {
   if (!isDatabaseConfigured()) return [];
-  await saveProducts(userId, [productId]);
+  await saveProducts(userId, [productId], "add");
   return getWishlistProductIds(userId);
 }
 
@@ -63,16 +66,21 @@ export async function removeWishlistItem(userId: string, productId: string): Pro
 /**
  * Adds a guest's saved ids (newest first) that the account doesn't already hold,
  * then returns the whole list, newest first. Safe to repeat: merging the same
- * list twice changes nothing.
+ * list twice changes nothing. A merge only fills free room — the account's own
+ * saves never make way for it, however stale the list on the device.
  */
 export async function mergeWishlist(userId: string, productIds: string[]): Promise<string[]> {
   if (!isDatabaseConfigured()) return [];
-  await saveProducts(userId, productIds);
+  await saveProducts(userId, productIds, "merge");
   return getWishlistProductIds(userId);
 }
 
-/** Stores the listed ones among `productIds` (newest first), keeping any already saved as they were. */
-async function saveProducts(userId: string, productIds: readonly string[]): Promise<void> {
+/**
+ * Stores the listed ones among `productIds` (newest first), keeping any already
+ * saved as they were. "add" is the shopper's own action, so at the cap the oldest
+ * save makes way; "merge" brings in a list from a device, so it takes only what fits.
+ */
+async function saveProducts(userId: string, productIds: readonly string[], mode: "add" | "merge"): Promise<void> {
   const candidates = [...new Set(productIds)].slice(0, MAX_WISHLIST_ITEMS);
   if (candidates.length === 0) return;
 
@@ -82,10 +90,22 @@ async function saveProducts(userId: string, productIds: readonly string[]): Prom
     select: { id: true },
   });
   const listedIds = new Set(listed.map((product) => product.id));
-  const incoming = candidates.filter((id) => listedIds.has(id));
+  let incoming = candidates.filter((id) => listedIds.has(id));
   if (incoming.length === 0) return;
 
   const wishlistId = await ensureWishlist(userId);
+
+  if (mode === "merge") {
+    const [held, visibleCount] = await Promise.all([
+      db.wishlistItem.findMany({ where: { wishlistId, productId: { in: incoming } }, select: { productId: true } }),
+      db.wishlistItem.count({ where: { wishlistId, product: visibleProduct } }),
+    ]);
+    const heldIds = new Set(held.map((item) => item.productId));
+    const room = Math.max(MAX_WISHLIST_ITEMS - visibleCount, 0);
+    incoming = incoming.filter((id) => !heldIds.has(id)).slice(0, room);
+    if (incoming.length === 0) return;
+  }
+
   // A millisecond apart, new saves keep the order they arrived in and sit above
   // everything already saved; ids already there keep their original date.
   const now = Date.now();
@@ -93,7 +113,7 @@ async function saveProducts(userId: string, productIds: readonly string[]): Prom
     data: incoming.map((productId, index) => ({ wishlistId, productId, addedAt: new Date(now - index) })),
     skipDuplicates: true,
   });
-  await trimToCap(wishlistId);
+  if (mode === "add") await trimToCap(wishlistId);
 }
 
 /** The user's wishlist row, created on first save. */
@@ -117,15 +137,29 @@ async function ensureWishlist(userId: string): Promise<string> {
   }
 }
 
-/** Drops the oldest saves beyond the cap. Deleting by id is idempotent, so concurrent trims agree. */
+/**
+ * Drops the oldest saves beyond the cap. Only pieces the shopper can see count
+ * towards it, so a withdrawn piece never pushes out a visible one; withdrawn
+ * pieces have their own, separate limit. Deleting by id is idempotent, so
+ * concurrent trims agree.
+ */
 async function trimToCap(wishlistId: string): Promise<void> {
   const db = getDb();
-  const overflow = await db.wishlistItem.findMany({
-    where: { wishlistId },
-    orderBy: newestFirst,
-    skip: MAX_WISHLIST_ITEMS,
-    select: { productId: true },
-  });
+  const [visibleOverflow, hiddenOverflow] = await Promise.all([
+    db.wishlistItem.findMany({
+      where: { wishlistId, product: visibleProduct },
+      orderBy: newestFirst,
+      skip: MAX_WISHLIST_ITEMS,
+      select: { productId: true },
+    }),
+    db.wishlistItem.findMany({
+      where: { wishlistId, NOT: { product: visibleProduct } },
+      orderBy: newestFirst,
+      skip: MAX_HIDDEN_ITEMS,
+      select: { productId: true },
+    }),
+  ]);
+  const overflow = [...visibleOverflow, ...hiddenOverflow];
   if (overflow.length === 0) return;
   await db.wishlistItem.deleteMany({
     where: { wishlistId, productId: { in: overflow.map((item) => item.productId) } },

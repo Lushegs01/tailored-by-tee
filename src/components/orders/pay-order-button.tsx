@@ -5,7 +5,12 @@ import * as React from "react";
 import { resumeAccountPayment } from "@/app/account/(member)/orders/actions";
 import { Button } from "@/components/ui/button";
 
-/** Opens a fresh Paystack checkout for one of the signed-in customer's orders that still holds its pieces. */
+/**
+ * Opens a fresh Paystack checkout for one of the signed-in customer's orders that
+ * still holds its pieces. Full width on phones, where the label ("Pay ₦1,250,000
+ * with Paystack") may wrap rather than push past the screen edge. aria-disabled
+ * while opening, so focus stays on the button if it comes back with an error.
+ */
 export function PayOrderButton({ orderNumber, label }: { orderNumber: string; label: string }) {
   const [pending, startTransition] = React.useTransition();
   const [error, setError] = React.useState<string | null>(null);
@@ -15,9 +20,12 @@ export function PayOrderButton({ orderNumber, label }: { orderNumber: string; la
       <Button
         size="lg"
         arrow
-        disabled={pending}
+        fullWidth
+        className="h-auto min-h-14 whitespace-normal px-6 py-4 text-center sm:w-auto sm:px-9"
+        aria-disabled={pending || undefined}
         aria-busy={pending || undefined}
         onClick={() => {
+          if (pending) return;
           setError(null);
           startTransition(async () => {
             try {

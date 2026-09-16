@@ -26,18 +26,21 @@ export function ProfileForm({ initial, email, supportEmail, className }: Profile
   const [state, formAction, pending] = React.useActionState<ProfileActionResult | null, FormData>(saveProfile, null);
   const values = state?.values ?? initial;
   const fieldErrors = state && !state.ok ? (state.fieldErrors ?? {}) : {};
+  const alertRef = React.useRef<HTMLParagraphElement>(null);
 
-  // Take the customer to the first field that needs fixing (focus is a DOM effect, not state).
+  // Take the customer to the first field that needs fixing, or to the message when no field
+  // is at fault (signed out, too many changes) — the disabled button lets focus go while saving.
   React.useEffect(() => {
     if (!state || state.ok) return;
     const first = state.fieldErrors?.name ? "profile-name" : state.fieldErrors?.phone ? "profile-phone" : null;
     if (first) document.getElementById(first)?.focus();
+    else alertRef.current?.focus();
   }, [state]);
 
   return (
     <form action={formAction} noValidate aria-label="Your details" className={cn("max-w-xl", className)}>
       {state && !state.ok ? (
-        <p role="alert" className="mb-8 border border-danger/40 px-4 py-3 text-body-sm">
+        <p ref={alertRef} tabIndex={-1} role="alert" className="mb-8 border border-danger/40 px-4 py-3 text-body-sm outline-none">
           {state.message}
         </p>
       ) : null}

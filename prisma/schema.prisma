@@ -99,6 +99,13 @@ enum InventoryReason {
   ORDER_RETURNED
 }
 
+/// Where a refund stands with Paystack: requested, money returned, or refused.
+enum RefundStatus {
+  PENDING
+  PROCESSED
+  FAILED
+}
+
 /* ── People ────────────────────────────────────────────────────────────── */
 
 model User {
@@ -109,6 +116,8 @@ model User {
   phone         String?
   image         String?
   role          Role      @default(CUSTOMER)
+  /// Demo account for evaluation only (npm run db:seed:demo); removed by db:clear-demo.
+  isDemo        Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -123,6 +132,8 @@ model User {
   couponUsages         CouponUsage[]
   orderEvents          OrderEvent[]
   inventoryAdjustments InventoryAdjustment[]
+  refunds              Refund[]
+  auditLogs            AuditLog[]
 }
 
 /// Auth.js adapter tables (@auth/prisma-adapter shape).
@@ -537,6 +548,11 @@ model Order {
   shippedAt        DateTime?
   deliveredAt      DateTime?
   refundedAt       DateTime?
+  /// Courier's tracking reference and name, added when the order ships.
+  trackingNumber   String?
+  carrier          String?
+  /// Demo order for evaluation only (npm run db:seed:demo); removed by db:clear-demo.
+  isDemo           Boolean        @default(false)
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
@@ -548,6 +564,7 @@ model Order {
   couponUsage CouponUsage?
   adjustments InventoryAdjustment[]
   reviews     Review[]
+  refunds     Refund[]
 
   @@index([userId, createdAt])
   @@index([status, createdAt])
@@ -608,7 +625,34 @@ model Payment {
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
 
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  refunds Refund[]
+
+  @@index([orderId])
+}
+
+/// Money returned to a customer through Paystack's refund API — never marked by
+/// hand. `providerReference` is Paystack's refund id, so a repeated webhook or
+/// retry finds the same row; `restocked` records whether the items went back
+/// into stock with it.
+model Refund {
+  id                String       @id @default(cuid())
+  orderId           String
+  paymentId         String
+  /// Integer kobo; may be less than the order total for a partial refund.
+  amount            Int
+  status            RefundStatus @default(PENDING)
+  providerReference String?      @unique
+  reason            String?
+  restocked         Boolean      @default(false)
+  /// The admin who asked for it.
+  actorId           String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  actor   User?   @relation(fields: [actorId], references: [id], onDelete: SetNull)
 
   @@index([orderId])
 }
@@ -736,6 +780,31 @@ model Review {
 
   @@index([productId, status])
   @@index([status, createdAt])
+}
+
+/* ── Administration ────────────────────────────────────────────────────── */
+
+/// Who changed what in the admin area (products, prices, discounts, roles…).
+/// Orders and stock keep their own trails (OrderEvent, InventoryAdjustment);
+/// this covers everything else. `actorId` is null for command-line changes
+/// (e.g. npm run admin:grant). Never holds secrets.
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  /// Dotted verb, e.g. "product.update", "admin.grant".
+  action     String
+  /// e.g. "Product", "Coupon", "User".
+  entityType String
+  entityId   String?
+  /// One plain sentence for the activity list, e.g. "Changed the price of Linen Shirt".
+  summary    String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId, createdAt])
+  @@index([createdAt])
 }
 
 /* ── Journal ───────────────────────────────────────────────────────────── */
