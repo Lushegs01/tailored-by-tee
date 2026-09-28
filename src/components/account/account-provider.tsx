@@ -17,7 +17,8 @@ async function refreshSession(): Promise<void> {
 /**
  * The account state for the whole storefront. `enabled` comes from the server's
  * configuration (never the visitor): without it no SessionProvider is mounted,
- * so a site without accounts makes no session requests at all.
+ * so a site without accounts makes no session requests at all, and the context's
+ * default tells the header not to offer signing in.
  *
  * The session is fetched once per page load, and again when something asks
  * (sign-in or sign-out in any tab, the wishlist finding the session gone) — not
@@ -43,7 +44,7 @@ function SessionBridge({ children }: { children: React.ReactNode }) {
     if (status === "loading") state = { status: "loading", user: null };
     else if (status !== "authenticated" || !id || !email) state = { status: "signed-out", user: null };
     else state = { status: "signed-in", user: { id, name, email } };
-    return { state, refresh: refreshSession };
+    return { enabled: true, state, refresh: refreshSession };
   }, [status, id, email, name]);
 
   return <AccountContext value={value}>{children}</AccountContext>;

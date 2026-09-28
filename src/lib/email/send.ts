@@ -2,6 +2,8 @@ import "server-only";
 
 import { siteConfig } from "@/config/site";
 
+import { EmailSendError, resendErrorCode } from "./send-failure";
+
 /*
  * Transactional email through Resend's REST API — sign-in links and order
  * emails. One key (RESEND_API_KEY); without it nothing is sent and callers
@@ -32,6 +34,7 @@ export interface OutgoingEmail {
   idempotencyKey?: string;
 }
 
+/** Throws EmailSendError when Resend refuses the email (see send-failure.ts), or the fetch's own error if it can't be reached. */
 export async function sendEmail(email: OutgoingEmail): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) throw new Error("RESEND_API_KEY is not set.");
@@ -49,7 +52,12 @@ export async function sendEmail(email: OutgoingEmail): Promise<void> {
   });
 
   if (!response.ok) {
-    const detail = (await response.text().catch(() => "")).slice(0, 300);
-    throw new Error(`Resend responded ${response.status}${detail ? `: ${detail}` : ""}`);
+    const body = await response.text().catch(() => "");
+    const detail = body.slice(0, 300);
+    throw new EmailSendError(
+      response.status,
+      resendErrorCode(body),
+      `Resend responded ${response.status}${detail ? `: ${detail}` : ""}`,
+    );
   }
 }

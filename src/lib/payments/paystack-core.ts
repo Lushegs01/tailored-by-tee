@@ -44,12 +44,16 @@ export type PaymentOutcome =
   | "reference_mismatch"
   | "failed"
   | "abandoned"
+  | "awaiting_customer"
   | "pending";
 
 /**
  * What a verified transaction means. Only an exact match — our reference, NGN,
  * and precisely the amount we asked for — confirms a payment. "abandoned" is not
  * final: Paystack reports it until the shopper completes payment, which can still happen.
+ * Paystack's "ongoing" is waiting on the shopper (a one-time code, a transfer not yet
+ * received); "pending", "processing", "queued" — and anything we don't recognise,
+ * the cautious reading — mean the payment itself is going through.
  */
 export function evaluatePayment(
   expected: { reference: string; amount: Kobo; currency: string },
@@ -63,6 +67,7 @@ export function evaluatePayment(
   }
   if (transaction.status === "failed" || transaction.status === "reversed") return "failed";
   if (transaction.status === "abandoned") return "abandoned";
+  if (transaction.status === "ongoing") return "awaiting_customer";
   return "pending";
 }
 

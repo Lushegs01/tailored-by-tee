@@ -26,8 +26,8 @@ export const SHOP_HIGHLIGHTS: NavLink[] = [
 
 /**
  * Quieter links set in small caps beneath the main list in the mobile drawer.
- * Account and Wishlist come first there, but depend on the visitor (sign-in
- * state, saved count), so MobileNav builds those two itself.
+ * Account (when accounts are on) and Wishlist come first there, but depend on the
+ * visitor (sign-in state, saved count), so MobileNav builds those two itself.
  */
 export const DRAWER_SECONDARY_LINKS: NavLink[] = [
   { label: "Contact", href: "/contact" },

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Accordion } from "radix-ui";
 import * as m from "motion/react-m";
 
-import { useAccount } from "@/components/account/use-account";
+import { useAccount, useAccountsEnabled } from "@/components/account/use-account";
 import { PlusIcon } from "@/components/icons";
 import { Sheet } from "@/components/ui/sheet";
 import { useWishlist } from "@/components/wishlist/wishlist-provider";
@@ -45,6 +45,8 @@ export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps)
   const [section, setSection] = useState("");
   // Client-only state is safe here: the drawer's contents render only while it is open, never on the server.
   const accountLink = accountLinkFor(useAccount().status);
+  // Without accounts there is nothing to sign in to; the wishlist still works on this device.
+  const accountsEnabled = useAccountsEnabled();
   const { count: wishlistCount } = useWishlist();
 
   const closeOnLink = (event: React.MouseEvent<HTMLElement>) => {
@@ -78,11 +80,13 @@ export function MobileNav({ open, onOpenChange, nav, pathname }: MobileNavProps)
         </Accordion.Root>
 
         <ul className="mt-10 flex flex-col">
-          <li>
-            <Link href={accountLink.href} aria-current={current(pathname, accountLink.href)} className={secondaryLink}>
-              {accountLink.label}
-            </Link>
-          </li>
+          {accountsEnabled ? (
+            <li>
+              <Link href={accountLink.href} aria-current={current(pathname, accountLink.href)} className={secondaryLink}>
+                {accountLink.label}
+              </Link>
+            </li>
+          ) : null}
           <li>
             <Link href="/wishlist" aria-current={current(pathname, "/wishlist")} className={secondaryLink}>
               Wishlist

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { useAccount } from "@/components/account/use-account";
+import { useAccount, useAccountsEnabled } from "@/components/account/use-account";
 import { useCart } from "@/components/cart/cart-provider";
 import { useHasMounted } from "@/components/hooks/use-has-mounted";
 import { AccountIcon, BagIcon, HeartIcon, SearchIcon } from "@/components/icons";
@@ -29,7 +29,9 @@ const countedControl =
  * wishlist, which keeps the phone header to one control each side of the wordmark.
  *
  * Signed-in state comes from useAccount() after the page loads — never from the
- * server — so every storefront page stays static.
+ * server — so every storefront page stays static. With accounts switched off there
+ * is no account control at all (configuration, so server and browser agree); the
+ * wishlist stays, kept on this device.
  */
 export function HeaderActions({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -37,6 +39,7 @@ export function HeaderActions({ className }: { className?: string }) {
   const cart = useCart();
   const wishlist = useWishlist();
   const account = useAccount();
+  const accountsEnabled = useAccountsEnabled();
   // The bag and wishlist hydrate from storage; showing counts only after mount keeps SSR and client in step.
   const mounted = useHasMounted();
   const bagCount = mounted ? cart.itemCount : 0;
@@ -52,15 +55,17 @@ export function HeaderActions({ className }: { className?: string }) {
         <SearchIcon />
       </IconButton>
 
-      <IconButton label={signedOut ? "Sign in" : "Your account"} asChild className="hidden lg:inline-flex">
-        <Link href={accountHref} aria-current={pathname === accountHref ? "page" : undefined}>
-          <AccountIcon />
-          {/* Positioned, so it appears without moving anything. Shown only once the session is known. */}
-          {account.status === "signed-in" ? (
-            <span aria-hidden="true" className="absolute top-2.5 right-2.5 size-1.5 bg-current" />
-          ) : null}
-        </Link>
-      </IconButton>
+      {accountsEnabled ? (
+        <IconButton label={signedOut ? "Sign in" : "Your account"} asChild className="hidden lg:inline-flex">
+          <Link href={accountHref} aria-current={pathname === accountHref ? "page" : undefined}>
+            <AccountIcon />
+            {/* Positioned, so it appears without moving anything. Shown only once the session is known. */}
+            {account.status === "signed-in" ? (
+              <span aria-hidden="true" className="absolute top-2.5 right-2.5 size-1.5 bg-current" />
+            ) : null}
+          </Link>
+        </IconButton>
+      ) : null}
 
       <Link
         href="/wishlist"

@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google";
 import Resend from "next-auth/providers/resend";
 
 import { authAdapter } from "@/lib/auth/adapter";
-import { isVerifiedGoogleProfile, publicSession, signInEmailLimitKey } from "@/lib/auth/callbacks";
+import { isVerifiedGoogleProfile, publicSession, signInEmailLimitKey, signInNetworkLimitKey } from "@/lib/auth/callbacks";
 import { enabledSignInMethods } from "@/lib/auth/config";
 import { SIGN_IN_LINK_MAX_AGE, sendSignInEmail } from "@/lib/email/sign-in-email";
 import { emailFrom } from "@/lib/email/send";
@@ -49,17 +49,36 @@ if (enabledSignInMethods.email) {
 const SIGN_IN_LINK_WINDOW_MS = 10 * 60_000;
 
 /**
- * Per address (10), per inbox (3, "+tags" counted together) and per instance
+ * Per caller (10), per inbox (3, "+tags" counted together) and per instance
  * (300) in ten minutes. Refusing here stops Auth.js before it writes a token or
  * sends anything; the action reports it as "too many links".
+ *
+ * Checked in that order, and a limit only counts a request that passed the ones
+ * before it: a caller over their own allowance never uses up the instance-wide
+ * one. A caller is an IPv4 address or an IPv6 /64 (signInNetworkLimitKey), so
+ * rotating addresses within one connection doesn't multiply the allowance.
  */
 async function withinSignInLinkLimits(email: string): Promise<boolean> {
-  const address = await clientAddress();
-  return (
-    rateLimit(`signin-link:ip:${address}`, { limit: 10, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok &&
-    rateLimit(`signin-link:email:${signInEmailLimitKey(email)}`, { limit: 3, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok &&
-    rateLimit("signin-link:all", { limit: 300, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok
-  );
+  const network = signInNetworkLimitKey(await clientAddress());
+  if (!rateLimit(`signin-link:ip:${network}`, { limit: 10, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok) return false;
+  if (!rateLimit(`signin-link:email:${signInEmailLimitKey(email)}`, { limit: 3, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok) {
+    return false;
+  }
+  return rateLimit("signin-link:all", { limit: 300, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok;
+}
+
+/**
+ * The email sign-in form's own limit, checked by its action before Auth.js is
+ * called at all. Auth.js looks the address up in the database before the
+ * callback's limits above run (and the action sets a cookie first), so without
+ * this every post would cost a query. Counted under its own key, so no request
+ * is counted twice against the limits above, and set a little above their
+ * per-caller one, so in ordinary use those decide. It never looks at the
+ * address, so it answers alike for addresses with and without an account.
+ */
+export async function withinSignInAttemptLimit(): Promise<boolean> {
+  const network = signInNetworkLimitKey(await clientAddress());
+  return rateLimit(`signin-attempt:ip:${network}`, { limit: 15, windowMs: SIGN_IN_LINK_WINDOW_MS }).ok;
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
