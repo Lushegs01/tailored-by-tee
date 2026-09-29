@@ -58,7 +58,8 @@ describe("evaluatePayment", () => {
     assert.equal(evaluatePayment(expected, transaction({ status: "failed" })), "failed");
     assert.equal(evaluatePayment(expected, transaction({ status: "reversed" })), "failed");
     assert.equal(evaluatePayment(expected, transaction({ status: "abandoned" })), "abandoned");
-    for (const status of ["ongoing", "pending", "processing", "queued"]) {
+    assert.equal(evaluatePayment(expected, transaction({ status: "ongoing" })), "awaiting_customer");
+    for (const status of ["pending", "processing", "queued", "something_new"]) {
       assert.equal(evaluatePayment(expected, transaction({ status })), "pending", status);
     }
   });

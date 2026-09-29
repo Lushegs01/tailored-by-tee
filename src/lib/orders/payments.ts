@@ -8,7 +8,13 @@ import { initializeTransaction, isPaystackTestMode, verifyTransaction } from "@/
 
 import { orderStatusPath } from "./access";
 import { CheckoutError } from "./errors";
-import { confirmationEmailDue, paymentStillInProgress, settlementPath, type SettleOutcome } from "./settlement";
+import {
+  confirmationEmailDue,
+  paymentInProgressMessage,
+  paymentRetryDelay,
+  settlementPath,
+  type SettleOutcome,
+} from "./settlement";
 
 /*
  * Paying for an order.
@@ -50,7 +56,7 @@ export async function startPayment(order: PayableOrder, links: { callbackUrl: st
   const db = getDb();
   // An earlier attempt may already have gone through without our hearing (a late webhook, a
   // return that never arrived): settle those first, so a paid order is never offered a second checkout.
-  await settleEarlierAttempts(order.id);
+  const retryDelay = await settleEarlierAttempts(order.id);
 
   const current = await db.order.findUnique({
     where: { id: order.id },
@@ -59,6 +65,10 @@ export async function startPayment(order: PayableOrder, links: { callbackUrl: st
 
   if (current && PAID_STATUSES.has(current.status)) {
     throw new CheckoutError("already_paid", "This order has already been paid. Refresh the page to see it confirmed.");
+  }
+  if (retryDelay > 0) {
+    // Also when the hold has just ended: that payment may yet complete, and its page will say so.
+    throw new CheckoutError("payment_in_progress", paymentInProgressMessage(retryDelay));
   }
   if (!current || current.status !== "PENDING" || !current.reservedUntil || current.reservedUntil <= new Date()) {
     throw new CheckoutError("unavailable", "This order can no longer be paid — its hold on the pieces has ended.");
@@ -101,45 +111,61 @@ export async function startPayment(order: PayableOrder, links: { callbackUrl: st
 
 /** How far back a new checkout looks for earlier attempts on the same order (holds are far shorter). */
 const EARLIER_ATTEMPTS_MS = 2 * 60 * 60_000;
+/** At most this many earlier attempts are re-checked with Paystack before a new checkout (the newest). */
+const EARLIER_ATTEMPTS_CHECKED = 5;
+/**
+ * How settlePayment's note starts on an attempt it rejected (money moved, but not
+ * what was asked for). Such an attempt is FAILED for good: Paystack's answer for it
+ * won't change, so it isn't asked again.
+ */
+const REJECTED_NOTE_PREFIX = "Rejected (";
 
 /**
  * Re-checks, with Paystack, the order's recent payment attempts that are still
  * unsettled, before another checkout opens. One that has paid settles the order
- * (and the caller then finds it paid); one Paystack says is still going through
- * stops the new checkout, since both could otherwise be charged. "Abandoned"
- * attempts are asked again too: Paystack reports that until the shopper pays,
- * so one left open in another tab may have been completed since.
+ * (and the caller then finds it paid). Returns how long the new checkout must wait
+ * for any Paystack says may still take the customer's money (see paymentRetryDelay),
+ * since both could otherwise be charged — 0 if none. "Abandoned" and "failed"
+ * attempts are asked again too: neither is final while the checkout is still open,
+ * perhaps in another tab — a shopper can come back to it, or try another card after
+ * a decline. Attempts whose checkout never opened (no access code) are left out: no
+ * one could have paid them. So are ones settlePayment rejected, which are final — a
+ * few of those (or of declines) must not push out an older abandoned attempt that
+ * was paid since. The checks run side by side, so a slow Paystack delays the new
+ * checkout by one request's timeout, not one per attempt; settling is safe to run
+ * concurrently (see confirmPayment).
  */
-async function settleEarlierAttempts(orderId: string): Promise<void> {
+async function settleEarlierAttempts(orderId: string): Promise<number> {
   const now = new Date();
   const attempts = await getDb().payment.findMany({
     where: {
       orderId,
-      status: { in: ["PENDING", "ABANDONED"] },
+      status: { in: ["PENDING", "ABANDONED", "FAILED"] },
+      accessCode: { not: null },
       createdAt: { gt: new Date(now.getTime() - EARLIER_ATTEMPTS_MS) },
+      // Not rejected. A missing note is spelled out, since in SQL NOT (NULL LIKE …) matches nothing.
+      OR: [{ gatewayResponse: null }, { NOT: { gatewayResponse: { startsWith: REJECTED_NOTE_PREFIX } } }],
     },
     orderBy: { createdAt: "desc" },
-    take: 3,
+    take: EARLIER_ATTEMPTS_CHECKED,
     select: { reference: true, createdAt: true },
   });
 
-  for (const attempt of attempts) {
-    let outcome: SettleOutcome;
-    try {
-      outcome = await settlePayment(attempt.reference);
-    } catch (error) {
-      // Paystack couldn't be asked, which decides nothing, so paying isn't blocked. A second
-      // successful payment would still be recognised when it settles, and flagged for a refund.
-      console.error(`[payments] could not re-check ${attempt.reference}`, error instanceof Error ? error.message : error);
-      continue;
-    }
-    if (paymentStillInProgress(outcome, attempt.createdAt, now)) {
-      throw new CheckoutError(
-        "payment_in_progress",
-        "Your last payment is still being confirmed. Please wait a minute, then refresh this page.",
-      );
-    }
-  }
+  const delays = await Promise.all(
+    attempts.map(async (attempt) => {
+      let outcome: SettleOutcome;
+      try {
+        outcome = await settlePayment(attempt.reference);
+      } catch (error) {
+        // Paystack couldn't be asked, which decides nothing, so paying isn't blocked. A second
+        // successful payment would still be recognised when it settles, and flagged for a refund.
+        console.error(`[payments] could not re-check ${attempt.reference}`, error instanceof Error ? error.message : error);
+        return 0;
+      }
+      return paymentRetryDelay(outcome, attempt.createdAt, now);
+    }),
+  );
+  return Math.max(0, ...delays);
 }
 
 export type { SettleOutcome } from "./settlement";
@@ -149,7 +175,7 @@ export async function settlePayment(reference: string): Promise<SettleOutcome> {
   const db = getDb();
   const payment = await db.payment.findUnique({
     where: { reference },
-    select: { id: true, orderId: true, amount: true, currency: true, status: true },
+    select: { id: true, orderId: true, amount: true, currency: true, status: true, gatewayResponse: true },
   });
   if (!payment) return "unknown_reference";
   if (payment.status === "SUCCESS") {
@@ -170,7 +196,8 @@ export async function settlePayment(reference: string): Promise<SettleOutcome> {
 
   switch (outcome) {
     case "pending":
-      return "pending";
+    case "awaiting_customer":
+      return outcome;
     case "failed":
     case "abandoned":
       // Not final: the shopper may still complete this checkout, which a later verification will see.
@@ -188,7 +215,9 @@ export async function settlePayment(reference: string): Promise<SettleOutcome> {
     }
     default: {
       // Money may have moved, but not what we asked for: never confirm; record it for a person to resolve.
-      const note = `Rejected (${outcome}): Paystack reported ${transaction.status}, ${transaction.amount} ${transaction.currency}; expected ${payment.amount} ${payment.currency}.`;
+      const note = `${REJECTED_NOTE_PREFIX}${outcome}): Paystack reported ${transaction.status}, ${transaction.amount} ${transaction.currency}; expected ${payment.amount} ${payment.currency}.`;
+      // Already recorded, word for word (a failed attempt is re-checked before each new checkout).
+      if (payment.status === "FAILED" && payment.gatewayResponse === note) return "rejected";
       console.error(`[payments] ${reference} ${note}`);
       await db.$transaction([
         db.payment.updateMany({
@@ -321,11 +350,24 @@ async function confirmPayment(
         else break;
       }
 
-      if (sold.length === lines.length) {
-        await tx.order.update({
-          where: { id: orderId },
-          data: { status: "PAID", paymentStatus: "SUCCESS", paidAt, cancelledAt: null },
+      if (sold.length < lines.length) {
+        for (const line of sold) await restoreStock(tx, line.variantId, line.quantity);
+        await tx.order.update({ where: { id: orderId }, data: { paymentStatus: "SUCCESS" } });
+        await tx.orderEvent.create({
+          data: { orderId, type: "payment_needs_refund", note: `Paid after the hold lapsed, but pieces had sold. Refund required: ${reference}.` },
         });
+        console.error(`[payments] ${reference}: paid after release and out of stock — refund required`);
+        return "needs_refund";
+      }
+
+      // Conditional, like the promote: of two late payments for this order racing (another tab,
+      // another attempt), the second waits for the first's lock, then matches nothing — so the
+      // pieces are never sold twice, and it is refunded as a duplicate below.
+      const reclaimed = await tx.order.updateMany({
+        where: { id: orderId, status: "CANCELLED" },
+        data: { status: "PAID", paymentStatus: "SUCCESS", paidAt, cancelledAt: null },
+      });
+      if (reclaimed.count === 1) {
         await tx.inventoryAdjustment.createMany({
           data: lines.map((line) => ({
             variantId: line.variantId,
@@ -341,13 +383,14 @@ async function confirmPayment(
         return "paid_after_release";
       }
 
-      for (const line of sold) await restoreStock(tx, line.variantId, line.quantity);
-      await tx.order.update({ where: { id: orderId }, data: { paymentStatus: "SUCCESS" } });
-      await tx.orderEvent.create({
-        data: { orderId, type: "payment_needs_refund", note: `Paid after the hold lapsed, but pieces had sold. Refund required: ${reference}.` },
-      });
-      console.error(`[payments] ${reference}: paid after release and out of stock — refund required`);
-      return "needs_refund";
+      // Another payment took the order first: put back what this one sold, and re-read it.
+      for (const line of lines) await restoreStock(tx, line.variantId, line.quantity);
+      const reread = await tx.order.findUniqueOrThrow({ where: { id: orderId }, select: { status: true } });
+      if (settlementPath(reread.status) !== "duplicate") {
+        // Can't happen (the update would have matched a released order, and one never returns to
+        // pending). Roll back rather than guess: the payment stays unclaimed for the next verification.
+        throw new Error(`Order ${orderId} is ${reread.status} after a failed late claim (${reference})`);
+      }
     }
 
     // Already paid by another payment (two tabs, two attempts): this one must be refunded.

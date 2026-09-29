@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-import { signIn, signOut } from "@/auth";
+import { signIn, signOut, withinSignInAttemptLimit } from "@/auth";
 import { accountsEnabled, enabledSignInMethods } from "@/lib/auth/config";
 import { rememberSignInReturn, safeReturnPath } from "@/lib/auth/session";
 
@@ -13,7 +13,9 @@ import { rememberSignInReturn, safeReturnPath } from "@/lib/auth/session";
  * session cookies); these actions add input validation and a same-site return
  * path. The limits that stop anyone flooding an inbox with links are enforced
  * inside Auth.js's signIn callback (src/auth.ts), which every path to sending a
- * link goes through; a refusal there comes back here as AccessDenied.
+ * link goes through; a refusal there comes back here as AccessDenied. The email
+ * action also checks a cheap per-caller limit of its own first, since Auth.js
+ * reads the database before that callback runs; both refusals read the same.
  * Replies never reveal whether an address has an account.
  */
 
@@ -28,6 +30,7 @@ export interface EmailSignInState {
 const emailSchema = z.string().trim().toLowerCase().max(254).pipe(z.email());
 
 const COULD_NOT_SEND = "We couldn’t send your link just now. Please try again.";
+const TOO_MANY_LINKS = "Too many sign-in links requested. Please wait a few minutes.";
 
 /** Auth.js answers a sent link with its "check your inbox" step; anything else is an error page. */
 function reachedInboxStep(destination: unknown): boolean {
@@ -48,6 +51,8 @@ export async function signInWithEmail(_previous: EmailSignInState, formData: For
   const parsed = emailSchema.safeParse(raw);
   if (!parsed.success) return { status: "error", message: "Enter a valid email address.", email: raw, field: "email" };
   const email = parsed.data;
+  // Before the cookie and before Auth.js's database lookup (see withinSignInAttemptLimit).
+  if (!(await withinSignInAttemptLimit())) return { status: "error", message: TOO_MANY_LINKS, email };
   const returnPath = safeReturnPath(formData.get("callbackUrl"));
 
   let destination: unknown;
@@ -57,7 +62,7 @@ export async function signInWithEmail(_previous: EmailSignInState, formData: For
   } catch (error) {
     if (error instanceof AuthError) {
       if (error.type === "AccessDenied") {
-        return { status: "error", message: "Too many sign-in links requested. Please wait a few minutes.", email };
+        return { status: "error", message: TOO_MANY_LINKS, email };
       }
       console.error("[auth] email sign-in failed", error.type);
       return { status: "error", message: COULD_NOT_SEND, email };

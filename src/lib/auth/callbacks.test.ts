@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { isClosedAuthPost, isVerifiedGoogleProfile, publicSession, signInEmailLimitKey } from "./callbacks";
+import {
+  isClosedAuthPost,
+  isVerifiedGoogleProfile,
+  publicSession,
+  signInEmailLimitKey,
+  signInNetworkLimitKey,
+} from "./callbacks";
 
 describe("isClosedAuthPost", () => {
   it("closes starting a sign-in over HTTP, for every provider", () => {
@@ -74,5 +80,70 @@ describe("signInEmailLimitKey", () => {
   it("leaves unusual addresses usable as keys", () => {
     assert.equal(signInEmailLimitKey("+tag@example.com"), "+tag@example.com");
     assert.equal(signInEmailLimitKey("not-an-email"), "not-an-email");
+  });
+});
+
+describe("signInNetworkLimitKey", () => {
+  it("counts an IPv4 address on its own", () => {
+    assert.equal(signInNetworkLimitKey("102.89.34.7"), "102.89.34.7");
+    assert.equal(signInNetworkLimitKey(" 102.89.34.7 "), "102.89.34.7");
+    assert.notEqual(signInNetworkLimitKey("102.89.34.8"), "102.89.34.7");
+  });
+
+  it("counts IPv4-mapped IPv6 as the IPv4 address, however it is written", () => {
+    const key = "102.89.34.7";
+    assert.equal(signInNetworkLimitKey("::ffff:102.89.34.7"), key);
+    assert.equal(signInNetworkLimitKey("::FFFF:102.89.34.7"), key);
+    assert.equal(signInNetworkLimitKey("0:0:0:0:0:ffff:102.89.34.7"), key);
+    assert.equal(signInNetworkLimitKey("0000:0000:0000:0000:0000:ffff:102.89.34.7"), key);
+    assert.equal(signInNetworkLimitKey("::0:ffff:102.89.34.7"), key);
+    assert.equal(signInNetworkLimitKey("::ffff:6659:2207"), key);
+    assert.equal(signInNetworkLimitKey("0:0:0:0:0:ffff:6659:2207"), key);
+    assert.equal(signInNetworkLimitKey("::ffff:6659:2207%eth0"), key);
+    assert.equal(signInNetworkLimitKey("::ffff:0102:0304"), "1.2.3.4");
+    // Different shoppers keep different allowances.
+    assert.equal(signInNetworkLimitKey("0:0:0:0:0:ffff:1.2.3.5"), "1.2.3.5");
+  });
+
+  it("counts every address in one IPv6 /64 together, however it is written", () => {
+    const key = "2001:db8:85a3:12::/64";
+    assert.equal(signInNetworkLimitKey("2001:db8:85a3:12:1:2:3:4"), key);
+    assert.equal(signInNetworkLimitKey("2001:0DB8:85a3:0012:ffff:ffff:ffff:ffff"), key);
+    assert.equal(signInNetworkLimitKey("2001:db8:85a3:12::9"), key);
+    assert.equal(signInNetworkLimitKey("2001:db8:85a3:12::1.2.3.4"), key);
+    assert.equal(signInNetworkLimitKey("2001:db8:85a3:12:0:ffff:1.2.3.4"), key);
+    assert.equal(signInNetworkLimitKey("2001:db8::1"), "2001:db8:0:0::/64");
+    assert.equal(signInNetworkLimitKey("2001:db8:0:0:1::"), "2001:db8:0:0::/64");
+    assert.equal(signInNetworkLimitKey("fe80::1%eth0"), "fe80:0:0:0::/64");
+    assert.notEqual(signInNetworkLimitKey("2001:db8:85a3:13::1"), key);
+  });
+
+  it("never lets the all-zero /64 become one shared allowance", () => {
+    assert.equal(signInNetworkLimitKey("::1"), "::1");
+    assert.equal(signInNetworkLimitKey("0:0:0:0:0:0:0:1"), "::1");
+    assert.equal(signInNetworkLimitKey("::"), "::");
+    assert.equal(signInNetworkLimitKey("::1.2.3.4"), "::102:304");
+    assert.notEqual(signInNetworkLimitKey("::2"), signInNetworkLimitKey("::1"));
+    for (const address of ["::1", "::", "::ffff:1.2.3.4", "0:0:0:0:0:ffff:0102:0304", "::1.2.3.4"]) {
+      assert.equal(signInNetworkLimitKey(address).endsWith("/64"), false, address);
+    }
+  });
+
+  it("leaves anything else usable as a key", () => {
+    assert.equal(signInNetworkLimitKey("local"), "local");
+    assert.equal(signInNetworkLimitKey(""), "");
+    assert.equal(signInNetworkLimitKey("1::2::3"), "1::2::3");
+    assert.equal(signInNetworkLimitKey("2001:db8:1"), "2001:db8:1");
+    assert.equal(signInNetworkLimitKey("not:an:address"), "not:an:address");
+    assert.equal(signInNetworkLimitKey(":"), ":");
+    assert.equal(signInNetworkLimitKey(":::"), ":::");
+    assert.equal(signInNetworkLimitKey("1:2:3:4:5:6:7:8:9"), "1:2:3:4:5:6:7:8:9");
+    assert.equal(signInNetworkLimitKey("1:2:3:4::5:6:7:8"), "1:2:3:4::5:6:7:8");
+    assert.equal(signInNetworkLimitKey("12345::1"), "12345::1");
+    assert.equal(signInNetworkLimitKey("::ffff:1.2.3.256"), "::ffff:1.2.3.256");
+    assert.equal(signInNetworkLimitKey("::ffff:1.2.3"), "::ffff:1.2.3");
+    assert.equal(signInNetworkLimitKey("1.2.3.4::"), "1.2.3.4::");
+    assert.equal(signInNetworkLimitKey("::1.2.3.4:5"), "::1.2.3.4:5");
+    assert.equal(signInNetworkLimitKey("[::1]:443"), "[::1]:443");
   });
 });

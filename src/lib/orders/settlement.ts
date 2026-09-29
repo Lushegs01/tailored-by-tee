@@ -3,7 +3,11 @@
  * they can be tested on their own. payments.ts applies them.
  */
 
-/** What settling one payment reference did. */
+/**
+ * What settling one payment reference did. Of the unfinished ones, "awaiting_customer"
+ * means Paystack is waiting on the shopper (a one-time code, a bank transfer not yet
+ * seen) and "pending" that the payment itself is going through.
+ */
 export type SettleOutcome =
   | "paid"
   | "paid_after_release"
@@ -12,6 +16,7 @@ export type SettleOutcome =
   | "rejected"
   | "failed"
   | "abandoned"
+  | "awaiting_customer"
   | "pending"
   | "unknown_reference";
 
@@ -26,6 +31,8 @@ export type SettleOutcome =
  *
  * A promote that finds the order already released (a sweep won the race) re-reads
  * the status and asks again, so a late payment is never mistaken for a duplicate.
+ * Taking a released order back is conditional too: of two late payments racing for
+ * it, the one that finds it already taken re-reads it as paid — a duplicate.
  */
 export type SettlementPath = "promote" | "after_release" | "duplicate";
 
@@ -46,17 +53,37 @@ export function confirmationEmailDue(outcome: SettleOutcome): boolean {
   return outcome === "paid" || outcome === "paid_after_release" || outcome === "already_paid";
 }
 
-/** How long an earlier payment that Paystack still reports as going through holds back a new checkout. */
-export const PAYMENT_IN_PROGRESS_MS = 15 * 60_000;
+/** How long after it started an earlier payment Paystack reports as going through holds back a new checkout. */
+export const PAYMENT_IN_PROGRESS_MS = 5 * 60_000;
 
 /**
- * Whether an earlier payment attempt, just re-checked with Paystack, should stop
- * a new checkout opening for the same order: Paystack says it is still going
- * through (a bank transfer clearing, a card at its one-time-code step) and it
- * started recently — a second checkout could charge the customer twice. An older
- * attempt left "in progress" doesn't block, so a customer who walked away from
- * one can still pay.
+ * The same for one where Paystack is waiting on the shopper. Shorter: usually they
+ * have walked away from a one-time code, and a transfer they did send is normally
+ * seen within a minute or two, after which it is "pending" or paid.
  */
-export function paymentStillInProgress(outcome: SettleOutcome, startedAt: Date, now: Date): boolean {
-  return outcome === "pending" && now.getTime() - startedAt.getTime() < PAYMENT_IN_PROGRESS_MS;
+export const AWAITING_CUSTOMER_MS = 3 * 60_000;
+
+/**
+ * How long an earlier payment attempt, just re-checked with Paystack, stops a new
+ * checkout opening for the same order — 0 when it doesn't. Only an attempt that
+ * may still take the customer's money blocks, and only for a few minutes after it
+ * started: long enough that a second checkout doesn't charge them twice, short
+ * enough that someone who walked away from one can soon pay. (A second payment
+ * that got through anyway is still recognised when it settles, and flagged for a refund.)
+ */
+export function paymentRetryDelay(outcome: SettleOutcome, startedAt: Date, now: Date): number {
+  const blocksFor =
+    outcome === "pending"
+      ? PAYMENT_IN_PROGRESS_MS
+      : outcome === "awaiting_customer"
+        ? AWAITING_CUSTOMER_MS
+        : 0;
+  return Math.max(0, startedAt.getTime() + blocksFor - now.getTime());
+}
+
+/** What the shopper is told while an earlier payment blocks a new one: when to look again, rounded up. */
+export function paymentInProgressMessage(delayMs: number): string {
+  const minutes = Math.max(1, Math.ceil(delayMs / 60_000));
+  const when = minutes === 1 ? "about a minute" : `about ${minutes} minutes`;
+  return `Your last payment is still being confirmed. Please refresh this page in ${when} — if it hasn’t gone through by then, you can try again.`;
 }

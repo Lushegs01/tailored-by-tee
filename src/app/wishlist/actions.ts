@@ -23,7 +23,16 @@ const productIdsSchema = z.array(productIdSchema).max(100);
 /* ── The account's list ────────────────────────────────────────────────── */
 
 export type WishlistSyncResult =
-  | { ok: true; /** The account's whole list, newest first. */ productIds: string[] }
+  | {
+      ok: true;
+      /** The account's whole list, newest first. */
+      productIds: string[];
+      /**
+       * The account the session belonged to when this ran — possibly not the one the
+       * tab thinks it is, if someone else signed in in another tab meanwhile.
+       */
+      userId: string;
+    }
   | { ok: false; reason: "signed-out" | "error" };
 
 /**
@@ -44,7 +53,7 @@ export async function syncWishlist(localIds: unknown): Promise<WishlistSyncResul
   }
 
   try {
-    return { ok: true, productIds: await mergeWishlist(user.id, parsed.data) };
+    return { ok: true, productIds: await mergeWishlist(user.id, parsed.data), userId: user.id };
   } catch (error) {
     console.error("[wishlist] sync failed", error);
     return { ok: false, reason: "error" };
@@ -76,7 +85,7 @@ async function changeWishlist(
   }
 
   try {
-    return { ok: true, productIds: await change(user.id, parsed.data) };
+    return { ok: true, productIds: await change(user.id, parsed.data), userId: user.id };
   } catch (error) {
     console.error("[wishlist] update failed", error);
     return { ok: false, reason: "error" };
