@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { saveProfile, type ProfileActionResult, type ProfileFormValues } from "@/app/account/(member)/profile/actions";
+import { saveProfile, type ProfileActionResult, type ProfileFormValues } from "@/app/(store)/account/(member)/profile/actions";
 import { CheckIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { FieldHint, Input, Label } from "@/components/ui/input";
@@ -29,7 +29,7 @@ export function ProfileForm({ initial, email, supportEmail, className }: Profile
   const alertRef = React.useRef<HTMLParagraphElement>(null);
 
   // Take the customer to the first field that needs fixing, or to the message when no field
-  // is at fault (signed out, too many changes) — the disabled button lets focus go while saving.
+  // is at fault (signed out, too many changes) â€” the disabled button lets focus go while saving.
   React.useEffect(() => {
     if (!state || state.ok) return;
     const first = state.fieldErrors?.name ? "profile-name" : state.fieldErrors?.phone ? "profile-phone" : null;
@@ -90,7 +90,7 @@ export function ProfileForm({ initial, email, supportEmail, className }: Profile
 
       <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
         <Button type="submit" size="lg" disabled={pending} aria-busy={pending || undefined}>
-          {pending ? "Saving…" : "Save changes"}
+          {pending ? "Savingâ€¦" : "Save changes"}
         </Button>
         <div role="status" aria-live="polite" aria-atomic="true">
           {state?.ok && !pending ? (

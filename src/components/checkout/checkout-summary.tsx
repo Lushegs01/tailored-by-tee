@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import type { ClientCheckoutQuote } from "@/app/checkout/actions";
+import type { ClientCheckoutQuote } from "@/app/(store)/checkout/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MediaImage } from "@/components/ui/media-image";
@@ -71,7 +71,7 @@ export function CheckoutSummary({
               <div className="min-w-0 flex-1">
                 <p className="text-body-sm font-medium">{line.name}</p>
                 <p className="mt-0.5 text-caption text-muted-foreground">
-                  {line.colorName} · {line.sizeLabel}
+                  {line.colorName} Â· {line.sizeLabel}
                   <span className="sr-only">, quantity {line.quantity}</span>
                 </p>
               </div>
@@ -121,7 +121,7 @@ export function CheckoutSummary({
         {quote && quote.totals.discountTotal > 0 ? (
           <div className="flex justify-between gap-4">
             <dt className="text-muted-foreground">Discount{quote.coupon ? ` (${quote.coupon.code})` : ""}</dt>
-            <dd className="tabular-nums">−{formatPrice(quote.totals.discountTotal)}</dd>
+            <dd className="tabular-nums">âˆ’{formatPrice(quote.totals.discountTotal)}</dd>
           </div>
         ) : null}
         <div className="flex justify-between gap-4">

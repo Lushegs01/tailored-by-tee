@@ -7,8 +7,8 @@
  * stale or forged cookie passes through here and is turned away there.
  */
 
-/** Areas that need a signed-in visitor. The admin area joins this list (and the proxy's matcher). */
-export const PROTECTED_PREFIXES: readonly string[] = ["/account"];
+/** Areas that need a signed-in visitor. Keep in step with the proxy's matcher. */
+export const PROTECTED_PREFIXES: readonly string[] = ["/account", "/admin"];
 
 /** Pages inside those areas that everyone must reach. */
 export const PUBLIC_PREFIXES: readonly string[] = ["/account/sign-in"];

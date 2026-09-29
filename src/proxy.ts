@@ -21,7 +21,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Must be literal for Next to read at build time; keep in step with PROTECTED_PREFIXES and
-  // PUBLIC_PREFIXES (the admin area adds "/admin", "/admin/:path*" here).
-  matcher: ["/account", "/account/((?!sign-in).*)"],
+  // Must be literal for Next to read at build time; keep in step with PROTECTED_PREFIXES
+  // and PUBLIC_PREFIXES.
+  matcher: ["/account", "/account/((?!sign-in).*)", "/admin", "/admin/:path*"],
 };

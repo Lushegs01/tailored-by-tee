@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { getCheckoutQuote, type ClientCheckoutQuote } from "@/app/checkout/actions";
+import { getCheckoutQuote, type ClientCheckoutQuote } from "@/app/(store)/checkout/actions";
 import type { CartLineInput } from "@/lib/catalog/types";
 import type { DeliveryMethod } from "@/lib/commerce/delivery";
 

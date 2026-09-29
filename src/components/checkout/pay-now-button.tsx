@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { resumePaymentAction } from "@/app/checkout/actions";
+import { resumePaymentAction } from "@/app/(store)/checkout/actions";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -33,12 +33,12 @@ export function PayNowButton({ orderNumber, accessKey, label }: { orderNumber: s
               if (result.ok) window.location.assign(result.redirectTo);
               else setError(result.message);
             } catch {
-              setError("We couldn’t reach the payment page. Check your connection and try again.");
+              setError("We couldnâ€™t reach the payment page. Check your connection and try again.");
             }
           });
         }}
       >
-        {pending ? "Opening Paystack…" : label}
+        {pending ? "Opening Paystackâ€¦" : label}
       </Button>
       {error ? (
         <p role="alert" className="mt-3 text-body-sm text-danger">

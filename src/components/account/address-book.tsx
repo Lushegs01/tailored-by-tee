@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { makeDefaultAddress, removeAddress } from "@/app/account/(member)/addresses/actions";
+import { makeDefaultAddress, removeAddress } from "@/app/(store)/account/(member)/addresses/actions";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { CheckIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -246,7 +246,7 @@ export function AddressBook({ addresses, maxAddresses, defaults, className }: Ad
         ) : null}
         <div className={cn("mt-8 flex flex-col gap-3 sm:flex-row")}>
           <Button onClick={confirmDelete} disabled={deleting} aria-busy={deleting || undefined}>
-            {deleting ? "Deleting…" : "Delete address"}
+            {deleting ? "Deletingâ€¦" : "Delete address"}
           </Button>
           <Button
             variant="outline"

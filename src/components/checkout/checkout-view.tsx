@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { placeOrderAction } from "@/app/checkout/actions";
+import { placeOrderAction } from "@/app/(store)/checkout/actions";
 import { useAccount } from "@/components/account/use-account";
 import { useCart } from "@/components/cart/cart-provider";
 import { EmptyState } from "@/components/feedback/empty-state";
@@ -50,7 +50,7 @@ export interface CheckoutViewProps {
   testPayments: boolean;
   reservationMinutes: number;
   pickup: { name: string; estimate: string; address: string } | null;
-  /** Lowest delivery fee, for "From ₦3,500" before a state is chosen. */
+  /** Lowest delivery fee, for "From â‚¦3,500" before a state is chosen. */
   deliveryFromFee: number;
   supportEmail: string;
   /** A signed-in customer's details; fills only what the tab's draft left empty. Absent for guests. */
@@ -78,7 +78,7 @@ export function CheckoutView(props: CheckoutViewProps) {
   // Someone signed out (or in) in another tab while this checkout was open: ask the server
   // to render it again for whoever is here now. After a sign-out the account's details and
   // addresses leave the page, and the form below starts again (keyed by owner), dropping the
-  // account's draft — so the next person on a shared device never sees them. A session
+  // account's draft â€” so the next person on a shared device never sees them. A session
   // request that merely failed changes nothing: the server still renders the same account.
   React.useEffect(() => {
     const previous = previousStatus.current;
@@ -95,7 +95,7 @@ export function CheckoutView(props: CheckoutViewProps) {
         title="Checkout is *nearly ready.*"
         body={
           <>
-            We&rsquo;re finishing online payments. Your bag is saved on this device — please check back soon, or email{" "}
+            We&rsquo;re finishing online payments. Your bag is saved on this device â€” please check back soon, or email{" "}
             <a href={`mailto:${props.supportEmail}`} className="link-underline-static text-foreground">
               {props.supportEmail}
             </a>{" "}
@@ -277,8 +277,8 @@ function CheckoutForm({
 
   const deliveryDetail =
     delivery && quote?.delivery
-      ? `${quote.delivery.fee === 0 ? "Free" : formatPrice(quote.delivery.fee)} · ${quote.delivery.estimate}`
-      : `From ${formatPrice(deliveryFromFee)} · fee depends on your state`;
+      ? `${quote.delivery.fee === 0 ? "Free" : formatPrice(quote.delivery.fee)} Â· ${quote.delivery.estimate}`
+      : `From ${formatPrice(deliveryFromFee)} Â· fee depends on your state`;
   const total = quote ? formatPrice(quote.totals.total) : null;
   const submitLabel = mode === "live" ? "Pay" : "Place test order";
 
@@ -365,7 +365,7 @@ function CheckoutForm({
               className="mt-0.5 size-4 shrink-0 cursor-pointer appearance-none border border-border-strong transition-colors checked:border-foreground checked:bg-foreground"
             />
             <span>
-              Email me about new collections and studio news. <span className="text-muted-foreground">Optional — unsubscribe any time.</span>
+              Email me about new collections and studio news. <span className="text-muted-foreground">Optional â€” unsubscribe any time.</span>
             </span>
           </label>
         </Section>
@@ -387,7 +387,7 @@ function CheckoutForm({
                   checked={!delivery}
                   onSelect={() => set("deliveryMethod", "pickup")}
                   title={pickup.name}
-                  detail={`Free · ${pickup.estimate}`}
+                  detail={`Free Â· ${pickup.estimate}`}
                 />
               ) : null}
             </div>
@@ -476,7 +476,7 @@ function CheckoutForm({
             </div>
           ) : pickup ? (
             <p className="mt-6 text-body-sm text-muted-foreground">
-              Collect from {pickup.address}. We&rsquo;ll email you as soon as your order is ready — bring your order
+              Collect from {pickup.address}. We&rsquo;ll email you as soon as your order is ready â€” bring your order
               number.
             </p>
           ) : null}
@@ -501,7 +501,7 @@ function CheckoutForm({
               <p className="text-eyebrow text-accent-brand">Test mode</p>
               <p className="mt-1">
                 Online payment isn&rsquo;t connected yet. Placing an order now holds these pieces for {reservationMinutes}{" "}
-                minutes as a test — nothing is charged.
+                minutes as a test â€” nothing is charged.
               </p>
             </div>
           ) : null}
@@ -516,12 +516,12 @@ function CheckoutForm({
           ) : null}
           <p className="text-body-sm text-muted-foreground">
             {mode === "live"
-              ? `You’ll pay on Paystack’s secure page — card, bank transfer or USSD — and come straight back here. We hold your pieces for ${reservationMinutes} minutes while you pay, and never see or store your card details.`
-              : "You’ll pay securely with Paystack — card, bank transfer or USSD. We never see or store your card details."}
+              ? `Youâ€™ll pay on Paystackâ€™s secure page â€” card, bank transfer or USSD â€” and come straight back here. We hold your pieces for ${reservationMinutes} minutes while you pay, and never see or store your card details.`
+              : "Youâ€™ll pay securely with Paystack â€” card, bank transfer or USSD. We never see or store your card details."}
           </p>
 
           <Button type="submit" size="lg" fullWidth disabled={submitting} aria-busy={submitting || undefined} className="mt-8">
-            {submitting ? "Placing your order…" : total ? `${submitLabel} · ${total}` : submitLabel}
+            {submitting ? "Placing your orderâ€¦" : total ? `${submitLabel} Â· ${total}` : submitLabel}
           </Button>
           <p className="mt-4 text-caption text-muted-foreground">
             By placing your order you agree to our{" "}

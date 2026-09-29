@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { addToWishlist, removeFromWishlist, syncWishlist, type WishlistSyncResult } from "@/app/wishlist/actions";
+import { addToWishlist, removeFromWishlist, syncWishlist, type WishlistSyncResult } from "@/app/(store)/wishlist/actions";
 import { useAccount, useRefreshAccount } from "@/components/account/use-account";
 import { LiveRegion, useAnnouncer } from "@/components/cart/live-region";
 import { createStoredValue } from "@/lib/storage";
@@ -25,13 +25,13 @@ import { createStoredValue } from "@/lib/storage";
  * account signs out, so the next person on a shared device never sees it: at once
  * from the sign-out button, and otherwise once the server confirms the session
  * has gone. A failed session request looks exactly like a sign-out, so until the
- * server agrees nothing is cleared — and nothing is wiped in other tabs: a list
+ * server agrees nothing is cleared â€” and nothing is wiped in other tabs: a list
  * this tab was showing stays, with any queued changes (sending waits); a list
  * found stored when the page loads signed out stays hidden meanwhile. A guest's
  * own list is never cleared. Every answer names the account the server acted for,
  * so if someone else has signed in meanwhile (in another tab), their list is never
  * taken for this one's: sending this one's queued changes stops at once, and the
- * server is asked which account this is, as for a sign-out — the same one carries
+ * server is asked which account this is, as for a sign-out â€” the same one carries
  * on, another one's list replaces this one (never merged), and nobody clears it.
  * Authorisation never depends on any of this: the server actions read the user
  * from the session.
@@ -54,7 +54,7 @@ export interface WishlistStatus {
    * of the list itself wait for this; a count or a heart doesn't need to.
    */
   restoring: boolean;
-  /** Drops ids the catalogue no longer lists — quietly, and on this device only. */
+  /** Drops ids the catalogue no longer lists â€” quietly, and on this device only. */
   forget: (productIds: readonly string[]) => void;
   /**
    * For the sign-out button: forgets the account's list on this device straight
@@ -95,7 +95,7 @@ const ownerStore = createStoredValue<string | null>(OWNER_STORAGE_KEY, {
 /**
  * The account whose list this tab keeps while a sign-out it noticed (or an answer
  * for another account) is being confirmed with the server; null otherwise. This
- * tab's own bookkeeping, so it lives in memory rather than storage — but outside
+ * tab's own bookkeeping, so it lives in memory rather than storage â€” but outside
  * React state, like the stores above, since the account-change handling sets it.
  */
 const heldAccount = (() => {
@@ -243,8 +243,8 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
 
   /**
    * The server answered for another account than this tab's: someone else has signed
-   * in, in another tab. Sending stops at once — a tap meanwhile must never send this
-   * account's queued changes to theirs — and the account is confirmed with the server
+   * in, in another tab. Sending stops at once â€” a tap meanwhile must never send this
+   * account's queued changes to theirs â€” and the account is confirmed with the server
    * just as a sign-out is (confirmSignOut): the same account carries on, another one's
    * list replaces this one without merging, and nobody clears it. That doesn't wait
    * for this tab's account state to catch up, so a stale session read can't leave
@@ -299,10 +299,10 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
           restoreAll(pendingRef.current);
           announce(
             several
-              ? "We couldn’t update your wishlist. Please try again."
+              ? "We couldnâ€™t update your wishlist. Please try again."
               : saved
-                ? "We couldn’t save that to your wishlist. Please try again."
-                : "We couldn’t remove that from your wishlist. Please try again.",
+                ? "We couldnâ€™t save that to your wishlist. Please try again."
+                : "We couldnâ€™t remove that from your wishlist. Please try again.",
           );
           refreshSession();
           break;
@@ -311,8 +311,8 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
           restore(productId, latest.baseline);
           announce(
             saved
-              ? "We couldn’t save that to your wishlist. Please try again."
-              : "We couldn’t remove that from your wishlist. Please try again.",
+              ? "We couldnâ€™t save that to your wishlist. Please try again."
+              : "We couldnâ€™t remove that from your wishlist. Please try again.",
           );
         }
         // Otherwise a newer change for this piece is waiting, and its answer decides.
@@ -365,7 +365,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
         }
         if (result.ok) {
           // Answered for another account (someone else signed in, in another tab): their list is
-          // never stored as this one's, nothing is sent, and nothing is merged again — trying once
+          // never stored as this one's, nothing is sent, and nothing is merged again â€” trying once
           // more would merge this browser's list into theirs. Confirm which account this is instead.
           recheckAccount();
           return;
@@ -405,13 +405,13 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
    * "nobody", so that alone proves nothing: keep the list and everything queued,
    * pause sending, and ask the server. Only its "signed out" clears the list; if it
    * still sees the account, carry on as before. If it sees a different account
-   * (signed in, in another tab), this one's queued changes are dropped — never sent
-   * to theirs — and the list here becomes theirs, held with sending paused until
+   * (signed in, in another tab), this one's queued changes are dropped â€” never sent
+   * to theirs â€” and the list here becomes theirs, held with sending paused until
    * this tab's account state agrees.
    */
   const confirmSignOut = React.useCallback(async () => {
     const heldId = heldAccount.get();
-    // Nothing held, so nothing to confirm — and no queue to drop for a "different" account.
+    // Nothing held, so nothing to confirm â€” and no queue to drop for a "different" account.
     if (heldId === null || confirmingRef.current) return;
     confirmingRef.current = true;
     modeRef.current = "unknown";
@@ -469,7 +469,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   }, [confirmSignOut]);
 
   /**
-   * The page loaded signed out, but the list stored here mirrors an account —
+   * The page loaded signed out, but the list stored here mirrors an account â€”
    * usually because that account signed out while the page was closed, but a
    * failed session request looks the same, and clearing on that alone would empty
    * the list in the account's other open tabs. The list stays hidden (restoring)
@@ -495,7 +495,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
         return;
       }
       if (result.reason === "signed-out" || attempt >= SYNC_RETRY_DELAYS_MS.length) {
-        // Signed out — or still unknown after retrying, when privacy wins: the list is safe on the server.
+        // Signed out â€” or still unknown after retrying, when privacy wins: the list is safe on the server.
         clearAccountList();
         return;
       }
