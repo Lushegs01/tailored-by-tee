@@ -29,9 +29,16 @@ export interface CustomerOrdersTableProps {
   /** The address this page is about, so an order placed with another one is flagged. */
   email: string;
   now: Date;
+  /**
+   * This is an account's page. Orders it shows that weren't placed while signed
+   * in were checked out as a guest with the same address — usually before the
+   * account existed — so they are marked. On the guest view every order is one,
+   * and marking them all would say nothing.
+   */
+  registered?: boolean;
 }
 
-export function CustomerOrdersTable({ orders, email, now }: CustomerOrdersTableProps) {
+export function CustomerOrdersTable({ orders, email, now, registered = false }: CustomerOrdersTableProps) {
   return (
     <DataTable caption="Orders" frameClassName="border-0">
       <THead>
@@ -47,16 +54,19 @@ export function CustomerOrdersTable({ orders, email, now }: CustomerOrdersTableP
         {orders.map((order) => {
           const status = orderStatusDisplay(order, now);
           const otherAddress = order.email.toLowerCase() !== email.toLowerCase();
+          const asGuest = registered && !order.viaAccount;
+          const badges = order.isDemo || order.isTest || otherAddress || asGuest;
           return (
             <Tr key={order.id} interactive>
               <RowHeader>
                 <RowLink href={orderHref(order.number)} className="font-mono">
                   {order.number}
                 </RowLink>
-                {order.isDemo || order.isTest || otherAddress ? (
+                {badges ? (
                   <span className="mt-1.5 flex flex-wrap items-center gap-1.5">
                     {order.isDemo ? <StatusBadge tone="neutral">Demo</StatusBadge> : null}
                     {order.isTest ? <StatusBadge tone="neutral">Test payment</StatusBadge> : null}
+                    {asGuest ? <StatusBadge tone="neutral">Checked out as a guest</StatusBadge> : null}
                     {otherAddress ? <StatusBadge tone="neutral">Another address</StatusBadge> : null}
                   </span>
                 ) : null}

@@ -27,6 +27,15 @@ const ORDERS_PATH = "/admin/orders";
 const PRODUCTS_PATH = "/admin/products";
 const REVIEWS_PATH = "/admin/reviews";
 
+/*
+ * Two anchors on the Settings page. They are its own section ids
+ * (INTEGRATIONS_SECTION_ID and ADMIN_TEAM_SECTION_ID in
+ * src/components/admin/settings/), repeated here rather than imported because
+ * those modules are server components and this file has to stay pure.
+ */
+export const SETTINGS_SERVICES_HREF = "/admin/settings#services";
+export const SETTINGS_TEAM_HREF = "/admin/settings#admin-team";
+
 /** Longest email address the RFC allows; anything longer is not an address. */
 export const MAX_EMAIL_LENGTH = 254;
 
@@ -44,6 +53,17 @@ export function normaliseCustomerEmail(value: unknown): string | null {
   const email = value.trim().toLowerCase();
   if (email.length === 0 || email.length > MAX_EMAIL_LENGTH) return null;
   return EMAIL_SHAPE.test(email) ? email : null;
+}
+
+// The shape every id in this database has (cuid, or a demo id like
+// "demo_user_ada"). The same expression as zId in lib/admin/validation; anything
+// else is refused before a lookup is made, so /admin/customers/<junk> is a 404
+// rather than a query.
+const ID_SHAPE = /^[A-Za-z0-9_.:-]{1,191}$/;
+
+/** True when this could be a customer id at all. */
+export function isCustomerId(value: string): boolean {
+  return ID_SHAPE.test(value);
 }
 
 /** The page for one registered customer. */
@@ -210,6 +230,15 @@ export function phoneSearchDigits(query: string): string | null {
   return national.length >= 3 ? national : null;
 }
 
+/* ── When nothing can be read ────────────────────────────────────────────── */
+
+/**
+ * Why a customers page has nothing to show. Declared here, where both the
+ * service that returns it and the panel that explains it can see it, so the two
+ * can never drift apart.
+ */
+export type CustomerLoadFailure = "not_configured" | "needs_migration" | "unavailable";
+
 /* ── Words for the owner ─────────────────────────────────────────────────── */
 
 const HAS_ACCOUNT: StatusDisplay = {
@@ -235,18 +264,13 @@ export function customerName(row: { name: string | null; email: string }): strin
   return name && name !== "" ? name : row.email;
 }
 
-/** "3 orders", "1 order", "No orders yet". */
-export function describeOrderCount(count: number): string {
-  if (count <= 0) return "No orders yet";
-  return `${count} ${count === 1 ? "order" : "orders"}`;
-}
-
 /**
- * Exactly what "Total spent" counts, said once and reused everywhere. Matches the
- * overview page's revenue rule, so the two never disagree.
+ * Exactly what "Total spent" counts, said once and reused everywhere. It is the
+ * same rule the Overview's revenue uses, with one deliberate difference, named
+ * in DEMO_MONEY_NOTE: a demo customer's own demo orders are counted here.
  */
 export const SPEND_NOTE =
-  "Total spent counts orders that are paid and going ahead, less any refund Paystack has returned. Unpaid checkouts, cancelled orders and delivery-free discounts aren’t adjusted for — it is what the customer was charged.";
+  "Total spent counts every order the customer has paid for and that is going ahead, less any refund Paystack has returned. Order totals include delivery, and any discount already taken off. Unpaid checkouts and cancelled orders aren’t counted, and an order refunded in full drops out altogether.";
 
 /** Test payments are never mixed into the money figures. */
 export const TEST_MONEY_NOTE =
@@ -254,6 +278,24 @@ export const TEST_MONEY_NOTE =
 
 /** Demo rows come from npm run db:seed:demo and are removed by npm run db:clear-demo. */
 export const DEMO_NOTE = "Demo content for evaluation, added by the sample-data script. Not a real customer.";
+
+/**
+ * Why these figures and the Overview's sales can differ while sample data is
+ * installed. Shown only when there is demo content to explain.
+ */
+export const DEMO_MONEY_NOTE =
+  "A demo customer’s figures include their demo orders, so they read as a real customer’s would. The Overview’s sales leave demo orders out, so the two won’t agree until the sample data is removed.";
+
+/**
+ * The figures above the list describe everyone the search matched, before the
+ * Account and Orders filters — that is what makes them worth clicking. Said out
+ * loud as soon as a filter is on, so the headline and the list never look like a
+ * contradiction.
+ */
+export function summaryScopeNote(query: Pick<CustomerListQuery, "account" | "orders">): string | null {
+  if (query.account === null && query.orders === null) return null;
+  return "These figures cover everyone matching the search. The list below is narrowed by the filters.";
+}
 
 /** Why this page never lets anyone change a customer's details. */
 export const READ_ONLY_NOTE =

@@ -6,9 +6,10 @@ import {
   CUSTOMER_LIST_ALLOWED,
   CUSTOMER_ORDERS_OPTIONS,
   CUSTOMERS_PATH,
+  DEMO_MONEY_NOTE,
   hasCustomerFilters,
-  READ_ONLY_NOTE,
   SPEND_NOTE,
+  summaryScopeNote,
   TEST_MONEY_NOTE,
   toCustomerListQuery,
 } from "@/components/admin/customers/customer-rules";
@@ -68,6 +69,8 @@ export default async function CustomersPage(props: PageProps<"/admin/customers">
   const params = { ...parsed, page };
   const filtered = hasCustomerFilters(query);
   const guests = Math.max(0, summary.total - summary.registered);
+  // The figures describe the whole search; the filters narrow only the list.
+  const scope = summaryScopeNote(query);
 
   return (
     <>
@@ -99,8 +102,10 @@ export default async function CustomersPage(props: PageProps<"/admin/customers">
       </StatGrid>
 
       <CustomerNote className="mt-3">
+        {scope ? <>{scope} </> : null}
         {SPEND_NOTE}
-        {summary.testSpent > 0 ? <> {TEST_MONEY_NOTE}</> : null} {READ_ONLY_NOTE}
+        {summary.testSpent > 0 ? <> {TEST_MONEY_NOTE}</> : null}
+        {summary.demo > 0 ? <> {DEMO_MONEY_NOTE}</> : null}
       </CustomerNote>
 
       <ListToolbar

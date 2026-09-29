@@ -3,15 +3,13 @@ import Link from "next/link";
 import { AdminEmptyState } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
 
+import { type CustomerLoadFailure, SETTINGS_SERVICES_HREF } from "./customer-rules";
+
 /*
  * What the customers pages say when they can't read anything, and the standing
  * notes about what the figures mean. No hooks, so server components render them
  * directly.
  */
-
-const SETTINGS_SERVICES = "/admin/settings#services";
-
-export type CustomerLoadFailure = "not_configured" | "needs_migration" | "unavailable";
 
 const FAILURES: Record<CustomerLoadFailure, { title: string; body: string }> = {
   not_configured: {
@@ -47,7 +45,7 @@ export function CustomersUnavailable({
         body={failure.body}
         action={
           reason === "not_configured" ? (
-            <Link href={SETTINGS_SERVICES} className="text-body-sm">
+            <Link href={SETTINGS_SERVICES_HREF} className="text-body-sm">
               <span className="link-underline-static pb-0.5">See connected services</span>
             </Link>
           ) : undefined

@@ -446,7 +446,10 @@ export const productOrganisationSchema = z.object({
   categoryId: zId("Choose a category."),
   collectionIds: idList,
   tags: zOptionalText({ max: MAX_TAGS * (PRODUCT_FIELD_LIMITS.tag + 2), label: "The tags" }),
-  badge: zOptionalText({ max: 32, label: "The badge" }),
+  badge: z.preprocess(
+    (value) => (typeof value === "string" && value.trim() !== "" ? value.trim() : null),
+    z.enum(PRODUCT_BADGES, { error: "Choose one of the badges in the list." }).nullable(),
+  ),
   isFeatured: zCheckbox(),
   bestsellerRank: zOptionalInt({ min: 1, max: MAX_BESTSELLER_RANK, label: "The best-seller position" }),
 });

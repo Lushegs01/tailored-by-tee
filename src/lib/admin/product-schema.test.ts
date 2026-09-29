@@ -5,13 +5,18 @@ import { PRODUCT_SEEDS } from "@/lib/catalog/seed/products";
 
 import { parseInput } from "./validation";
 import {
+  BULK_ACTION_COPY,
   BULK_ACTION_STATUS,
+  BULK_PRODUCT_ACTIONS,
   MAX_BULK_PRODUCTS,
   MAX_TAGS,
   PRODUCT_BADGE_OPTIONS,
   PRODUCT_CODE_LENGTH,
   PRODUCT_FIELD_LIMITS,
   PRODUCT_LIST_ALLOWED,
+  PRODUCT_STATUSES,
+  PRODUCT_STOCK_FILTERS,
+  PRODUCT_STOCK_FILTER_OPTIONS,
   SEO_DESCRIPTION_RECOMMENDED,
   SEO_TITLE_RECOMMENDED,
   bulkProductSchema,
@@ -513,5 +518,37 @@ describe("bulkProductSchema", () => {
   it("refuses a step it doesn't know", () => {
     const parsed = parseInput(bulkProductSchema, { action: "delete", ids: ["a"] });
     assert.ok(!parsed.ok);
+  });
+});
+
+describe("bulk steps", () => {
+  it("has wording and a target status for every step the schema accepts", () => {
+    for (const action of BULK_PRODUCT_ACTIONS) {
+      assert.ok(BULK_ACTION_COPY[action], `${action} has wording`);
+      assert.ok(BULK_ACTION_COPY[action].verb.length > 0, `${action} has a verb`);
+      assert.ok(BULK_ACTION_STATUS[action], `${action} has a target status`);
+      assert.ok(parseInput(bulkProductSchema, { action, ids: ["a"] }).ok, `${action} is accepted`);
+    }
+  });
+
+  it("moves products to the status the editor uses for the same word", () => {
+    // The bulk bar hides products already in the target status; it must be the
+    // same status setProductStatus writes, or "already like that" would be wrong.
+    assert.equal(BULK_ACTION_STATUS.publish, "ACTIVE");
+    assert.equal(BULK_ACTION_STATUS.unpublish, "DRAFT");
+    assert.equal(BULK_ACTION_STATUS.archive, "ARCHIVED");
+    for (const status of Object.values(BULK_ACTION_STATUS)) {
+      assert.ok(PRODUCT_STATUSES.includes(status), `${status} is a product status`);
+    }
+  });
+});
+
+describe("stock filters", () => {
+  it("offers exactly the values the list URL allows", () => {
+    assert.deepEqual(
+      PRODUCT_STOCK_FILTER_OPTIONS.map((option) => option.value),
+      [...PRODUCT_STOCK_FILTERS],
+    );
+    assert.ok(PRODUCT_STOCK_FILTER_OPTIONS.every((option) => option.label.length > 0));
   });
 });

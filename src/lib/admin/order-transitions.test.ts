@@ -4,6 +4,7 @@ import { describe, it } from "node:test";
 import type { DeliveryMethod, OrderStatus, PaymentStatus } from "@/generated/prisma/enums";
 
 import {
+  ACTION_AUDIT,
   ACTION_EVENT,
   ACTION_FROM,
   ACTION_TIMESTAMP,
@@ -133,6 +134,23 @@ describe("the action list", () => {
     assert.equal(ACTION_TIMESTAMP.start_processing, null);
     assert.equal(ACTION_TIMESTAMP.refund, null);
     assert.equal(ACTION_TIMESTAMP.recheck_payment, null);
+  });
+
+  it("names each step's audit entry in the words the activity list reads", () => {
+    // The Settings activity list turns "order.ship" into "Order marked shipped"
+    // from its own verb map; a name outside that vocabulary would read as
+    // "Order mark shipped". Keep these in step with VERBS in lib/admin/settings.
+    for (const action of ORDER_ACTIONS) {
+      assert.match(ACTION_AUDIT[action], /^[a-z]+(\.[a-z]+)+$/, action);
+    }
+    assert.equal(ACTION_AUDIT.start_processing, "order.process");
+    assert.equal(ACTION_AUDIT.recheck_payment, "order.payment.status");
+    assert.equal(ACTION_AUDIT.mark_shipped, "order.ship");
+    assert.equal(ACTION_AUDIT.mark_delivered, "order.deliver");
+    assert.equal(ACTION_AUDIT.refund, "refund.create");
+    // Both cancellations read the same to a reader; the summary says which it was.
+    assert.equal(ACTION_AUDIT.cancel_paid, "order.cancel");
+    assert.equal(ACTION_AUDIT.cancel_unpaid, "order.cancel");
   });
 
   it("never allows a step from a status outside its own from-list", () => {

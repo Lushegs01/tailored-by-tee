@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Notice } from "@/components/admin/collections/notice";
 import { CustomerAddressList } from "@/components/admin/customers/customer-addresses";
 import { CustomerReviews, CustomerWishlist } from "@/components/admin/customers/customer-activity";
 import { CustomerFigures, CustomerFiguresNote } from "@/components/admin/customers/customer-money";
@@ -18,24 +19,23 @@ import {
   customerOrdersHref,
   customerPath,
   DEMO_NOTE,
+  isCustomerId,
   READ_ONLY_NOTE,
+  SETTINGS_TEAM_HREF,
 } from "@/components/admin/customers/customer-rules";
-import { Notice } from "@/components/admin/collections/notice";
 import { AdminPageHeader, AdminSection, KeyValueList, StatusBadge } from "@/components/admin/ui";
 import { Button } from "@/components/ui/button";
 import { getAdminUser, requireAdminPage } from "@/lib/admin/auth";
-import { CUSTOMER_ORDERS_SHOWN, getCustomerName, getRegisteredCustomer } from "@/lib/admin/customers";
+import { getCustomerName, getRegisteredCustomer } from "@/lib/admin/customers";
 import { formatAdminDate, formatAdminDateTime, formatNumber } from "@/lib/admin/format";
 import { adminMetadata } from "@/lib/admin/metadata";
 import { formatNigerianPhone } from "@/lib/commerce/phone";
-
-const ID_PATTERN = /^[A-Za-z0-9_.:-]{1,191}$/;
 
 export async function generateMetadata(props: PageProps<"/admin/customers/[id]">): Promise<Metadata> {
   // Never look anything up for someone who isn't an admin.
   if (!(await getAdminUser())) return adminMetadata("Customer");
   const { id } = await props.params;
-  const name = ID_PATTERN.test(id) ? await getCustomerName(id) : null;
+  const name = isCustomerId(id) ? await getCustomerName(id) : null;
   return adminMetadata(name ? `${name} — Customers` : "Customer not found");
 }
 
@@ -51,7 +51,7 @@ export async function generateMetadata(props: PageProps<"/admin/customers/[id]">
 export default async function CustomerPage(props: PageProps<"/admin/customers/[id]">) {
   const { id } = await props.params;
   await requireAdminPage(customerPath(id));
-  if (!ID_PATTERN.test(id)) notFound();
+  if (!isCustomerId(id)) notFound();
 
   const load = await getRegisteredCustomer(id);
   if (!load.ok) {
@@ -100,7 +100,7 @@ export default async function CustomerPage(props: PageProps<"/admin/customers/[i
         <Notice tone="info" title="This customer is an administrator" className="mt-6">
           <p>
             They can see and change everything in the admin area. Admin access is given and taken away in{" "}
-            <Link href="/admin/settings#team">
+            <Link href={SETTINGS_TEAM_HREF}>
               <span className="link-underline-static pb-0.5">Settings</span>
             </Link>
             .
@@ -163,16 +163,16 @@ export default async function CustomerPage(props: PageProps<"/admin/customers/[i
 
         <AdminSection
           title="Orders"
-          description="Orders placed while signed in, and orders placed with this email address before they had an account."
+          description="Orders placed while signed in, and orders placed with this email address before they had an account — those are marked “Checked out as a guest”."
           flush
           footer={
             totals.ordersTotal > orders.length ? (
-              <MoreOrdersLink email={profile.email} shown={Math.min(orders.length, CUSTOMER_ORDERS_SHOWN)} total={totals.ordersTotal} />
+              <MoreOrdersLink email={profile.email} shown={orders.length} total={totals.ordersTotal} />
             ) : undefined
           }
         >
           {orders.length > 0 ? (
-            <CustomerOrdersTable orders={orders} email={profile.email} now={now} />
+            <CustomerOrdersTable orders={orders} email={profile.email} now={now} registered />
           ) : (
             <NoCustomerOrders registered />
           )}

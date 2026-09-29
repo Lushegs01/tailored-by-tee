@@ -25,6 +25,17 @@ export function orderPath(orderNumber: string): string {
 
 /* ── The actions ────────────────────────────────────────────────────────── */
 
+/** Every order status, as a tuple, for zod's enum in the server actions. */
+export const ORDER_STATUSES = [
+  "PENDING",
+  "PAID",
+  "PROCESSING",
+  "SHIPPED",
+  "DELIVERED",
+  "CANCELLED",
+  "REFUNDED",
+] as const satisfies readonly OrderStatus[];
+
 export const ORDER_ACTIONS = [
   "start_processing",
   "mark_shipped",
@@ -99,6 +110,22 @@ export const ACTION_TIMESTAMP: Record<OrderAction, "shippedAt" | "deliveredAt" |
   cancel_paid: "cancelledAt",
   refund: null,
   recheck_payment: null,
+};
+
+/**
+ * The audit action a step records, in the vocabulary the Settings activity list
+ * reads ("order.ship" → "Order marked shipped"). The two cancellations share one
+ * action because they are the same thing to the reader; which it was is in the
+ * entry's own summary and metadata.
+ */
+export const ACTION_AUDIT: Record<OrderAction, string> = {
+  start_processing: "order.process",
+  mark_shipped: "order.ship",
+  mark_delivered: "order.deliver",
+  cancel_unpaid: "order.cancel",
+  cancel_paid: "order.cancel",
+  refund: "refund.create",
+  recheck_payment: "order.payment.status",
 };
 
 /** The OrderEvent `type` a step records on the timeline. */

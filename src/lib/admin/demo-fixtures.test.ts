@@ -10,9 +10,12 @@ import {
   DEMO_EMAIL_DOMAIN,
   DEMO_ORDER_PLAN,
   DEMO_REVIEWS,
+  VERIFIED_REVIEW_MARGIN_DAYS,
+  ordersSupportingReview,
   chooseDemoLines,
   createDemoRandom,
   demoCustomer,
+  demoCustomerJoinedAt,
   demoEmail,
   demoOrderEvents,
   demoOrderId,
@@ -96,6 +99,17 @@ describe("demo customers", () => {
   it("looks up a customer by key and refuses an unknown one", () => {
     assert.equal(demoCustomer("adaeze").name, "Adaeze Okonkwo");
     assert.throws(() => demoCustomer("nobody"), RangeError);
+  });
+
+  it("opens every account before that customer's first order", () => {
+    DEMO_CUSTOMERS.forEach((customer, index) => {
+      if (!customer.registered) return;
+      const first = DEMO_ORDER_PLAN.find((spec) => spec.customer === customer.key);
+      assert.ok(first, `${customer.key} has no orders`);
+      const joined = demoCustomerJoinedAt(NOW, index);
+      assert.ok(joined.getTime() < demoPlacedAt(NOW, first).getTime(), `${customer.key} ordered before joining`);
+      assert.ok(joined.getTime() < NOW.getTime(), `${customer.key} joined in the future`);
+    });
   });
 });
 
@@ -279,7 +293,95 @@ describe("timeline entries", () => {
       trackingNumber: null,
       carrier: null,
     });
-    assert.ok(events.some((event) => event.type === "payment_needs_refund"));
+    const cancelled = events.find((event) => event.type === "order_cancelled");
+    assert.ok(cancelled, "a paid order is cancelled by hand, not released");
+    // It was PAID at the moment it was cancelled, which is why a refund is owed.
+    assert.equal(cancelled.fromStatus, "PAID");
+    assert.match(cancelled.note, /go back to the customer/);
+  });
+
+  it("releases the hold, rather than cancelling, when nothing was paid", () => {
+    const spec = DEMO_ORDER_PLAN.find((entry) => entry.status === "CANCELLED" && !entry.paidBeforeCancel);
+    assert.ok(spec);
+    const events = demoOrderEvents(spec, demoTimeline(NOW, spec), {
+      orderNumber: demoOrderNumber(2026, spec.sequence),
+      reference: null,
+      trackingNumber: null,
+      carrier: null,
+    });
+    const released = events.find((event) => event.type === "order_released");
+    assert.ok(released);
+    assert.equal(released.fromStatus, "PENDING");
+    assert.equal(released.toStatus, "CANCELLED");
+  });
+
+  it("asks for a refund before recording that it went through", () => {
+    const spec = DEMO_ORDER_PLAN.find((entry) => entry.refund?.status === "PROCESSED");
+    assert.ok(spec);
+    const events = demoOrderEvents(spec, demoTimeline(NOW, spec), {
+      orderNumber: demoOrderNumber(2026, spec.sequence),
+      reference: null,
+      trackingNumber: null,
+      carrier: null,
+    });
+    const types = events.map((event) => event.type);
+    assert.ok(types.includes("refund_requested"));
+    assert.ok(types.indexOf("refund_requested") < types.indexOf("refund_processed"));
+  });
+
+  it("leaves a refund still with Paystack unconfirmed", () => {
+    const spec = DEMO_ORDER_PLAN.find((entry) => entry.refund?.status === "PENDING");
+    assert.ok(spec);
+    const types = demoOrderEvents(spec, demoTimeline(NOW, spec), {
+      orderNumber: demoOrderNumber(2026, spec.sequence),
+      reference: null,
+      trackingNumber: null,
+      carrier: null,
+    }).map((event) => event.type);
+    assert.ok(types.includes("refund_pending"));
+    assert.ok(!types.includes("refund_processed"), "the money hasn't reached the customer yet");
+  });
+
+  /*
+   * The admin timeline gives each of these its own wording (EVENT_LABELS in
+   * src/lib/admin/order-transitions.ts); anything else would show as a tidied-up
+   * raw type. Kept as a plain list rather than an import, so this slice doesn't
+   * depend on another one's internals — but if a type here is ever changed, check
+   * that file has words for the new one.
+   */
+  const KNOWN_TYPES = new Set([
+    "order_placed",
+    "payment_rejected",
+    "payment_confirmed",
+    "processing_started",
+    "order_shipped",
+    "order_delivered",
+    "order_cancelled",
+    "order_released",
+    "refund_requested",
+    "refund_pending",
+    "refund_processed",
+    "refund_failed",
+  ]);
+
+  it("only uses entry types the admin timeline has its own words for", () => {
+    const used = new Set<string>();
+    for (const spec of DEMO_ORDER_PLAN) {
+      const events = demoOrderEvents(spec, demoTimeline(NOW, spec), {
+        orderNumber: demoOrderNumber(2026, spec.sequence),
+        reference: "DEMO-2026-000001-P1",
+        trackingNumber: "DEMO-TRK-2026-000001",
+        carrier: "Demo Couriers",
+      });
+      for (const event of events) {
+        assert.ok(KNOWN_TYPES.has(event.type), `order ${spec.sequence}: unknown entry type "${event.type}"`);
+        used.add(event.type);
+      }
+    }
+    // Every step the admin has to read is actually exercised by the demo store.
+    for (const type of ["order_placed", "payment_confirmed", "processing_started", "order_shipped", "order_delivered", "order_cancelled", "order_released", "refund_processed", "refund_pending"]) {
+      assert.ok(used.has(type), `no demo order records "${type}"`);
+    }
   });
 });
 
@@ -372,6 +474,40 @@ describe("reviews", () => {
 
   it("gives each review its own key", () => {
     assert.equal(new Set(DEMO_REVIEWS.map((review) => review.key)).size, DEMO_REVIEWS.length);
+  });
+
+  it("shows both a verified and an unverified review", () => {
+    assert.ok(DEMO_REVIEWS.some((review) => review.verified));
+    assert.ok(DEMO_REVIEWS.some((review) => !review.verified));
+  });
+
+  it("never claims a verified purchase the customer hadn't yet made", () => {
+    for (const review of DEMO_REVIEWS.filter((entry) => entry.verified)) {
+      const supporting = ordersSupportingReview(review);
+      assert.ok(supporting.length > 0, `review ${review.key} has no purchase behind it`);
+      for (const spec of supporting) {
+        assert.equal(spec.customer, review.customer);
+        assert.ok(demoOrderWasPaid(spec), `order ${spec.sequence} was never paid for`);
+        // Placed early enough that the piece had arrived before the review was written.
+        assert.ok(spec.daysAgo >= review.daysAgo + VERIFIED_REVIEW_MARGIN_DAYS);
+      }
+    }
+  });
+
+  it("finds no purchase behind a review written before the customer ever bought", () => {
+    const template = DEMO_REVIEWS[0];
+    const firstPaid = DEMO_ORDER_PLAN.filter((spec) => spec.customer === template.customer && demoOrderWasPaid(spec)).reduce(
+      (oldest, spec) => Math.max(oldest, spec.daysAgo),
+      0,
+    );
+
+    // Written the day before that order was placed: nothing can back it.
+    const tooEarly = { ...template, daysAgo: firstPaid + 1 };
+    assert.deepEqual(ordersSupportingReview(tooEarly), []);
+
+    // Written well after it: the order stands behind it.
+    const later = { ...template, daysAgo: firstPaid - VERIFIED_REVIEW_MARGIN_DAYS };
+    assert.ok(ordersSupportingReview(later).length > 0);
   });
 });
 

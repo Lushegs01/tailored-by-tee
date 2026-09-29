@@ -26,7 +26,9 @@ import {
   demoAddressId,
   demoCouponUsageId,
   demoCustomer,
+  demoCustomerJoinedAt,
   demoEmail,
+  demoOrderEventId,
   demoOrderEvents,
   demoOrderId,
   demoOrderItemId,
@@ -371,9 +373,13 @@ export interface SeedCounts {
   discountedOrders: number;
 }
 
-/** Emails a non-demo account already holds; seeding would collide with them. */
+/**
+ * Emails a real (non-demo) account already holds. Guest customers make no account,
+ * but their address still goes on the order — and the admin groups a guest's orders
+ * by email — so every demo address is checked, not just the ones that become accounts.
+ */
 export async function findConflictingEmails(db: PrismaClient): Promise<string[]> {
-  const emails = DEMO_CUSTOMERS.filter((customer) => customer.registered).map((customer) => demoEmail(customer.key));
+  const emails = DEMO_CUSTOMERS.map((customer) => demoEmail(customer.key));
   const clashes = await db.user.findMany({
     where: { email: { in: emails }, isDemo: false },
     select: { email: true },
@@ -400,7 +406,7 @@ async function seedCustomers(tx: Tx, now: Date, products: { id: string }[]): Pro
     if (!customer.registered) continue;
 
     const id = demoUserId(customer.key);
-    const joinedAt = lagosDaysAgo(now, 60 - index * 3, 10, index * 5);
+    const joinedAt = demoCustomerJoinedAt(now, index);
     await tx.user.create({
       data: {
         id,
@@ -462,6 +468,21 @@ interface BuiltLine {
   lineTotal: number;
 }
 
+/**
+ * A demo order that was actually paid for, as written. Reviews are matched
+ * against these so a "verified purchase" always points at an order that was
+ * finished before the review was written and that held the piece being reviewed.
+ */
+interface DemoPurchase {
+  customer: string;
+  orderId: string;
+  /** When the customer had it in hand: delivered, else paid, else placed. */
+  completedAt: Date;
+  delivered: boolean;
+  /** The products on the order, in line order. */
+  productIds: string[];
+}
+
 function buildLines(spec: DemoOrderSpec, variants: readonly DemoVariant[], year: number): BuiltLine[] {
   const random = createDemoRandom(year * 1_000 + spec.sequence);
   return chooseDemoLines(random, variants, spec.lines, 2).map(({ item, quantity }) => ({
@@ -475,7 +496,16 @@ async function seedOrder(
   tx: Tx,
   spec: DemoOrderSpec,
   context: { now: Date; year: number; catalogue: DemoCatalogue },
-): Promise<{ items: number; payments: number; events: number; refunds: number; couponUsages: number; discounted: boolean }> {
+): Promise<{
+  items: number;
+  payments: number;
+  events: number;
+  refunds: number;
+  couponUsages: number;
+  discounted: boolean;
+  /** Null unless the order was paid for, so only real purchases can back a review. */
+  purchase: DemoPurchase | null;
+}> {
   const { now, year, catalogue } = context;
   const customer = demoCustomer(spec.customer);
   const number = demoOrderNumber(year, spec.sequence);
@@ -717,39 +747,74 @@ async function seedOrder(
     couponUsages += 1;
   }
 
-  return { items: lines.length, payments, events: events.length, refunds, couponUsages, discounted: couponId !== null };
+  const purchase: DemoPurchase | null = paid
+    ? {
+        customer: customer.key,
+        orderId,
+        completedAt: timeline.deliveredAt ?? timeline.paidAt ?? timeline.placedAt,
+        delivered: timeline.deliveredAt !== null,
+        productIds: lines.map((line) => line.variant.productId),
+      }
+    : null;
+
+  return { items: lines.length, payments, events: events.length, refunds, couponUsages, discounted: couponId !== null, purchase };
 }
 
-async function seedReviews(tx: Tx, now: Date, catalogue: DemoCatalogue, year: number): Promise<number> {
-  if (catalogue.products.length === 0) return 0;
+/**
+ * The order that can back a "verified purchase" badge on this review: one the
+ * same customer paid for, that was finished *before* the review was written, and
+ * that actually held something. A delivered order is the surest evidence; failing
+ * that, the most recent one whose money arrived. Null means no badge.
+ */
+function purchaseBehindReview(purchases: readonly DemoPurchase[], customerKey: string, writtenAt: Date): DemoPurchase | null {
+  const candidates = purchases.filter(
+    (purchase) =>
+      purchase.customer === customerKey && purchase.productIds.length > 0 && purchase.completedAt.getTime() < writtenAt.getTime(),
+  );
+  if (candidates.length === 0) return null;
+  return candidates.reduce((best, purchase) => {
+    if (purchase.delivered !== best.delivered) return purchase.delivered ? purchase : best;
+    return purchase.completedAt.getTime() > best.completedAt.getTime() ? purchase : best;
+  });
+}
 
-  // Verified reviews are attached to a delivered demo order the same customer placed.
-  const deliveredByCustomer = new Map<string, string>();
-  for (const spec of DEMO_ORDER_PLAN) {
-    if (spec.status === "DELIVERED" && !deliveredByCustomer.has(spec.customer)) {
-      deliveredByCustomer.set(spec.customer, demoOrderId(year, spec.sequence));
-    }
-  }
+async function seedReviews(tx: Tx, now: Date, catalogue: DemoCatalogue, purchases: readonly DemoPurchase[]): Promise<number> {
+  if (catalogue.products.length === 0) return 0;
 
   let written = 0;
   for (const [index, review] of DEMO_REVIEWS.entries()) {
     const customer = demoCustomer(review.customer);
-    const product = catalogue.products[index % catalogue.products.length];
     const writtenAt = lagosDaysAgo(now, review.daysAgo, 9 + (index % 10), (index * 7) % 60);
     const at = new Date(Math.min(writtenAt.getTime(), now.getTime() - 60_000));
-    const moderated = review.status === "PENDING" ? null : new Date(at.getTime() + 3_600_000);
+    // Moderated about an hour later, but never dated in the future, however
+    // recently a review is added to the plan.
+    const moderated =
+      review.status === "PENDING" ? null : new Date(Math.min(at.getTime() + 3_600_000, now.getTime() - 30_000));
+
+    /*
+     * A verified review is written about something that customer really bought:
+     * the piece comes from the order itself, so the badge, the order link and the
+     * product on the review all tell the same story. The plans are written so
+     * this holds (demoPlanProblems checks it), and this is the backstop — an
+     * unsupported review simply goes out without the badge.
+     */
+    const bought = review.verified ? purchaseBehindReview(purchases, review.customer, at) : null;
+    const productId = bought
+      ? bought.productIds[index % bought.productIds.length]
+      : catalogue.products[index % catalogue.products.length].id;
 
     await tx.review.create({
       data: {
         id: demoReviewId(review.key),
-        productId: product.id,
+        productId,
         userId: customer.registered ? demoUserId(customer.key) : null,
-        orderId: review.verified ? (deliveredByCustomer.get(review.customer) ?? null) : null,
+        orderId: bought?.orderId ?? null,
         rating: review.rating,
         title: review.title,
         body: review.body,
         displayName: customer.name,
-        isVerifiedPurchase: review.verified,
+        // Never claim a verified purchase without an order to back it up.
+        isVerifiedPurchase: bought !== null,
         status: review.status,
         isDemo: true,
         moderatedAt: moderated,
@@ -793,6 +858,7 @@ export async function seedDemoData(tx: Tx, catalogue: DemoCatalogue, now: Date):
   counts.addresses = people.addresses;
   counts.wishlists = people.wishlists;
 
+  const purchases: DemoPurchase[] = [];
   for (const spec of DEMO_ORDER_PLAN) {
     const written = await seedOrder(tx, spec, { now, year, catalogue });
     counts.orders += 1;
@@ -802,10 +868,10 @@ export async function seedDemoData(tx: Tx, catalogue: DemoCatalogue, now: Date):
     counts.refunds += written.refunds;
     counts.couponUsages += written.couponUsages;
     if (written.discounted) counts.discountedOrders += 1;
+    if (written.purchase) purchases.push(written.purchase);
   }
 
-  counts.reviews = await seedReviews(tx, now, catalogue, year);
+  // Reviews come last on purpose: they are matched against the orders as written.
+  counts.reviews = await seedReviews(tx, now, catalogue, purchases);
   return counts;
 }
-
-export { DEMO_EMAIL_DOMAIN } from "../../src/lib/admin/demo-fixtures";

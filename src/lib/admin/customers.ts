@@ -3,6 +3,7 @@ import "server-only";
 import {
   type CustomerCounts,
   type CustomerListQuery,
+  type CustomerLoadFailure,
   customerTotalFor,
   phoneSearchDigits,
 } from "@/components/admin/customers/customer-rules";
@@ -24,19 +25,24 @@ import { containsPattern } from "./stock-state";
  * Every search value is a bound parameter; LIKE wildcards in what the owner
  * typed are escaped, never obeyed.
  *
- * Money follows the overview page's rule exactly, so the two never disagree:
- * an order counts once it is paid and going ahead (PAID, PROCESSING, SHIPPED or
- * DELIVERED with a paidAt), for its total less any refund Paystack has actually
- * processed. Payments made with Paystack test keys are counted separately and
- * never added to real money. Demo orders are counted on their own (demo) rows,
- * which are labelled, rather than silently dropped.
+ * Money uses the overview page's rule (lib/admin/metrics): an order counts once
+ * it is paid and going ahead (PAID, PROCESSING, SHIPPED or DELIVERED with a
+ * paidAt), for its total less any refund Paystack has actually processed.
+ * Payments made with Paystack test keys are counted separately and never added
+ * to real money.
+ *
+ * ONE DELIBERATE DIFFERENCE from the overview, which drops demo orders outright:
+ * here a demo customer's demo orders are counted into their own figures, so
+ * their page reads exactly as a real customer's does — which is the point of
+ * sample data. The row and the order are both badged, and DEMO_MONEY_NOTE tells
+ * the owner why the two pages can differ. Nothing demo is ever folded into a
+ * real customer's figures: a customer is one email address, and every demo order
+ * carries a demo address (see lib/admin/demo-fixtures).
  */
 
 /* ── Failures ────────────────────────────────────────────────────────────── */
 
-export type CustomerLoad<T> =
-  | { ok: true; data: T }
-  | { ok: false; reason: "not_configured" | "needs_migration" | "unavailable" };
+export type CustomerLoad<T> = { ok: true; data: T } | { ok: false; reason: CustomerLoadFailure };
 
 /** Postgres "relation does not exist" and "column does not exist". */
 const MISSING_SCHEMA_SQLSTATE = ["42P01", "42703"];
@@ -207,7 +213,10 @@ function customersFrom(query: CustomerListQuery): Prisma.Sql {
       COALESCE(NULLIF(btrim(u."name"), ''), g."orderName") AS "name",
       COALESCE(NULLIF(btrim(u."phone"), ''), g."orderPhone") AS "phone",
       COALESCE(u."role" = 'ADMIN', false) AS "isAdmin",
-      (COALESCE(u."isDemo", false) OR COALESCE(g."isDemo", false)) AS "isDemo",
+      -- The account's own flag decides when there is an account, so a real
+      -- customer is never badged "Demo" because of one stray order. A guest has
+      -- no account, so their orders are all there is to go on.
+      (CASE WHEN u."id" IS NOT NULL THEN u."isDemo" ELSE COALESCE(g."isDemo", false) END) AS "isDemo",
       u."createdAt" AS "registeredAt",
       COALESCE(g."ordersTotal", 0) AS "ordersTotal",
       COALESCE(g."paidOrders", 0) AS "paidOrders",
@@ -471,19 +480,32 @@ async function selectTotals(owner: { userId?: string | null; email: string }): P
   };
 }
 
+/**
+ * The ids of a customer's most recent orders. Found with the one owner rule in
+ * SQL, so the list, the figures and this table can never disagree — and never
+ * through Prisma's `mode: "insensitive"`, which compiles to ILIKE and would let
+ * an underscore in an address match somebody else's.
+ */
+async function selectOrderIds(owner: { userId?: string | null; email: string }, take: number): Promise<string[]> {
+  const rows = await getDb().$queryRaw<{ id: string }[]>`
+    SELECT o."id"
+    FROM "Order" o
+    WHERE ${ownerClause(owner)}
+    ORDER BY o."createdAt" DESC, o."id" DESC
+    LIMIT ${take}::int`;
+  return rows.map((row) => row.id);
+}
+
 async function selectOrders(
   owner: { userId?: string | null; email: string },
   take: number,
 ): Promise<CustomerOrderRow[]> {
-  const email = owner.email.trim().toLowerCase();
-  const where: Prisma.OrderWhereInput = owner.userId
-    ? { OR: [{ userId: owner.userId }, { email }] }
-    : { email };
+  const ids = await selectOrderIds(owner, take);
+  if (ids.length === 0) return [];
 
   const orders = await getDb().order.findMany({
-    where,
+    where: { id: { in: ids } },
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    take,
     select: {
       id: true,
       number: true,
@@ -731,7 +753,13 @@ export interface GuestCustomer {
   lastAddress: GuestDeliveryAddress | null;
 }
 
-/** The account with this address, if there is one — so the guest view can send the owner there instead. */
+/**
+ * The account with this address, if there is one — so the guest view can send
+ * the owner there instead. An exact match on the unique index, which is right
+ * because the accounts adapter stores every address lower-cased and the caller
+ * passes a lower-cased address (normaliseCustomerEmail); the same assumption the
+ * storefront's own order-visibility rule rests on.
+ */
 export async function findCustomerByEmail(email: string): Promise<CustomerLoad<{ id: string } | null>> {
   return load("by-email", async () => getDb().user.findUnique({ where: { email }, select: { id: true } }));
 }
@@ -742,9 +770,12 @@ export async function findCustomerByEmail(email: string): Promise<CustomerLoad<{
  */
 export async function getGuestCustomer(email: string): Promise<CustomerLoad<GuestCustomer | null>> {
   return load("guest", async () => {
-    const latest = await getDb().order.findFirst({
-      where: { email },
-      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    const owner = { userId: null, email };
+    const [latestId] = await selectOrderIds(owner, 1);
+    if (!latestId) return null;
+
+    const latest = await getDb().order.findUnique({
+      where: { id: latestId },
       select: {
         customerName: true,
         phone: true,
@@ -760,7 +791,6 @@ export async function getGuestCustomer(email: string): Promise<CustomerLoad<Gues
     });
     if (!latest) return null;
 
-    const owner = { userId: null, email };
     const [totals, orders] = await Promise.all([selectTotals(owner), selectOrders(owner, CUSTOMER_ORDERS_SHOWN)]);
     const isPickup = latest.deliveryMethod === "PICKUP";
 

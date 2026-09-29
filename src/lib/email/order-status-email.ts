@@ -9,7 +9,6 @@ import { getDb, isDatabaseConfigured } from "@/lib/db";
 
 import {
   renderOrderStatusEmail,
-  statusEmailKind,
   tidy,
   tidyOptional,
   type OrderStatusEmailKind,

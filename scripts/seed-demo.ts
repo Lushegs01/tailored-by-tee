@@ -23,6 +23,7 @@
  */
 import { Prisma } from "../src/generated/prisma/client";
 import { lagosCalendarParts, summariseDemoPlan } from "../src/lib/admin/demo-fixtures";
+import { ORDER_STATUS_OPTIONS } from "../src/lib/admin/status";
 
 import {
   DemoScriptError,
@@ -53,9 +54,11 @@ const TRANSACTION = { maxWait: 15_000, timeout: 120_000 } as const;
 
 function describePlan(): void {
   const plan = summariseDemoPlan();
-  const statuses = Object.entries(plan.ordersByStatus)
-    .map(([status, count]) => `${count} ${status.toLowerCase()}`)
-    .join(", ");
+  // The admin area's own words for each status, so the two always agree.
+  const statuses = ORDER_STATUS_OPTIONS.map(({ value, label }) => {
+    const count = plan.ordersByStatus[value as keyof typeof plan.ordersByStatus] ?? 0;
+    return `${count} ${label.charAt(0).toLowerCase()}${label.slice(1)}`;
+  }).join(", ");
 
   console.log(
     [

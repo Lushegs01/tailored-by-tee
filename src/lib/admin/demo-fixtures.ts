@@ -208,6 +208,15 @@ export function demoCustomer(key: string): DemoCustomer {
   return customer;
 }
 
+/**
+ * When a demo account was opened. Earlier for the customers listed first, and
+ * always before the first order that customer went on to place — a customer page
+ * showing an order older than the account would read as broken.
+ */
+export function demoCustomerJoinedAt(now: Date, customerIndex: number): Date {
+  return lagosDaysAgo(now, Math.max(0, 60 - customerIndex * 3), 10, (customerIndex * 5) % 60);
+}
+
 /* ── Orders ─────────────────────────────────────────────────────────────── */
 
 export type DemoOrderStatus =
@@ -432,9 +441,13 @@ export interface DemoEventContext {
 }
 
 /**
- * The order's history, in the shape the storefront already writes (`order_placed`,
- * `payment_confirmed`, `order_released`) plus the steps the admin will add when an
- * order is prepared, shipped, delivered or refunded.
+ * The order's history, using exactly the `OrderEvent.type` vocabulary the rest of
+ * the site writes — the storefront's own entries (`order_placed`,
+ * `payment_confirmed`, `payment_rejected`, `order_released`, see
+ * src/lib/orders/), and for the admin's own steps the types in `ACTION_EVENT` and
+ * the refund entries in src/lib/admin/order-transitions.ts. A demo timeline
+ * therefore reads in the admin's own words rather than falling back to a
+ * prettified raw type.
  */
 export function demoOrderEvents(
   spec: DemoOrderSpec,
@@ -473,7 +486,7 @@ export function demoOrderEvents(
 
   if (timeline.processingAt) {
     events.push({
-      type: "order_processing",
+      type: "processing_started",
       fromStatus: "PAID",
       toStatus: "PROCESSING",
       note: "Being prepared in the studio.",
@@ -493,9 +506,11 @@ export function demoOrderEvents(
   }
 
   if (timeline.deliveredAt) {
+    // The admin records one step for both: the timeline reads "Marked as collected"
+    // for a collection order and "Marked as delivered" for a delivery.
     const collected = spec.delivery === "pickup";
     events.push({
-      type: collected ? "order_collected" : "order_delivered",
+      type: "order_delivered",
       fromStatus: collected ? "PROCESSING" : "SHIPPED",
       toStatus: "DELIVERED",
       note: collected ? "Collected from the studio." : "Delivered to the customer.",
@@ -506,8 +521,10 @@ export function demoOrderEvents(
   if (timeline.cancelledAt) {
     const paid = demoOrderWasPaid(spec);
     events.push({
-      type: paid ? "payment_needs_refund" : "order_released",
-      fromStatus: "PENDING",
+      // An unpaid order's hold simply runs out — the same entry reservations.ts
+      // writes. A paid one had to be cancelled by hand.
+      type: paid ? "order_cancelled" : "order_released",
+      fromStatus: paid ? "PAID" : "PENDING",
       toStatus: "CANCELLED",
       note: paid
         ? "Cancelled after payment. The money still has to go back to the customer."
@@ -516,14 +533,52 @@ export function demoOrderEvents(
     });
   }
 
-  if (timeline.refundedAt) {
-    events.push({
-      type: "order_refunded",
-      fromStatus: "DELIVERED",
-      toStatus: "REFUNDED",
-      note: spec.refund?.partial ? "Part of the order was refunded through Paystack." : "Refunded in full through Paystack.",
-      createdAt: timeline.refundedAt,
-    });
+  /*
+   * Refunds. A refund that has gone through is asked for first and confirmed
+   * afterwards; one still with Paystack has only been asked for. The request is
+   * dated before the confirmation, and never after it, so nothing lands in the future.
+   */
+  if (spec.refund) {
+    const settledAt = timeline.refundedAt;
+    const requestedAt = settledAt ? new Date(settledAt.getTime() - HOUR_MS) : timeline.cancelledAt;
+    if (requestedAt) {
+      const part = spec.refund.partial ? "Part of the order" : "The whole order";
+      events.push({
+        type: "refund_requested",
+        fromStatus: null,
+        toStatus: null,
+        note: `${part} was put forward for a refund: ${spec.refund.reason}.`,
+        createdAt: requestedAt,
+      });
+
+      if (spec.refund.status === "PROCESSED" && settledAt) {
+        events.push({
+          type: "refund_processed",
+          fromStatus: spec.status === "REFUNDED" ? "DELIVERED" : null,
+          toStatus: spec.status === "REFUNDED" ? "REFUNDED" : null,
+          note: spec.refund.partial
+            ? "Paystack paid part of the order back to the customer."
+            : "Paystack paid the order back to the customer in full.",
+          createdAt: settledAt,
+        });
+      } else if (spec.refund.status === "PENDING") {
+        events.push({
+          type: "refund_pending",
+          fromStatus: null,
+          toStatus: null,
+          note: "With Paystack; the money hasn't reached the customer yet.",
+          createdAt: requestedAt,
+        });
+      } else if (spec.refund.status === "FAILED") {
+        events.push({
+          type: "refund_failed",
+          fromStatus: null,
+          toStatus: null,
+          note: "Paystack couldn't pay this one back. It has to be sorted out by hand.",
+          createdAt: requestedAt,
+        });
+      }
+    }
   }
 
   return events.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
@@ -644,22 +699,41 @@ export interface DemoReviewSpec {
   body: string;
   status: DemoReviewStatus;
   daysAgo: number;
+  /**
+   * Ask for a "verified purchase" badge. It is only granted when this customer
+   * actually has an order, containing this piece, that finished before the review
+   * was written — see `VERIFIED_REVIEW_MARGIN_DAYS` and the check in
+   * `demoPlanProblems`. The badge is never shown without an order behind it.
+   */
   verified: boolean;
 }
+
+/**
+ * How long before a review its supporting order must have been placed. An order
+ * takes up to about four days to reach the customer, so five keeps the review
+ * safely after the piece arrived.
+ */
+export const VERIFIED_REVIEW_MARGIN_DAYS = 5;
 
 /**
  * Fifteen modest, plausible reviews — five still waiting, so the moderation queue
  * and the navigation badge have something to show. Every one is stored with
  * `isDemo: true` and is never shown to a customer as genuine.
+ *
+ * Some are marked as verified purchases and some are not, so both appear in the
+ * admin. A review can only ask for the badge when that customer had already
+ * bought and received something; `demoPlanProblems` checks this.
  */
 export const DEMO_REVIEWS: readonly DemoReviewSpec[] = [
   { key: "01", customer: "adaeze", rating: 5, title: "Beautifully made", body: "The stitching is neat and the cloth feels substantial without being heavy. It has become the piece I reach for first.", status: "APPROVED", daysAgo: 52, verified: true },
-  { key: "02", customer: "tunde", rating: 4, title: "Very good, sizing runs generous", body: "Lovely finish and the colour is exactly as photographed. I would take a size down next time.", status: "APPROVED", daysAgo: 46, verified: true },
+  // tunde's first order came later than this, so there is nothing to verify it against.
+  { key: "02", customer: "tunde", rating: 4, title: "Very good, sizing runs generous", body: "Lovely finish and the colour is exactly as photographed. I would take a size down next time.", status: "APPROVED", daysAgo: 46, verified: false },
   { key: "03", customer: "chiamaka", rating: 5, title: "Worth the wait", body: "Arrived well packed and pressed. It has washed twice now with no change to the shape.", status: "APPROVED", daysAgo: 40, verified: true },
   { key: "04", customer: "folake", rating: 3, title: "Good piece, slow delivery", body: "No complaints about the making. It took a little longer to reach Ibadan than I expected.", status: "APPROVED", daysAgo: 36, verified: true },
   { key: "05", customer: "emeka", rating: 5, title: "Excellent cut", body: "Sits well across the shoulders and the sleeves are the right length for once.", status: "APPROVED", daysAgo: 31, verified: true },
   { key: "06", customer: "halima", rating: 4, title: "Comfortable in the heat", body: "Light enough for a long day out and it does not crease as much as I feared.", status: "APPROVED", daysAgo: 26, verified: false },
-  { key: "07", customer: "seyi", rating: 2, title: "Not the colour I expected", body: "The piece itself is fine, but the shade is warmer in person than on screen. The exchange was handled politely.", status: "APPROVED", daysAgo: 22, verified: true },
+  // seyi's first order was only a week ago, well after this was written.
+  { key: "07", customer: "seyi", rating: 2, title: "Not the colour I expected", body: "The piece itself is fine, but the shade is warmer in person than on screen. The exchange was handled politely.", status: "APPROVED", daysAgo: 22, verified: false },
   { key: "08", customer: "adaeze", rating: 5, title: "Second one bought", body: "I liked the first so much I ordered another in a different colour. Consistent quality both times.", status: "APPROVED", daysAgo: 17, verified: true },
   { key: "09", customer: "ibrahim", rating: 4, title: "Smart and simple", body: "Easy to dress up or down. The buttons feel solid, which is usually where things fail.", status: "REJECTED", daysAgo: 14, verified: false },
   { key: "10", customer: "folake", rating: 5, title: "Best purchase this year", body: "Buy this now buy this now cheap deals at my shop link in bio", status: "REJECTED", daysAgo: 11, verified: false },
@@ -671,6 +745,20 @@ export const DEMO_REVIEWS: readonly DemoReviewSpec[] = [
 ];
 
 export const DEMO_REVIEW_COUNT = DEMO_REVIEWS.length;
+
+/**
+ * The orders that could back a "verified purchase" badge on this review: paid
+ * for by the same customer, and placed long enough before it to have arrived.
+ * Empty means the review must go out without the badge.
+ */
+export function ordersSupportingReview(review: DemoReviewSpec): DemoOrderSpec[] {
+  return DEMO_ORDER_PLAN.filter(
+    (spec) =>
+      spec.customer === review.customer &&
+      demoOrderWasPaid(spec) &&
+      spec.daysAgo >= review.daysAgo + VERIFIED_REVIEW_MARGIN_DAYS,
+  );
+}
 
 /* ── Summaries and checks ───────────────────────────────────────────────── */
 
@@ -766,6 +854,19 @@ export function demoPlanProblems(): string[] {
     if (review.daysAgo < 0 || review.daysAgo > 60) problems.push(`${where}: written outside the last 60 days.`);
     if (review.title.length > 120) problems.push(`${where}: title is too long.`);
     if (review.body.length < 40 || review.body.length > 600) problems.push(`${where}: body should be a sentence or three.`);
+    if (review.verified && ordersSupportingReview(review).length === 0) {
+      problems.push(
+        `${where}: asks for a verified purchase, but ${review.customer} has no paid order from at least ` +
+          `${VERIFIED_REVIEW_MARGIN_DAYS} days before it. Move the review later, or set verified: false.`,
+      );
+    }
+  }
+
+  if (!DEMO_REVIEWS.some((review) => review.verified)) {
+    problems.push("At least one review must be a verified purchase, so the badge can be seen.");
+  }
+  if (!DEMO_REVIEWS.some((review) => !review.verified)) {
+    problems.push("At least one review must be unverified, so both kinds appear.");
   }
 
   const summary = summariseDemoPlan();
