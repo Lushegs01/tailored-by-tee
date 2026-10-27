@@ -197,4 +197,60 @@ export const LAYER_SEEDS: ProductSeed[] = [
     sizes: ["one-size"],
     createdAt: "2026-04-10T09:00:00.000Z",
   },
+
+  /* ── Studio photography, October 2026 ─────────────────────────────────────
+   * Copy describes only what the photograph shows. Prices, size ranges and
+   * cloth descriptions are provisional — see products-traditional.ts.
+   */
+  {
+    slug: "double-breasted-wool-jacket",
+    code: "DBJ",
+    name: "Double-Breasted Jacket",
+    category: "outerwear",
+    collections: [],
+    summary: "A short double-breasted jacket with peak lapels, cut to finish at the hip.",
+    description:
+      "Six buttons on a jacket cropped high enough to show the whole waistband of a trouser. The lapels are peaked and set wide, and the cloth is brushed so the colour sits deep rather than flat. Photographed in three colourways on the same mannequin, over the same black trouser, so the only thing that changes between them is the colour.",
+    details: [
+      "Double-breasted front, six buttons",
+      "Wide peak lapels",
+      "Cropped to finish at the hip",
+      "Welted side pockets",
+      "Three colourways photographed together",
+    ],
+    material: "Brushed cloth with a soft wool handle",
+    care: CARE.wool,
+    fit: "Cropped and squared through the shoulder",
+    modelNote: null,
+    price: 165_000_00,
+    tags: ["jacket", "outerwear", "double breasted", "peak lapel", "cropped", "wool", "smart", "harmattan"],
+    colors: ["clay", "chocolate", "forest"],
+    sizes: sizesBetween("s", "xxl"),
+    createdAt: "2026-10-25T10:35:00.000Z",
+  },
+  {
+    slug: "suede-harrington-jacket",
+    code: "SHJ",
+    name: "Suede Harrington Jacket",
+    category: "outerwear",
+    collections: [],
+    summary: "A zip-front suede blouson with a point collar, in four earth colours.",
+    description:
+      "A short zipped jacket in soft suede, with a flat point collar, slanted hand pockets and a plain hem that sits at the waist. The nap takes the light differently on every panel, which is what you want from suede and what you cannot get from anything else. Photographed as a stack, so the four colours can be judged against each other.",
+    details: [
+      "Full-length zip with a flat point collar",
+      "Slanted hand pockets",
+      "Plain hem finishing at the waist",
+      "Four colourways photographed together",
+    ],
+    material: "Brushed suede with a soft nap",
+    care: CARE.suede,
+    fit: "Short and straight; sits at the waist",
+    modelNote: null,
+    price: 195_000_00,
+    tags: ["jacket", "outerwear", "suede", "harrington", "blouson", "zip", "leather", "casual"],
+    colors: ["stone", "chocolate", "tobacco", "olive"],
+    sizes: sizesBetween("s", "xl"),
+    createdAt: "2026-10-25T10:40:00.000Z",
+  },
 ];

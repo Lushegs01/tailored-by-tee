@@ -104,6 +104,15 @@ function buildImages(seed: ProductSeed, media: ProductMediaEntry | null): Produc
   return [
     { ...toMediaAsset(media.primary), id: `${id}_primary`, role: "primary", colorId, position: 0 },
     { ...toMediaAsset(media.alternate), id: `${id}_alternate`, role: "alternate", colorId, position: 1 },
+    ...(media.gallery ?? []).map(
+      (asset, index): ProductImage => ({
+        ...toMediaAsset(asset),
+        id: `${id}_gallery_${index + 1}`,
+        role: "gallery",
+        colorId,
+        position: index + 2,
+      }),
+    ),
   ];
 }
 
