@@ -54,6 +54,30 @@ export const CATEGORY_SEEDS = [
     code: "DNM",
   },
   {
+    slug: "sets",
+    name: "Co-ord Sets",
+    description: "Shirt and trouser cut from one cloth, so the whole outfit is decided in a single piece.",
+    code: "SET",
+  },
+  {
+    slug: "agbada",
+    name: "Agbada",
+    description: "Wide-sleeved ceremonial robes, hand-embroidered at the chest and worn over a matching tunic.",
+    code: "AGB",
+  },
+  {
+    slug: "kaftans",
+    name: "Kaftans",
+    description: "Senator tunics and kaftan sets in quiet colours, cut long and easy for the heat.",
+    code: "KFT",
+  },
+  {
+    slug: "caps",
+    name: "Caps",
+    description: "Fila — folded wool, hand-beaded velvet and woven aso-oke, to finish a traditional outfit.",
+    code: "CAP",
+  },
+  {
     slug: "accessories",
     name: "Accessories",
     description: "Vegetable-tanned leather and washed cotton, made to finish an outfit quietly.",

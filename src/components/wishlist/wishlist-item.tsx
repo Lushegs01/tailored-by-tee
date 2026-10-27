@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import type { WishlistProduct } from "@/app/wishlist/actions";
+import type { WishlistProduct } from "@/app/(store)/wishlist/actions";
 import { ChevronDownIcon } from "@/components/icons";
 import { ProductCard } from "@/components/product/product-card";
 import { Button } from "@/components/ui/button";
@@ -19,8 +19,8 @@ export interface WishlistItemProps {
 }
 
 /**
- * A saved piece: the storefront card — with its own quick add and heart switched
- * off, so each action appears once — and the two things a wishlist is for below
+ * A saved piece: the storefront card â€” with its own quick add and heart switched
+ * off, so each action appears once â€” and the two things a wishlist is for below
  * it. "Move to bag" uses the piece's default colour and offers only the sizes in
  * stock now; when there is just one, it is chosen already.
  */

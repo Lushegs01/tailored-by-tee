@@ -235,6 +235,38 @@
         "url": "https://unsplash.com/@uglug",
         "photoUrl": "https://unsplash.com/photos/brown-leather-handbag-on-white-table-XwjrPFW7xw0"
       }
+    },
+    "caps": {
+      "src": "/images/categories/caps.jpg",
+      "width": 1200,
+      "height": 1500,
+      "alt": "Black embroidered cap on a linen mannequin above a black band-collar tunic",
+      "color": "#393a39",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQID/8QAHhAAAQQDAAMAAAAAAAAAAAAAAQACAxESITEEUWH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AGkY8GPBwAvYrq0r4j5JpC4nNw3qjxU3zJcRdHXpB/9k="
+    },
+    "agbada": {
+      "src": "/images/categories/agbada.jpg",
+      "width": 1200,
+      "height": 1500,
+      "alt": "Navy agbada with a grey and red fretwork chest panel, on a stand against a dark backdrop",
+      "color": "#313139",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAcEAACAwADAQAAAAAAAAAAAAABAgADEQQSIVH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwCeosNKd1OEHc+x1KC6KwYYw0eSbZsUgR2rlutSKFXAoEtI/9k="
+    },
+    "kaftans": {
+      "src": "/images/categories/kaftans.jpg",
+      "width": 1200,
+      "height": 1500,
+      "alt": "Model in a white kaftan and black fila, seated against a dark green backdrop",
+      "color": "#5a5950",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgQF/8QAIRAAAwABBAEFAAAAAAAAAAAAAQIDAAQFERITIjEyUXH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAABEA/9oADAMBAAIRAxEAPwDITatdaKUEiJsncdjwCD9ZE0aqxUycEHgjqcVHz0lDTLZVRpAE9OT8f3DT7xrpuyC59J49hkIt/9k="
+    },
+    "sets": {
+      "src": "/images/categories/sets.jpg",
+      "width": 1200,
+      "height": 1500,
+      "alt": "Model in a brown embroidered camp-collar shirt and matching wide trousers, in bright sunlight",
+      "color": "#a38d7f",
+      "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAF/8QAIRAAAgEDAwUAAAAAAAAAAAAAAQIDAAURBCFxEiJBYtH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Ar20qHTSoxVFAUH33rXEMeO4nPnehXVFktMnUN0II5yPtLEKEDIOeaMj/2Q=="
     }
   },
   "products": {
@@ -1011,6 +1043,796 @@
           "url": "https://unsplash.com/@olaszkolda",
           "photoUrl": "https://unsplash.com/photos/a-young-woman-in-a-beige-suit-and-white-shirt-6A1dE8VEENc"
         }
+      }
+    },
+    "beaded-velvet-fila": {
+      "name": "Beaded Velvet Fila",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/beaded-velvet-fila/beaded-velvet-fila-01.jpg",
+        "width": 692,
+        "height": 865,
+        "alt": "Black velvet fila with a hand-beaded gold and white band, resting on a polished brass stand",
+        "color": "#817e78",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQIDAAQFEUESISKBwf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARIf/aAAwDAQACEQMRAD8ANmr68GQZELQxRPsBd+euTVnxF+zsYr2ZIydqokPYcCmT2ytmSSSQ8XUR7A+VqBNgHdQ7Ey//2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/beaded-velvet-fila/beaded-velvet-fila-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the fila's beaded band, showing the gold cord scallops and white seed beads",
+        "color": "#636763",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIF/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQIDAAQFIRESExRBcf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAVEQEBAAAAAAAAAAAAAAAAAAAAMf/aAAwDAQACEQMRAD8AvLZmKwLW8AEsvOxzpftHFlbV4kaSVldlBYdw6PusG7mZppJiFDSHqIUcDdD5DUg//9k="
+      }
+    },
+    "plain-wool-fila": {
+      "name": "Plain Fila",
+      "garmentColorName": "Burgundy",
+      "garmentColorHex": "#5E2130",
+      "primary": {
+        "src": "/images/products/plain-wool-fila/plain-wool-fila-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Nine plain filas in burgundy, sand, red, rust, black, green, navy, brown and white, each on a dark stand",
+        "color": "#85899a",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAgP/xAAkEAACAQMEAAcAAAAAAAAAAAABAgMAEzEEERIhBSIkUmGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAEC/8QAGBEAAgMAAAAAAAAAAAAAAAAAAAECITH/2gAMAwEAAhEDEQA/AKwMq2hyVg7TEG3gD8pabSRyaaJyvIsgJNvPVCFn9Mbj+YyOe/dv9VJPF5Y0VGQMVABbG/ziroUpLD//2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/plain-wool-fila/plain-wool-fila-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "A single burgundy plain fila on a dark stand, showing its soft folded crown",
+        "color": "#868a9c",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQMG/8QAHxABAAEEAgMBAAAAAAAAAAAAAQIAAwUREjEEEyFh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABcRAQEBAQAAAAAAAAAAAAAAAAEAMUH/2gAMAwEAAhEDEQA/AI5PIXDLRtgMLfE4vc91pokSIEQA60UbLD2JZOx5bKTcibT5pTppP1/tN2PAv//Z"
+      }
+    },
+    "aso-oke-patterned-fila": {
+      "name": "Aso-Oke Fila",
+      "garmentColorName": "Burgundy",
+      "garmentColorHex": "#5E2130",
+      "primary": {
+        "src": "/images/products/aso-oke-patterned-fila/aso-oke-patterned-fila-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Nine aso-oke filas in striped and chevron weaves, arranged in a grid on dark stands",
+        "color": "#798193",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgME/8QAIxAAAgEEAAYDAAAAAAAAAAAAAQIDAAQRMQUSExQicSEygf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AHE5RoR1l8ZJ8YXQAOvVO2toZLaJ3KszICW5NnG6hbTSSdl5Y7gTOfj651j1WOHjjRwohiLFVAz1N4/Kewa//9k="
+      },
+      "alternate": {
+        "src": "/images/products/aso-oke-patterned-fila/aso-oke-patterned-fila-02.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Six aso-oke filas in burgundy, navy, ochre, red, pink and purple weaves",
+        "color": "#848ea2",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EACEQAAMAAQQBBQAAAAAAAAAAAAECAxIABCExERMVQUNR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwBA3FS0qNNgVFRjnwcevI/TpE4NaSUalVZ1DFQ/AJ+OtDbbr7jGX1enTJfHJJ750V91vYu0pXRZocVBkD4A651QH//Z"
+      },
+      "gallery": [
+        {
+          "src": "/images/products/aso-oke-patterned-fila/aso-oke-patterned-fila-03.jpg",
+          "width": 640,
+          "height": 800,
+          "alt": "Close view of a burgundy aso-oke fila, showing the diagonal stripe of the woven strip cloth",
+          "color": "#767a8b",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgT/xAAiEAACAQMDBQEAAAAAAAAAAAABAhEAAzEEBSEGEhMyUZH/xAAVAQEBAAAAAAAAAAAAAAAAAAACA//EABcRAQEBAQAAAAAAAAAAAAAAAAEAMUH/2gAMAwEAAhEDEQA/AJtz1txd4bx9sWiAFI9sZ/aVpyilpBjkfKI6lEPVFlisgskg4JjNKS5k1TsXAv/Z"
+        }
+      ]
+    },
+    "embroidered-cotton-cap": {
+      "name": "Embroidered Cap",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/embroidered-cotton-cap/embroidered-cotton-cap-01.jpg",
+        "width": 1539,
+        "height": 1924,
+        "alt": "Black cap scattered with small red, yellow, blue and white embroidered marks, on a linen mannequin over a black band-collar tunic",
+        "color": "#3b3c3b",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQED/8QAHhAAAQQDAAMAAAAAAAAAAAAAAQACAxESITEEUYH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AGkY8GPBwAvYrq0+I+SaQuJzcN6o8Vb5suIujr0g//9k="
+      },
+      "alternate": {
+        "src": "/images/products/embroidered-cotton-cap/embroidered-cotton-cap-02.jpg",
+        "width": 863,
+        "height": 1079,
+        "alt": "Close view of the embroidered cap, showing the scattered stars and dashes across the black crown",
+        "color": "#403f3d",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBf/EAB4QAAICAgIDAAAAAAAAAAAAAAECABEDMQQSEyFR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8AwuRyfAwUL2rfuUKwZQw0RcHMisXtRr5FrkpQAq0BJSP/2Q=="
+      }
+    },
+    "woven-motif-agbada": {
+      "name": "Woven-Motif Agbada",
+      "garmentColorName": "Ecru",
+      "garmentColorHex": "#E9E2D0",
+      "primary": {
+        "src": "/images/products/woven-motif-agbada/woven-motif-agbada-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Cream agbada with a tonal basket-weave embroidered chest panel, on a stand against a dark backdrop",
+        "color": "#837b6f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQMG/8QAHRAAAwACAwEBAAAAAAAAAAAAAQIDABEEBSFhEv/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCHX9LHkcGVaPQO4J81r5grMiMVI9U6ObaMV4/FWSnYmv5BPzCKdDCtGoauC5LaAHm8JP/Z"
+      },
+      "alternate": {
+        "src": "/images/products/woven-motif-agbada/woven-motif-agbada-02.jpg",
+        "width": 845,
+        "height": 1056,
+        "alt": "Close view of the cream agbada's chest panel, showing the interlocking basket-weave embroidery between two solid bars",
+        "color": "#9e9487",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAQIF/8QAIhAAAQMCBgMAAAAAAAAAAAAAAQACEQMSBAYUFiEiMkFh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ADbdC9p1FQhsXCB2IQcuUp4xLo9dAtk+Q+qg6ABAQJ//2Q=="
+      }
+    },
+    "diamond-motif-agbada": {
+      "name": "Diamond-Motif Agbada",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "/images/products/diamond-motif-agbada/diamond-motif-agbada-01.jpg",
+        "width": 1080,
+        "height": 1350,
+        "alt": "White agbada with a gold lattice diamond on the chest, its sleeves hanging wide against a dark backdrop",
+        "color": "#474746",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAgEAACAQQBBQAAAAAAAAAAAAABAhEAAwQFQQYhUmGB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AC9dpreTp7mY9x1cMwQCIMDn7RMr51Q60uvS92HPdzHripeg/9k="
+      },
+      "alternate": {
+        "src": "/images/products/diamond-motif-agbada/diamond-motif-agbada-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the white agbada's gold lattice diamond and matching shoulder triangle",
+        "color": "#9b9995",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgQFBv/EAB0QAAICAgMBAAAAAAAAAAAAAAECAxEAIQQGQUL/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ADHVeHFArSyzMwW3qhZrzXmSn6/OHYJICoJqx5mu5llX38YqNi8g/9k="
+      }
+    },
+    "column-motif-agbada": {
+      "name": "Column-Motif Agbada",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "/images/products/column-motif-agbada/column-motif-agbada-01.jpg",
+        "width": 1242,
+        "height": 1553,
+        "alt": "White agbada outlined in gold, with a column of fine vertical stitching down the chest panel",
+        "color": "#65625f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAgEAACAQMEAwAAAAAAAAAAAAABAgMABBEFEiExE2Fx/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AD7XQFlsIrhrgq0i7gu3rPVDMArEE8g4NW7p4bGONTwiqv3FS8+nq08h34yxPXugv//Z"
+      },
+      "alternate": {
+        "src": "/images/products/column-motif-agbada/column-motif-agbada-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the agbada's gold-outlined chest panel and eight-point star motif",
+        "color": "#87837e",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBv/EACQQAAEDAgQHAAAAAAAAAAAAAAEAAhEDBgQSFCIjMUFygZHh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJzbIa4HUcKJO3dMekk266TlxEjocn1aKrOnqEHk0+UKZikztCC//9k="
+      }
+    },
+    "navy-geometric-agbada": {
+      "name": "Navy Geometric Agbada",
+      "garmentColorName": "Navy",
+      "garmentColorHex": "#232A38",
+      "primary": {
+        "src": "/images/products/navy-geometric-agbada/navy-geometric-agbada-01.jpg",
+        "width": 1226,
+        "height": 1533,
+        "alt": "Navy agbada with a grey and red fretwork panel across the chest, on a stand",
+        "color": "#34333a",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAcEAACAwADAQAAAAAAAAAAAAABAgADEQQSIVH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAEx/9oADAMBAAIRAxEAPwCeosNKd1OEHc+xxKC6K4Ixho8k6zYpAjtXKdakUBcCgRcH/9k="
+      },
+      "alternate": {
+        "src": "/images/products/navy-geometric-agbada/navy-geometric-agbada-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the navy agbada's interlocking grey fretwork, shadowed in a finer red line",
+        "color": "#323241",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwQF/8QAGxABAQACAwEAAAAAAAAAAAAAAQIAEQUhI4H/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8AwZaiZZdAYpydBpg2YDXmnzJk7cvIH//Z"
+      }
+    },
+    "charcoal-mandarin-kaftan": {
+      "name": "Charcoal Mandarin Kaftan",
+      "garmentColorName": "Charcoal",
+      "garmentColorHex": "#3B3B3D",
+      "primary": {
+        "src": "/images/products/charcoal-mandarin-kaftan/charcoal-mandarin-kaftan-01.jpg",
+        "width": 1452,
+        "height": 1815,
+        "alt": "Charcoal mandarin-collar kaftan on a dress form in front of a deep red curtain",
+        "color": "#936668",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAEEBf/EAB8QAQABAwQDAAAAAAAAAAAAAAEDAAIRBAUGUSIxsf/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/8QAGhEBAAEFAAAAAAAAAAAAAAAAAQACAxESIf/aAAwDAQACEQMRAD8AN7ijj1ISSBcWZDvyanLbcHqlyGRdztOrD61nOpkHGaOAAJZZq47T/9k="
+      },
+      "alternate": {
+        "src": "/images/products/charcoal-mandarin-kaftan/charcoal-mandarin-kaftan-02.jpg",
+        "width": 726,
+        "height": 908,
+        "alt": "Close view of the charcoal kaftan's mandarin collar, buttoned placket and welted chest pocket",
+        "color": "#7b5864",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAHBABAAIDAQEBAAAAAAAAAAAAAQIEAAMhERIy/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAP/xAAZEQABBQAAAAAAAAAAAAAAAAAAAgMREkH/2gAMAwEAAhEDEQA/ADWKst9y2iRjCU5evBReGGDhl7VzYXrcD8m18MzpWtzJft64qWS/GH//2Q=="
+      }
+    },
+    "white-kaftan-set": {
+      "name": "White Kaftan Set",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "/images/products/white-kaftan-set/white-kaftan-set-01.jpg",
+        "width": 1424,
+        "height": 1780,
+        "alt": "Model seated in a white kaftan with a notched V neck and three-quarter sleeves, wearing a black fila",
+        "color": "#5a5a51",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgQF/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQIDAAQREgUTIjFRcf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFREBAQAAAAAAAAAAAAAAAAAAEQD/2gAMAwEAAhEDEQA/AMhOKvpoUkEREbIHGxwCD6qNoJVYqYnBBwRqaUnryRQWyzKqNEATpk51+0afl76N2QXB7TjwKhFv/9k="
+      },
+      "alternate": {
+        "src": "/images/products/white-kaftan-set/white-kaftan-set-02.jpg",
+        "width": 882,
+        "height": 1103,
+        "alt": "Close view of the white kaftan's body and wide sleeve, with the model's hands resting in his lap",
+        "color": "#868b86",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAlEAACAQMDAgcAAAAAAAAAAAABAgMABCEFERIGEyQxQVJhodH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AW2lWduJ5Ei5q74EmQPgVHNvpJJJd1J9Ax2H1VGS3uJLxUa8k7edkAwN/yjP04ObeMl8/aKA//9k="
+      }
+    },
+    "black-senator-set": {
+      "name": "Black Senator Set",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/black-senator-set/black-senator-set-01.jpg",
+        "width": 1595,
+        "height": 1994,
+        "alt": "Model standing by a staircase in a black senator set — long tunic with a chest pocket and matching wide trousers — and a black fila",
+        "color": "#7a7671",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQT/xAAkEAACAAQEBwAAAAAAAAAAAAABAgADBBIUIVFhBRExcYGRof/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCeVxuY+HlKguLWzN+30+IZvGggWnoEqa6VVFrWIDOoGTHME7c+sLYSXoPUBf/Z"
+      },
+      "alternate": {
+        "src": "/images/products/black-senator-set/black-senator-set-02.jpg",
+        "width": 957,
+        "height": 1196,
+        "alt": "Upper-body view of the black senator tunic, showing the mandarin collar and square patch pocket",
+        "color": "#7c7774",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAb/xAAhEAACAQMEAwEAAAAAAAAAAAABAhEAAwQSEyEiBVGBof/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwBOX5e3h7SkkluzaQD1pKBWRTwZEzUWWJxUdjJkgT644/aqbLtsW4JA0iB8oL//2Q=="
+      }
+    },
+    "sage-embroidered-kaftan": {
+      "name": "Sage Embroidered Kaftan",
+      "garmentColorName": "Sage",
+      "garmentColorHex": "#9CA38E",
+      "primary": {
+        "src": "/images/products/sage-embroidered-kaftan/sage-embroidered-kaftan-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Model in a sage-green kaftan and matching trousers standing beside a dark red door",
+        "color": "#9b9090",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgL/xAAgEAACAQMEAwAAAAAAAAAAAAABAhEAEzEDBRIUIVGh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAXEQEAAwAAAAAAAAAAAAAAAAAAAQIx/9oADAMBAAIRAxEAPwCdi13Z7Ly6XFQKfPEEHHyloRQIjFE9pXrWNVYNw8iCPQMUoVyVBnIpC21//9k="
+      },
+      "alternate": {
+        "src": "/images/products/sage-embroidered-kaftan/sage-embroidered-kaftan-02.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Side view of the sage kaftan set, showing the tunic's length and the straight-cut trousers",
+        "color": "#8f8787",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgP/xAAfEAEAAgEDBQAAAAAAAAAAAAABAgMABBEhBQYxYaH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQACIf/aAAwDAQACEQMRAD8An23fZfZKichqgcD5PRikgABthbpFDpbS6qXM4oiYiLdw3PuAmnt//9k="
+      },
+      "gallery": [
+        {
+          "src": "/images/products/sage-embroidered-kaftan/sage-embroidered-kaftan-03.jpg",
+          "width": 640,
+          "height": 800,
+          "alt": "Close view of the sage kaftan's chest, showing the small dark embroidered motif",
+          "color": "#95908c",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwX/xAAhEAABBAIABwAAAAAAAAAAAAABAgMEEQASFCFTYXGRsf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/AHafcjRIimwgJU5Tm4JOvbK3GReqPWRVNhxmIknkb+YZjqs06a8Yaa//2Q=="
+        }
+      ]
+    },
+    "navy-knit-polo-set": {
+      "name": "Navy Knit Polo Set",
+      "garmentColorName": "Navy",
+      "garmentColorHex": "#232A38",
+      "primary": {
+        "src": "/images/products/navy-knit-polo-set/navy-knit-polo-set-01.jpg",
+        "width": 887,
+        "height": 1109,
+        "alt": "Navy knitted shirt and matching drawstring trousers laid flat with a white cap and white trainers",
+        "color": "#55545f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQP/xAAiEAACAQMCBwAAAAAAAAAAAAABAgMAERIxUQQTISIjQmH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAERIf/aAAwDAQACEQMRAD8ALnnx4kcp5CY1YyI1sRbb5pS8UsLxI+IGSg6UVYeYMMnkPax9N7CrrMyKFB6AWpuDr//Z"
+      },
+      "alternate": {
+        "src": "/images/products/navy-knit-polo-set/navy-knit-polo-set-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the navy knit shirt's soft collar and button placket over a white tee",
+        "color": "#34374f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAHxAAAgICAgMBAAAAAAAAAAAAAQIDEQAhBDEFEiJB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQP/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/AMJESPnMscxMaMxWVFuwAaNHEDy9AAxb/frIcMBG5SsPaoHAPVbG8GTvrKZKH//Z"
+      }
+    },
+    "brown-overshirt-set": {
+      "name": "Brown Overshirt Set",
+      "garmentColorName": "Chocolate",
+      "garmentColorHex": "#45302A",
+      "primary": {
+        "src": "/images/products/brown-overshirt-set/brown-overshirt-set-01.jpg",
+        "width": 1199,
+        "height": 1499,
+        "alt": "Model standing in profile in a chocolate band-collar overshirt and matching wide trousers against a white wall",
+        "color": "#c1bdbe",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABf/EAB8QAAEEAQUBAAAAAAAAAAAAAAEAAgMFESEjMUFhsv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEQMRAD8AWr5nyXVmwnbYWADHeOUmiq3W7tT7H8pXCFf/2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/brown-overshirt-set/brown-overshirt-set-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Upper-body view of the chocolate overshirt, showing the band collar and plain buttoned front",
+        "color": "#e2e0e2",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgMG/8QAHBAAAgICAwAAAAAAAAAAAAAAAQIAAwQREjFR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANLiM74tTWHk5UbPsrDWgrrVB0o1FA//2Q=="
+      }
+    },
+    "ankara-print-shirt-set": {
+      "name": "Ankara Print Shirt Set",
+      "garmentColorName": "Ochre",
+      "garmentColorHex": "#B0782B",
+      "primary": {
+        "src": "/images/products/ankara-print-shirt-set/ankara-print-shirt-set-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Printed short-sleeve shirt with an ochre yoke and matching ochre trousers, laid flat on a wooden floor",
+        "color": "#bb9a76",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIE/8QAHRAAAgIDAAMAAAAAAAAAAAAAARECAwAhURJxsf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAXEQEBAQEAAAAAAAAAAAAAAAABACFh/9oADAMBAAIRAxEAPwDVaLBRMlBR36YX3KhUfCLTW8SyAM4Np7HeYhG8M6yDt//Z"
+      },
+      "alternate": {
+        "src": "/images/products/ankara-print-shirt-set/ankara-print-shirt-set-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the shirt's printed panel, showing figures carrying loads on a pale blue ground",
+        "color": "#a6a5a4",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAID/8QAHxAAAgICAgMBAAAAAAAAAAAAAQIDEQAFEjEhYZHx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAXEQEBAQEAAAAAAAAAAAAAAAABABIT/9oADAMBAAIRAxEAPwBJUvEolA5wyKOPpqoZUsuxWVwreAxAr8xDkpsFXsGj8BzVteHYsZWtjfQy8hJtv//Z"
+      }
+    },
+    "palm-embroidered-camp-set": {
+      "name": "Palm Embroidered Camp Set",
+      "garmentColorName": "Chocolate",
+      "garmentColorHex": "#45302A",
+      "primary": {
+        "src": "/images/products/palm-embroidered-camp-set/palm-embroidered-camp-set-01.jpg",
+        "width": 1320,
+        "height": 1650,
+        "alt": "Model in a brown camp-collar shirt embroidered with a palm landscape, with matching wide trousers, in bright sunlight",
+        "color": "#a59182",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAF/8QAIRAAAgEDAwUAAAAAAAAAAAAAAQIDAAURBCFxEiJBYtH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Ar20yHTSoxVFAUH33rXEMeO4nPnehXVVktMnUN0IYc5H2liGPAyDnmjI//9k="
+      },
+      "alternate": {
+        "src": "/images/products/palm-embroidered-camp-set/palm-embroidered-camp-set-02.jpg",
+        "width": 660,
+        "height": 825,
+        "alt": "Close view of the shirt's embroidered palms, roofline and hills across the front",
+        "color": "#755b4d",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQME/8QAIRAAAQMEAQUAAAAAAAAAAAAAAQIDEQAEBUEhEhMVMbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/AMWVdW7kHW5PbQqANTv7UfIXKeBcOcce6Qztsm2ZbWhR6i4pRJ2SJNBhZIk7ozR//9k="
+      }
+    },
+    "afro-print-shirt-set": {
+      "name": "Afro Print Shirt Set",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "/images/products/afro-print-shirt-set/afro-print-shirt-set-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "White short-sleeve shirt printed with a portrait and an afro comb, laid flat beside navy pleated trousers",
+        "color": "#a09fa2",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBf/EABwQAAICAwEBAAAAAAAAAAAAAAEDAhEABCEFMf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDRcxCNMsbIiq7V9JqsHJPSgGapifhkMYrYJVAmI7EYH//Z"
+      },
+      "alternate": {
+        "src": "/images/products/afro-print-shirt-set/afro-print-shirt-set-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the shirt's printed portrait and afro-comb panel",
+        "color": "#bfbdbe",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgIF/8QAIRAAAgIBAwUBAAAAAAAAAAAAAQMCEQAEITESIjJBUWH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8AQrdAMgom5GFiX3M9j9MGSvWpG55mMqLZR6aq48bYYfogHs7z5H1+5ZNH/9k="
+      }
+    },
+    "striped-zip-polo-set": {
+      "name": "Striped Zip Polo Set",
+      "garmentColorName": "Pale Blue",
+      "garmentColorHex": "#BFCCD8",
+      "primary": {
+        "src": "/images/products/striped-zip-polo-set/striped-zip-polo-set-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Pale blue knitted zip polo with a chocolate collar and stripes, laid flat with matching chocolate trousers",
+        "color": "#af9786",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAQT/xAAfEAABBAICAwAAAAAAAAAAAAABAgMREgAEIUEFcaH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAGBEAAgMAAAAAAAAAAAAAAAAAAAECETH/2gAMAwEAAhEDEQA/ALNxpCfHOuqW4Ib4rEk9fYwa10hlAcAvUW994Pthe4xJVVMms8E9cZRgSeUPFVp//9k="
+      },
+      "alternate": {
+        "src": "/images/products/striped-zip-polo-set/striped-zip-polo-set-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the zip polo's placket and the two full-length chocolate stripes",
+        "color": "#bbc4cb",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAgX/xAAiEAACAQMCBwAAAAAAAAAAAAABAgMAESExoQUSEyJBUVL/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAFhEBAQEAAAAAAAAAAAAAAAAAEQAB/9oADAMBAAIRAxEAPwCyIIpZE5o7qqYz9YO1JFYIoVCFAxYeKIciOK2r9m9KTiHSkaMRAhCV19UsCOrf/9k="
+      }
+    },
+    "cream-overshirt-set": {
+      "name": "Cream Overshirt Set",
+      "garmentColorName": "Bone",
+      "garmentColorHex": "#E6DFD1",
+      "primary": {
+        "src": "/images/products/cream-overshirt-set/cream-overshirt-set-01.jpg",
+        "width": 887,
+        "height": 1109,
+        "alt": "Cream ribbed overshirt and matching pleated trousers laid flat with a brown cap and white trainers",
+        "color": "#958c87",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAED/8QAHxAAAgEEAgMAAAAAAAAAAAAAAQIRAAMEMQVBISSR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwDXFxw2MoupbV3cBGnyRv7VNq2DBCzR25EKU9dSVA2x2O6Mb7kkzE9UQ1//2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/cream-overshirt-set/cream-overshirt-set-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the cream overshirt's collar and contrast brown facing, with the brown cap beside it",
+        "color": "#a89d96",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAP/xAAiEAACAgECBwEAAAAAAAAAAAABAgMRAAQxBRIUITJxgZH/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AbF1I4YxnZVmArm8vV/oyo0MAADKSw3IJFnB6uRn0qRsxBcliUNVXfb5joZHmhjlJALqGqtrGEn//2Q=="
+      }
+    },
+    "double-breasted-wool-jacket": {
+      "name": "Double-Breasted Jacket",
+      "garmentColorName": "Clay",
+      "garmentColorHex": "#A5634A",
+      "primary": {
+        "src": "/images/products/double-breasted-wool-jacket/double-breasted-wool-jacket-01.jpg",
+        "width": 887,
+        "height": 1109,
+        "alt": "Rust double-breasted jacket with peak lapels on a shop mannequin, worn over black trousers",
+        "color": "#716561",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAIF/8QAIRAAAQQCAQUBAAAAAAAAAAAAAQIDBBEAIQUGEiJBYaH/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABURAQEAAAAAAAAAAAAAAAAAAAAx/9oADAMBAAIRAxEAPwAjPKOLkRgnuAIopIuxW/zJV1IsKIBVV6sDFNNCNLhlG1USSd2azPe4xJecIdUPI+vuCq//2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/double-breasted-wool-jacket/double-breasted-wool-jacket-02.jpg",
+        "width": 887,
+        "height": 1109,
+        "alt": "The same double-breasted jacket in chocolate brown, on a shop mannequin over black trousers",
+        "color": "#6c6664",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIE/8QAIRAAAgIBBAIDAAAAAAAAAAAAAQIDEQAEBRIhBhMxUaH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Awrus8k2k9fIWQCGF39/l4j+RlXYAvQND4xooRp5NvZDb3ys999ZMu0xvK7+xxyYmsC//2Q=="
+      },
+      "gallery": [
+        {
+          "src": "/images/products/double-breasted-wool-jacket/double-breasted-wool-jacket-03.jpg",
+          "width": 887,
+          "height": 1109,
+          "alt": "The same double-breasted jacket in forest green, on a shop mannequin over black trousers",
+          "color": "#686563",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEF/8QAIhABAAEEAQMFAAAAAAAAAAAAAQIAAwQREgUhQQYiMWGh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwAMOqX7mXi8ORBDlGR8nn8qy9STJIMtb7bCl27RjZeGw7yBVTe3VZ97pkW9cS7I9z4+6KY//9k="
+        }
+      ]
+    },
+    "suede-harrington-jacket": {
+      "name": "Suede Harrington Jacket",
+      "garmentColorName": "Stone",
+      "garmentColorHex": "#ADA597",
+      "primary": {
+        "src": "/images/products/suede-harrington-jacket/suede-harrington-jacket-01.jpg",
+        "width": 1409,
+        "height": 1761,
+        "alt": "Five suede harrington jackets in stone, olive, chocolate and brown, stacked and overlapping",
+        "color": "#675c55",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAIRAAAgEDAwUAAAAAAAAAAAAAAQIDAAQRBRIxIjJBUdH/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAFREBAQAAAAAAAAAAAAAAAAAAACH/2gAMAwEAAhEDEQA/AC3eqytKqWxCRoeSO4/Kuupx7Rm0JOPDVnTRbbmVFOBn1SUtlMa9R4FGlH//2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/suede-harrington-jacket/suede-harrington-jacket-02.jpg",
+        "width": 705,
+        "height": 881,
+        "alt": "Close view of a brown suede harrington jacket's point collar, zip and soft nap",
+        "color": "#4a392f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIF/8QAHhABAAECBwAAAAAAAAAAAAAAAQARIQISMkGRodH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFREBAQAAAAAAAAAAAAAAAAAAAQD/2gAMAwEAAhEDEQA/AMLKqLu39jiU0nEPC2p3LhrIF//Z"
+      }
+    },
+    "pinstripe-double-breasted-suit": {
+      "name": "Pinstripe Double-Breasted Suit",
+      "garmentColorName": "Silver",
+      "garmentColorHex": "#B9BCBE",
+      "primary": {
+        "src": "/images/products/pinstripe-double-breasted-suit/pinstripe-double-breasted-suit-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Pale grey chalk-stripe double-breasted suit with peak lapels, on a stand in a fitting room",
+        "color": "#737378",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQME/8QAIBAAAgEEAgMBAAAAAAAAAAAAAQIRAAMEIRIxBRNBUf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAWEQEBAQAAAAAAAAAAAAAAAAABACH/2gAMAwEAAhEDEQA/AMjC0Cy3McBkWDrvW6Rs+UybdlERW4qoAhdRFRycfjmSrRJnr9+U0ty0qgehNCKHSTG//9k="
+      },
+      "alternate": {
+        "src": "/images/products/pinstripe-double-breasted-suit/pinstripe-double-breasted-suit-02.jpg",
+        "width": 825,
+        "height": 1031,
+        "alt": "Close view of the chalk-stripe suit's peak lapel and double-breasted button stance",
+        "color": "#616974",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwT/xAAeEAACAgICAwAAAAAAAAAAAAABAgMRABITMSJBYf/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQEBAQEAAAAAAAAAAAAAAAABABEh/9oADAMBAAIRAxEAPwAxwSOkyqq6WaHsnCZodj4jv5gwLqFFnvJ5IrkY2ezjAyK9v//Z"
+      }
+    },
+    "charcoal-peak-lapel-suit": {
+      "name": "Charcoal Peak-Lapel Suit",
+      "garmentColorName": "Charcoal",
+      "garmentColorHex": "#3B3B3D",
+      "primary": {
+        "src": "/images/products/charcoal-peak-lapel-suit/charcoal-peak-lapel-suit-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Charcoal double-breasted suit with peak lapels on a dress form, styled with a red tie against a gold curtain",
+        "color": "#928364",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQIG/8QAHhAAAQQCAwEAAAAAAAAAAAAAAQADESECBBITYZH/xAAVAQEBAAAAAAAAAAAAAAAAAAACA//EABgRAQADAQAAAAAAAAAAAAAAABEAAiED/9oADAMBAAIRAxEAPwCIaLreEwan6E/0Y+LNBmdxscqPEGvQnTs5SaU+QZFddn//2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/charcoal-peak-lapel-suit/charcoal-peak-lapel-suit-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the charcoal suit's peak lapel, red tie and pocket square",
+        "color": "#8a6f49",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBP/EAB4QAAEEAgMBAAAAAAAAAAAAAAEAAgMRBCESEzFh/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABkRAQACAwAAAAAAAAAAAAAAAAEAAxESMf/aAAwDAQACEQMRAD8AEkTjLJwYXGrNC6G9rF0/E+NK6R73EnkdE36CpHIc0kDwaQFSHYu+Z//Z"
+      }
+    },
+    "royal-blue-two-piece-suit": {
+      "name": "Royal Blue Two-Piece Suit",
+      "garmentColorName": "Royal Blue",
+      "garmentColorHex": "#2C4C8C",
+      "primary": {
+        "src": "/images/products/royal-blue-two-piece-suit/royal-blue-two-piece-suit-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Model leaning against a wall in a royal blue single-breasted two-piece suit with a purple tie",
+        "color": "#868c9d",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBf/EACIQAAEDAwQDAQAAAAAAAAAAAAECAxEABRIEEyExFDJR4f/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAECEf/aAAwDAQACEQMRAD8Ae66pxlbScBtKVBk9/aqnTlSQRjyJouTHkLZBPKXSASJgR1WebsWzhtE48e/5VJeApaf/2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/royal-blue-two-piece-suit/royal-blue-two-piece-suit-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Upper-body view of the royal blue suit, showing the notch lapel and two-button front",
+        "color": "#4e607d",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAP/xAAeEAEAAQQDAQEAAAAAAAAAAAABAgADBBEFEjE1Qf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAIR/9oADAMBAAIRAxEAPwAHJZWbbubuDGRIdj4JvrTY5qwFjrZ5uhc/9Qj+INS7NVoJ1//Z"
+      }
+    },
+    "card-print-camp-shirt": {
+      "name": "Card Print Camp Shirt",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/card-print-camp-shirt/card-print-camp-shirt-01.jpg",
+        "width": 1365,
+        "height": 1706,
+        "alt": "Black short-sleeve camp shirt printed with a fan of five playing cards, laid flat on a wooden table",
+        "color": "#483930",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQMG/8QAIRAAAgEEAgIDAAAAAAAAAAAAAQIDAAQREgUxFDRBUbH/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAGBEBAAMBAAAAAAAAAAAAAAAAAQACEUH/2gAMAwEAAhEDEQA/AM7JcCXaZpJvJLE5GNQP2kli5DUet18uM1KeygttiFLFXAByfulI+AtHjV5NmdgCx6yaKyMQ2vZ//9k="
+      },
+      "alternate": {
+        "src": "/images/products/card-print-camp-shirt/card-print-camp-shirt-02.jpg",
+        "width": 819,
+        "height": 1024,
+        "alt": "Close view of the printed fan of five hearts across the black shirt",
+        "color": "#242528",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQMEBf/EAB8QAAEDBQADAAAAAAAAAAAAAAEAAgMEERITISNB4f/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AwJJ6R1LrZRlkoA8u0m598UdkQnN04jKJxNunP4qP/9k="
+      }
+    },
+    "line-art-camp-shirt": {
+      "name": "Line Art Camp Shirt",
+      "garmentColorName": "Chalk",
+      "garmentColorHex": "#F1EEE6",
+      "primary": {
+        "src": "/images/products/line-art-camp-shirt/line-art-camp-shirt-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "White short-sleeve shirt with a continuous black line drawing of two faces, laid flat against a grey wall",
+        "color": "#9d9b95",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAED/8QAIBAAAgICAQUBAAAAAAAAAAAAAQIDEQAEBRIhMTJxsf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwBurw7rrhpZArkdlAsD7kbUkVipiWwa9hgdTmNmGBIVEZVBQsG/3MmPWxY+SbOBf//Z"
+      },
+      "alternate": {
+        "src": "/images/products/line-art-camp-shirt/line-art-camp-shirt-02.jpg",
+        "width": 759,
+        "height": 949,
+        "alt": "Close view of the shirt's line drawing crossing the button placket",
+        "color": "#cecdca",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwX/xAAfEAACAgIBBQAAAAAAAAAAAAABAgARAyEEBRUxQWH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwC23TOMmOgjChplbZg9pyes6V9Eo5qoWLBNERB4G5IP/9k="
+      }
+    },
+    "cable-knit-vest": {
+      "name": "Cable Knit Vest",
+      "garmentColorName": "Chocolate",
+      "garmentColorHex": "#45302A",
+      "primary": {
+        "src": "/images/products/cable-knit-vest/cable-knit-vest-01.jpg",
+        "width": 1445,
+        "height": 1806,
+        "alt": "Brown cable-knit V-neck vest over a white shirt and cream wide trousers on a mannequin, with a matching flat cap",
+        "color": "#5b4436",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABf/EACQQAAIBAgMJAAAAAAAAAAAAAAECAwARBBIhExQiQVFUcZKx/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwARsIXwjTKoYZSWJOq+OtMQCPYR3vfKPlF4WVxBZ2LKWHCNNBypDfYu1X3NFSv/2Q=="
+      },
+      "alternate": {
+        "src": "/images/products/cable-knit-vest/cable-knit-vest-02.jpg",
+        "width": 723,
+        "height": 904,
+        "alt": "Upper-body view of the brown cable-knit vest, showing the cable panels and tipped V neck",
+        "color": "#564138",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgQF/8QAIxAAAgECBAcAAAAAAAAAAAAAAQMCABEEBRIhIiMxQUJRYf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/AMKKYiDYNIgyUQIX93qI7Eg9RSiGWoxS1Obr1i9rGw2O1HX4bns4/I9vtCKV/9k="
+      }
+    },
+    "ribbed-knit-polo": {
+      "name": "Ribbed Knit Polo",
+      "garmentColorName": "Ecru",
+      "garmentColorHex": "#E9E2D0",
+      "primary": {
+        "src": "/images/products/ribbed-knit-polo/ribbed-knit-polo-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model standing beside a wooden chair in an ecru ribbed knit polo and dark green trousers",
+        "color": "#78593f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAgX/xAAeEAACAgICAwAAAAAAAAAAAAABAgARAxIEITEyYf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAWEQEBAQAAAAAAAAAAAAAAAAABAAL/2gAMAwEAAhEDEQA/AG3Kw5EvcXqaWvP2TjyksyWzPjy6ByequEr37GA4JzTf/9k="
+      },
+      "alternate": {
+        "src": "/images/products/ribbed-knit-polo/ribbed-knit-polo-02.jpg",
+        "width": 735,
+        "height": 919,
+        "alt": "Upper-body view of the ecru ribbed knit polo, showing the fine vertical rib and flat collar",
+        "color": "#aa8766",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwT/xAAdEAACAgIDAQAAAAAAAAAAAAABAgMRACEEEiMy/8QAFAEBAAAAAAAAAAAAAAAAAAAABP/EABYRAAMAAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEQMRAD8AqSOX2dzaWOuxoZMWFnDHNeTlSwAdVjXdH6vDLtZ3hqQmWf/Z"
+      }
+    },
+    "classic-tailored-trousers": {
+      "name": "Classic Tailored Trousers",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/classic-tailored-trousers/classic-tailored-trousers-01.jpg",
+        "width": 1440,
+        "height": 1800,
+        "alt": "Seven pairs of flat-front tailored trousers fanned out in brown, stone, black, grey, navy and taupe",
+        "color": "#8d8988",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQIE/8QAIhAAAgEEAQQDAAAAAAAAAAAAAQIDAAQFESESEyIjMTKh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AM9289vkZUSeRXUFAwc7++h+GlkOaeNWSXxIBG1G9VeRwqNeC67ze2QdSFeKbB0NDgD4oP/Z"
+      },
+      "alternate": {
+        "src": "/images/products/classic-tailored-trousers/classic-tailored-trousers-02.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Seven pairs of tailored trousers fanned out with leather belts threaded through the waistbands",
+        "color": "#87827e",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgP/xAAiEAACAQIGAwEAAAAAAAAAAAABAgMABAUREhMhMUFRYXH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFREBAQAAAAAAAAAAAAAAAAAAAEH/2gAMAwEAAhEDEQA/AIWmM4kgl3bpy6MAQwByOrnx6BpXavfS2sMjbQZ0Vjx5I/aP4hhG1PeSrNxLLq06Os8/v2lqAKiqOgMqKX//2Q=="
+      },
+      "gallery": [
+        {
+          "src": "/images/products/classic-tailored-trousers/classic-tailored-trousers-03.jpg",
+          "width": 1508,
+          "height": 1885,
+          "alt": "A stack of folded tailored trousers in grey, navy and charcoal, showing their side-adjuster tabs",
+          "color": "#6c6a6b",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAEF/8QAIxAAAgECBAcAAAAAAAAAAAAAAQIDABEEBTFBEhMUU4Gh0f/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFREBAQAAAAAAAAAAAAAAAAAAACH/2gAMAwEAAhEDEQA/AAjEB5pJi6iYtxa6EeK1kzRGQM+IAYi5ATegiGBLDkq1xuTV6WHtJ7+0iv/Z"
+        },
+        {
+          "src": "/images/products/classic-tailored-trousers/classic-tailored-trousers-04.jpg",
+          "width": 843,
+          "height": 1054,
+          "alt": "Close view of four trouser waistbands stacked, showing the buckled side-adjuster tabs",
+          "color": "#707271",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBv/EAB4QAQACAwACAwAAAAAAAAAAAAECAwAEEQUhMaHB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABcRAQEBAQAAAAAAAAAAAAAAAAEAERL/2gAMAwEAAhEDEQA/ADv3oQ2LYk5PLE4XJ9YyvepK4ktmQ8Oj7zP2yXyNw/DY/uVERO8xyITUb//Z"
+        }
+      ]
+    },
+    "wide-leg-trousers": {
+      "name": "Wide-Leg Trousers",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/wide-leg-trousers/wide-leg-trousers-01.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Six pairs of pleated wide-leg trousers laid flat in black, cream, stone, brown, olive and navy",
+        "color": "#99938c",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAgMEBf/EAB8QAAMAAgICAwAAAAAAAAAAAAECAwARBBIUMUFRkf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA78m0PPSbACLzVdjfsbObfGCvxpO3tkBP5kNeBKq37dt2oGbR+QNDHzo05Ii60oAGx9YF//9k="
+      },
+      "alternate": {
+        "src": "/images/products/wide-leg-trousers/wide-leg-trousers-02.jpg",
+        "width": 1600,
+        "height": 2000,
+        "alt": "Model wearing olive pleated wide-leg trousers with black loafers",
+        "color": "#838076",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQP/xAAfEAABBAICAwAAAAAAAAAAAAABAAIDBBEhEjFRYYH/xAAVAQEBAAAAAAAAAAAAAAAAAAABAv/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJy2TFfrhuhJgO97SmvKOt1gbDHBxBY3kPhSQj5AHPe1Jf/Z"
+      },
+      "gallery": [
+        {
+          "src": "/images/products/wide-leg-trousers/wide-leg-trousers-03.jpg",
+          "width": 887,
+          "height": 1109,
+          "alt": "Model wearing brown pleated wide-leg trousers with a black tee and white trainers",
+          "color": "#72747c",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAHxAAAQQCAgMAAAAAAAAAAAAAAgABAxEEIQVREkGR/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8AHlRgXLYxFbP6e/i09dKB4wSThMTl5Rvqn0k03SqB/9k="
+        }
+      ]
+    },
+    "pleated-shop-trousers": {
+      "name": "Pleated Trousers",
+      "garmentColorName": "Sand",
+      "garmentColorHex": "#C9B592",
+      "primary": {
+        "src": "/images/products/pleated-shop-trousers/pleated-shop-trousers-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Sand pleated trousers on a wooden hanger against a slatted shop wall",
+        "color": "#a6927d",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgME/8QAIBAAAgEEAQUAAAAAAAAAAAAAAQIDAAQSMREhIjJRcf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAXEQADAQAAAAAAAAAAAAAAAAAAAQIh/9oADAMBAAIRAxEAPwDTDcJKI2w5CqV+Ykil2nqBupSOVht3UKuWQIA4FNfEa16oaWjS8P/Z"
+      },
+      "alternate": {
+        "src": "/images/products/pleated-shop-trousers/pleated-shop-trousers-02.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Camel pleated trousers on a wooden hanger against a slatted shop wall",
+        "color": "#a69078",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwL/xAAgEAACAgEDBQAAAAAAAAAAAAABAgMRABIxUQQUIaGx/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABgRAAIDAAAAAAAAAAAAAAAAAAABAiEx/9oADAMBAAIRAxEAPwBJJjNGh02yswNbX4J+5fbPxWLKFaHp20hbJsKK4xBdb+sFqxo4f//Z"
+      },
+      "gallery": [
+        {
+          "src": "/images/products/pleated-shop-trousers/pleated-shop-trousers-03.jpg",
+          "width": 843,
+          "height": 1054,
+          "alt": "Rose pink pleated trousers on a wooden hanger against a slatted shop wall",
+          "color": "#aa8f83",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwL/xAAfEAACAgIBBQAAAAAAAAAAAAABAgMRABJBBSEiUVL/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAECIf/aAAwDAQACEQMRAD8ASZlJheFDoUoD5okY6p4ixx6xOpRqjQ6gKAGFAVkLeo78YVDS8P/Z"
+        },
+        {
+          "src": "/images/products/pleated-shop-trousers/pleated-shop-trousers-04.jpg",
+          "width": 843,
+          "height": 1054,
+          "alt": "Dark olive pleated trousers on a wooden hanger against a slatted shop wall",
+          "color": "#9b8b7c",
+          "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAQIE/8QAIxAAAQMDAgcAAAAAAAAAAAAAAQIDEQAEEgUxEyEiI1Fhcf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAWEQADAAAAAAAAAAAAAAAAAAAAAjH/2gAMAwEAAhEDEQA/ADUXXiynhHFYXBPnIDatbdv205qBVAn7VXMXFogLB6XdwfU0pJxHM7UTUVYf/9k="
+        }
+      ]
+    },
+    "side-stripe-trousers": {
+      "name": "Side-Stripe Trousers",
+      "garmentColorName": "Silver",
+      "garmentColorHex": "#B9BCBE",
+      "primary": {
+        "src": "/images/products/side-stripe-trousers/side-stripe-trousers-01.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Silver-grey trousers with a black side stripe, on a wooden hanger against a slatted shop wall",
+        "color": "#a29485",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAABP/EAB0QAAIBBQEBAAAAAAAAAAAAAAECAwAEERIhE9H/xAAUAQEAAAAAAAAAAAAAAAAAAAAD/8QAFREBAQAAAAAAAAAAAAAAAAAAAAL/2gAMAwEAAhEDEQA/AFQzRyukrxhjpjoHNSQaKwVmLDOCc0u+byFuyKo22UgDncUcDg+UVEl//9k="
+      },
+      "alternate": {
+        "src": "/images/products/side-stripe-trousers/side-stripe-trousers-02.jpg",
+        "width": 843,
+        "height": 1054,
+        "alt": "Black trousers with a red and white side stripe, laid out on a grey tufted sofa",
+        "color": "#837d79",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAL/xAAiEAABAwMDBQAAAAAAAAAAAAABAgMhAAQREzFRBRQywdH/xAAUAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AK+h1nqAISdNxQIVzymkeMZERtTb1sZtlZnU9H5V9qlU53mgv/9k="
+      }
+    },
+    "herringbone-trousers": {
+      "name": "Herringbone Trousers",
+      "garmentColorName": "Slate",
+      "garmentColorHex": "#6E6E6C",
+      "primary": {
+        "src": "/images/products/herringbone-trousers/herringbone-trousers-01.jpg",
+        "width": 1478,
+        "height": 1848,
+        "alt": "Grey herringbone trousers on a wooden hanger, showing the red-piped welt pocket",
+        "color": "#59595f",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIF/8QAIhAAAQMDAwUAAAAAAAAAAAAAAQIDBAARIQUGEzNBYpLh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAIf/aAAwDAQACEQMRAD8AKTpjsaSlgAu8mQUpsDnvVHbku56Xt8rAalOhpxRWtSsWJUbikEp4gHlXnzNWj//Z"
+      },
+      "alternate": {
+        "src": "/images/products/herringbone-trousers/herringbone-trousers-02.jpg",
+        "width": 740,
+        "height": 925,
+        "alt": "Close view of the herringbone weave and the red-piped welt pocket",
+        "color": "#575965",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIEBf/EACEQAAIABgIDAQAAAAAAAAAAAAECAAMEERIhMYFBUWHB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAVEQEBAAAAAAAAAAAAAAAAAAAAIf/aAAwDAQACEQMRAD8Azxkdq5QeAugOoIlJbctD0R+wtWxp6ubKFmCtza32K1pMlBz5HqKgr//Z"
+      }
+    },
+    "adire-stripe-wide-trousers": {
+      "name": "Adire Stripe Wide Trousers",
+      "garmentColorName": "Ink",
+      "garmentColorHex": "#1C1C1E",
+      "primary": {
+        "src": "/images/products/adire-stripe-wide-trousers/adire-stripe-wide-trousers-01.jpg",
+        "width": 887,
+        "height": 1109,
+        "alt": "Model wearing black wide-leg trousers with a printed cowrie panel and ochre stripe, with leather sandals",
+        "color": "#af9a8a",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIBAAAgICAAcAAAAAAAAAAAAAAQIAAwURBBIUITJSYf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAXEQEBAQEAAAAAAAAAAAAAAAABAAMT/9oADAMBAAIRAxEAPwBWU3Zn+GrLHlUIQN9vOWpncgWTK02lyzsBr4AYzqrvcwXQJua3/9k="
+      },
+      "alternate": {
+        "src": "/images/products/adire-stripe-wide-trousers/adire-stripe-wide-trousers-02.jpg",
+        "width": 640,
+        "height": 800,
+        "alt": "Close view of the printed cowrie shells, geometric marks and ochre stripe running down the leg",
+        "color": "#8a7c71",
+        "blurDataURL": "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAANAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABgT/xAAhEAABAwQBBQAAAAAAAAAAAAABAAIFAwQRIZESIkFRsv/EABQBAQAAAAAAAAAAAAAAAAAAAAL/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREh/9oADAMBAAIRAxEAPwCWSaKklIdQzh2ucJiNDA8Iddbkb93tw+kpNfZ7TyhdY44f/9k="
       }
     }
   }

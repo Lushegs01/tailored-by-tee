@@ -55,7 +55,9 @@ async function upsertMedia(db: PrismaClient, id: string, asset: MediaAsset): Pro
     alt: asset.alt,
     color: asset.color,
     blurDataUrl: asset.blurDataURL ?? null,
-    provider: "unsplash",
+    // Catalogue photography is either a placeholder from Unsplash or a studio file
+    // served from this app's own /public; uploads carry "cloudinary" instead.
+    provider: asset.src.startsWith("/") ? "local" : "unsplash",
     creditName: asset.credit?.name ?? null,
     creditUrl: asset.credit?.url ?? null,
   };
@@ -148,7 +150,14 @@ async function seedProducts(db: PrismaClient): Promise<{ products: number; newVa
     // Photography first: shared rows, idempotent, and kept out of the product transaction.
     const images: { id: string; mediaId: string; role: string; colorId: string | null; position: number }[] = [];
     for (const image of product.images) {
-      const source = image.role === "primary" ? media?.primary : media?.alternate;
+      // The manifest entry is preferred over the mapped image because it still
+      // carries the photographer credit, which `toMediaAsset` strips.
+      const source =
+        image.role === "primary"
+          ? media?.primary
+          : image.role === "alternate"
+            ? media?.alternate
+            : media?.gallery?.[image.position - 2];
       const mediaId = await upsertMedia(db, `med_${image.id}`, source ?? image);
       images.push({ id: image.id, mediaId, role: image.role, colorId: image.colorId, position: image.position });
     }

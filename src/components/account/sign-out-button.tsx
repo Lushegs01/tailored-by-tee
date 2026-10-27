@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 
-import { signOutAction } from "@/app/account/sign-in/actions";
+import { signOutAction } from "@/app/(store)/account/sign-in/actions";
 import { useRefreshAccount } from "@/components/account/use-account";
 import { clearCheckoutDraft } from "@/components/checkout/checkout-draft";
 import { useWishlistStatus } from "@/components/wishlist/wishlist-provider";
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 /*
  * Signing out happens on the server (signOutAction clears the session and
  * redirects home). Once the action has finished, this browser forgets what the
- * account left in it — its wishlist, and the checkout details kept for this tab —
+ * account left in it â€” its wishlist, and the checkout details kept for this tab â€”
  * so on a shared device the next person never sees them. Then the session is
  * read again, in this tab and any other open one, so the header stops saying
  * "signed in" (other tabs confirm the sign-out with the server and forget the
@@ -51,7 +51,7 @@ function SignOutSubmit() {
         "transition-opacity duration-300 ease-editorial disabled:opacity-60",
       )}
     >
-      <span className="link-underline-static pb-0.5">{pending ? "Signing out…" : "Sign out"}</span>
+      <span className="link-underline-static pb-0.5">{pending ? "Signing outâ€¦" : "Sign out"}</span>
     </button>
   );
 }

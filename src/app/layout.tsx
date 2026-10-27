@@ -1,39 +1,24 @@
 import type { Metadata, Viewport } from "next";
 
-import { CartDrawer } from "@/components/cart/cart-drawer";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import { AppProviders } from "@/components/providers/app-providers";
-import { SearchOverlay } from "@/components/search/search-overlay";
-import { JsonLd, organizationJsonLd } from "@/components/seo/json-ld";
 import { siteConfig } from "@/config/site";
-import { accountsEnabled } from "@/lib/auth/config";
 import { fontVariables } from "@/lib/fonts";
 
 import "./globals.css";
 
+/*
+ * The document itself, and nothing else. Two very different interfaces sit
+ * inside it: the storefront ((store), with its header, footer, bag and search)
+ * and the admin area (/admin, its own operational frame). Neither one's chrome
+ * or client state reaches the other.
+ *
+ * Titles, descriptions and social metadata belong to each area; only what is
+ * true of every page in the document is set here.
+ */
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
-    template: `%s — ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
+  title: siteConfig.name,
   applicationName: siteConfig.name,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: siteConfig.name,
-    locale: "en_NG",
-    url: "/",
-    title: siteConfig.name,
-    description: siteConfig.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-  },
   formatDetection: { telephone: false },
 };
 
@@ -45,22 +30,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-NG" className={fontVariables}>
-      <body>
-        <a href="#main" className="skip-link">
-          Skip to content
-        </a>
-        {/* Configuration only (is sign-in possible at all), so every page stays static. */}
-        <AppProviders accounts={accountsEnabled}>
-          <SiteHeader />
-          <main id="main" tabIndex={-1} className="outline-none">
-            {children}
-          </main>
-          <SiteFooter />
-          <CartDrawer />
-          <SearchOverlay />
-        </AppProviders>
-        <JsonLd data={organizationJsonLd()} />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

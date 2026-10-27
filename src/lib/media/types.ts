@@ -17,6 +17,12 @@ export interface ProductMediaEntry {
   garmentColorHex: string;
   primary: MediaAsset;
   alternate: MediaAsset;
+  /**
+   * Further views of the same piece — a second colourway, a flat of the cloth —
+   * shown after the first two on the product page. Cards only ever use the first
+   * two, so this stays optional and costs listings nothing.
+   */
+  gallery?: MediaAsset[];
 }
 
 export interface MediaManifest {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { addAddress, editAddress } from "@/app/account/(member)/addresses/actions";
+import { addAddress, editAddress } from "@/app/(store)/account/(member)/addresses/actions";
 import { SelectField, TextField } from "@/components/checkout/checkout-field";
 import { Button } from "@/components/ui/button";
 import { NIGERIAN_STATES } from "@/config/nigeria";
@@ -198,7 +198,7 @@ export function AddressForm({ address, defaults, isFirst, onSaved, onCancel }: A
           id="address-label"
           label="Label"
           optional
-          placeholder="Home, Office…"
+          placeholder="Home, Officeâ€¦"
           hint="A name to tell your addresses apart."
           autoComplete="off"
           maxLength={40}
@@ -224,7 +224,7 @@ export function AddressForm({ address, defaults, isFirst, onSaved, onCancel }: A
             />
             <span>
               Make this my default address{" "}
-              <span className="text-muted-foreground">— the one filled in for you at checkout.</span>
+              <span className="text-muted-foreground">â€” the one filled in for you at checkout.</span>
             </span>
           </label>
         )}
@@ -232,7 +232,7 @@ export function AddressForm({ address, defaults, isFirst, onSaved, onCancel }: A
 
       <div className="mt-10 grid gap-3">
         <Button type="submit" size="lg" fullWidth disabled={pending} aria-busy={pending || undefined}>
-          {pending ? "Saving…" : address ? "Save changes" : "Save address"}
+          {pending ? "Savingâ€¦" : address ? "Save changes" : "Save address"}
         </Button>
         <Button type="button" variant="ghost" fullWidth onClick={onCancel}>
           Cancel

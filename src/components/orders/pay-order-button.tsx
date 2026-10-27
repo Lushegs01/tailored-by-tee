@@ -2,12 +2,12 @@
 
 import * as React from "react";
 
-import { resumeAccountPayment } from "@/app/account/(member)/orders/actions";
+import { resumeAccountPayment } from "@/app/(store)/account/(member)/orders/actions";
 import { Button } from "@/components/ui/button";
 
 /**
  * Opens a fresh Paystack checkout for one of the signed-in customer's orders that
- * still holds its pieces. Full width on phones, where the label ("Pay ₦1,250,000
+ * still holds its pieces. Full width on phones, where the label ("Pay â‚¦1,250,000
  * with Paystack") may wrap rather than push past the screen edge. aria-disabled
  * while opening, so focus stays on the button if it comes back with an error.
  */
@@ -33,12 +33,12 @@ export function PayOrderButton({ orderNumber, label }: { orderNumber: string; la
               if (result.ok) window.location.assign(result.redirectTo);
               else setError(result.message);
             } catch {
-              setError("We couldn’t reach the payment page. Check your connection and try again.");
+              setError("We couldnâ€™t reach the payment page. Check your connection and try again.");
             }
           });
         }}
       >
-        {pending ? "Opening Paystack…" : label}
+        {pending ? "Opening Paystackâ€¦" : label}
       </Button>
       {error ? (
         <p role="alert" className="mt-3 text-body-sm text-danger">

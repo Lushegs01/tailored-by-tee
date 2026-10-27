@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { getWishlistProducts, type WishlistProduct, type WishlistProductsResult } from "@/app/wishlist/actions";
+import { getWishlistProducts, type WishlistProduct, type WishlistProductsResult } from "@/app/(store)/wishlist/actions";
 import { useAccount } from "@/components/account/use-account";
 import { MAX_CART_LINES } from "@/components/cart/cart-lines";
 import { useCart } from "@/components/cart/cart-provider";
@@ -35,7 +35,7 @@ export interface WishlistViewProps {
 
 /**
  * The saved pieces. Resolved in the browser: a guest's list lives in
- * localStorage, so the server can't know it. The list — order, saves, removals —
+ * localStorage, so the server can't know it. The list â€” order, saves, removals â€”
  * always comes from the wishlist provider; card data comes from the public
  * catalogue, kept per id so removing one piece never reloads the others.
  *
@@ -58,7 +58,7 @@ export function WishlistView({ className, signInHref }: WishlistViewProps) {
   const [attempt, setAttempt] = React.useState(0);
   const [notice, setNotice] = React.useState<Notice | null>(null);
   const regionRef = React.useRef<HTMLElement>(null);
-  /** Pieces just moved to the bag, until its quote confirms them: variant id → product. */
+  /** Pieces just moved to the bag, until its quote confirms them: variant id â†’ product. */
   const movedRef = React.useRef(new Map<string, { productId: string; name: string }>());
 
   const ids = wishlist.productIds.filter((id) => !unlisted.has(id));
@@ -132,7 +132,7 @@ export function WishlistView({ className, signInHref }: WishlistViewProps) {
     const alreadyInBag = cart.lines.some((line) => line.variantId === variantId);
     const bagFull = !alreadyInBag && cart.lines.length >= MAX_CART_LINES;
     const label = [product.name, bag.colorName, bag.oneSize ? null : size.label].filter(Boolean).join(", ");
-    // The bag decides, and announces, what happens — including why a full bag can't take it.
+    // The bag decides, and announces, what happens â€” including why a full bag can't take it.
     cart.addItem(variantId, 1, { label, openDrawer: false });
     if (bagFull) {
       setNotice({ kind: "bag-full" });
@@ -195,8 +195,8 @@ export function WishlistView({ className, signInHref }: WishlistViewProps) {
           <EmptyState
             id={headingId}
             align="start"
-            title="We couldn’t load your *saved pieces.*"
-            body="Your wishlist is safe — this is only a problem showing it. Please try again in a moment."
+            title="We couldnâ€™t load your *saved pieces.*"
+            body="Your wishlist is safe â€” this is only a problem showing it. Please try again in a moment."
             actions={<Button onClick={retry}>Try again</Button>}
           />
         </div>
@@ -226,7 +226,7 @@ export function WishlistView({ className, signInHref }: WishlistViewProps) {
           role="alert"
           className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border border-danger/40 px-4 py-3 text-body-sm"
         >
-          <p>Some saved pieces didn’t load.</p>
+          <p>Some saved pieces didnâ€™t load.</p>
           <button
             type="button"
             onClick={retry}
@@ -280,7 +280,7 @@ function WishlistNotice({ notice, className }: { notice: Notice; className?: str
     notice.kind === "moved"
       ? `${notice.name} is now in your bag.`
       : notice.kind === "returned"
-        ? `${notice.name} sold out in that size before it reached your bag, so it’s back in your wishlist.`
+        ? `${notice.name} sold out in that size before it reached your bag, so itâ€™s back in your wishlist.`
         : `Your bag holds up to ${MAX_CART_LINES} different pieces. Make room there to move this one across.`;
 
   return (
